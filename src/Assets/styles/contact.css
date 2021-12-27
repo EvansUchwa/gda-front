@@ -1,0 +1,58 @@
+.contact {
+  width: 90%;
+  margin: 50px auto;
+  padding: 20px 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* background-color: #fde4e9; */
+}
+.contactForm {
+  width: 45%;
+}
+.contactForm form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.contactForm form input,
+.contactForm form textarea {
+  margin: 10px 0;
+  width: 100%;
+  border: solid 1px var(--cwd2);
+}
+.contactForm form input {
+}
+.contactForm form textarea {
+  width: 100%;
+  height: 200px;
+  padding: 10px 15px;
+}
+.contactForm form button {
+  background-color: var(--colorPrincipal);
+  color: white;
+}
+
+.contactImg {
+  width: 45%;
+  display: flex;
+}
+
+.contactImg img {
+  width: 100%;
+  object-fit: contain;
+  /* height: 80vh; */
+}
+
+@media screen and (max-width: 512px) {
+  .contact {
+    flex-direction: column-reverse;
+  }
+  .contactForm {
+    width: 100%;
+  }
+  .contactImg {
+    margin-top: 50px;
+    width: 100%;
+  }
+}

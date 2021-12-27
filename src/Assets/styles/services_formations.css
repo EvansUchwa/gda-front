@@ -1,0 +1,180 @@
+.formationOrServicePart {
+  width: 90%;
+  margin: auto;
+  /* background-color: violet; */
+  padding: 50px 0;
+}
+
+.formationOrServicePart h1 {
+  margin: 0 0 10px 0px;
+  text-align: center;
+  color: white;
+}
+.formationList,
+.serviceList {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.formation-card {
+  cursor: pointer;
+  transition: all 0.5s;
+  padding: 30px 15px;
+  width: 32%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  margin: 10px 0;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.formation-card:hover {
+  background-color: var(--colorThird);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+.formation-card:hover h3,
+.formation-card:hover p {
+  color: white;
+}
+
+.formation-card h3,
+.formation-card p {
+  text-align: center;
+  color: grey;
+}
+.formation-card > p {
+  /* color: grey; */
+}
+
+.fc-price {
+  text-align: center;
+  margin: 10px 0;
+}
+.fc-price > span {
+  color: rgba(255, 0, 0, 0.739);
+  padding: 5px 8px;
+  /* color: white; */
+}
+.fc-price p {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+  position: relative;
+}
+.fc-price p b {
+  font-size: 40px;
+  color: var(--colorSecond);
+}
+.fc-price p span {
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  color: var(--colorSecond);
+}
+
+.formation-card > button {
+  background-color: var(--colorPrincipal);
+  color: white;
+  padding: 10px 0;
+  margin: auto;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.5s;
+}
+
+.formation-card > button:hover {
+  transform: scale(1.1);
+}
+
+.formation-card > ul {
+  margin-top: 10px;
+}
+.formation-card > ul li {
+  display: flex;
+  align-items: center;
+  margin: 0 0 5px 0;
+}
+.formation-card > ul li i:first-child {
+  color: yellowgreen;
+  font-size: 30px;
+  /* margin-right: 10px; */
+}
+.formation-card > ul li span {
+  display: none;
+}
+
+.service-card {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+  padding: 20px 0 0 0;
+  background-color: white;
+  border-radius: 20px;
+  margin: 10px 0;
+}
+.service-card div {
+  /* background-color: var(--cpd2); */
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  transition: all 0.5s;
+}
+.service-card div:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
+    rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  background-color: var(--cpd3);
+}
+.service-card div img {
+  max-width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+.service-card b {
+  color: var(--cpd3);
+  padding: 10px 0;
+  max-width: 80%;
+  text-align: center;
+}
+.service-card button {
+  color: white;
+  background-color: var(--colorPrincipal);
+  margin-bottom: 20px;
+}
+
+.reserveFormationPlaceForm {
+}
+.reserveFormationPlaceForm h2 {
+  color: var(--colorPrincipal);
+}
+.reserveFormationPlaceForm button {
+  color: white;
+  background-color: var(--colorPrincipal);
+}
+
+@media screen and (max-width: 512px) {
+  .formation-card {
+    width: 95%;
+    margin: 10px auto;
+  }
+  .service-card {
+    width: 95%;
+    margin: 10px auto;
+  }
+}

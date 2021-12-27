@@ -1,0 +1,166 @@
+.dashboardPart {
+  width: 100%;
+  background-color: var(--cwd1);
+  transition: all 0.5s;
+  padding: 20px 0;
+}
+.dashboardPartAlign {
+  margin-left: auto !important;
+  width: 100%;
+  transform: translateX(250px);
+}
+
+.dash-welcomeBanner {
+  background-color: white;
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 0 auto;
+}
+.dash-welcomeBanner a {
+  background-color: var(--colorPrincipal);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+.dwb-candidate,
+.dwb-employer,
+.dwb-vip {
+}
+
+.choiceUser {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+.choiceUser a {
+  background-color: var(--colorPrincipal);
+  color: white;
+  padding: 10px 15px;
+  margin: 10px 0;
+}
+/*  */
+
+/* Dash stat */
+.dash-stats {
+  width: 90%;
+  margin: 20px auto;
+  /* background-color: thistle; */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.dash-stats h2 {
+  width: 100%;
+}
+.ds-section {
+  margin: 10px 0;
+  width: 30%;
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
+  position: relative;
+}
+.ds-section:nth-child(2) {
+  background-color: var(--colorPrincipal);
+}
+.ds-section:nth-child(3) {
+  background-color: orange;
+}
+.ds-section:nth-child(4) {
+  background-color: var(--colorSecond);
+}
+.ds-section i {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  font-size: 40px;
+  transform: translateY(-50%);
+}
+/* End dash stat */
+
+/* Fast link */
+.dash-fastLinks {
+  width: 90%;
+  margin: 20px auto 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.dash-fastLinks h2 {
+  width: 100%;
+  color: var(--colorSecond);
+}
+.df-section {
+  margin: 10px 0;
+  width: 32%;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+    rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+    rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+  padding: 10px 15px;
+  background-color: white;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+.df-section:hover {
+  background-color: var(--colorPrincipal);
+  color: white;
+}
+.df-section:hover a {
+  background-color: white;
+  color: var(--colorPrincipal);
+}
+.df-section:hover span {
+  color: var(--cwd1);
+}
+.df-section div {
+  margin: 10px 0;
+}
+.df-section img {
+  border: solid 2px white;
+  margin: -5px;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: grey;
+}
+.df-section span {
+  color: gray;
+}
+.df-section a {
+  background-color: var(--colorPrincipal);
+  color: white;
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+/* End fast links */
+@media screen and (max-width: 512px) {
+  .dash-welcomeBanner {
+    flex-direction: column;
+  }
+  .dash-welcomeBanner a {
+    display: inline-block;
+    margin: 5px auto 10px auto;
+  }
+  .ds-section b {
+    font-size: 12px;
+  }
+  .ds-section i {
+    font-size: 20px;
+    top: 2px;
+    right: 2px;
+    transform: initial;
+  }
+
+  .df-section {
+    width: 95%;
+  }
+}

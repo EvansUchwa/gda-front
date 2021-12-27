@@ -1,0 +1,95 @@
+.hasSigned {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.hasSigned img {
+  max-width: 80%;
+  max-height: 200px;
+  margin-bottom: 10px;
+}
+.authPart {
+  width: 100%;
+}
+
+.authPart > img {
+  display: none;
+}
+.authPart-form {
+  width: 90%;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.apf-img {
+  width: 40%;
+  display: flex;
+}
+.apf-img img {
+  height: 500px;
+  width: 100%;
+}
+.apf-form {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  width: 40%;
+  padding: 50px 20px;
+  background-color: var(--cpd1);
+}
+.apf-form h2 {
+  margin-bottom: 15px;
+}
+.apf-form h2,
+.apf-form p {
+  text-align: center;
+}
+.apf-form h2,
+.apf-form a {
+  color: var(--colorPrincipal);
+}
+
+.apf-form form input,
+.apf-form form select {
+  background-color: var(--ow6);
+}
+.apf-form form label {
+  color: var(--colorPrincipal);
+}
+.apf-form form {
+  width: 100%;
+}
+
+.apf-form form button {
+  width: 50%;
+  color: white;
+  background-color: var(--colorPrincipal);
+  margin-bottom: 10px;
+}
+
+.formViewPassword {
+  margin: 10px 0;
+}
+.formViewPassword input {
+  display: block;
+}
+.formViewPassword label {
+  display: flex;
+  /* background-color: violet; */
+}
+
+@media screen and (max-width: 512px) {
+  .apf-img {
+    width: 80%;
+  }
+  .apf-img img {
+    height: 250px;
+  }
+  .apf-form {
+    margin-top: 20px;
+    width: 100%;
+  }
+}

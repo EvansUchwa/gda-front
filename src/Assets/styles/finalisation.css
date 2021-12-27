@@ -1,0 +1,151 @@
+body {
+}
+/* finaliseSignStepsForm */
+.finaliseSign {
+  padding: 50px 0;
+  margin: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.finaliseSign > section {
+  width: 45%;
+}
+.finaliseSign > section:nth-child(1) {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.finaliseSign section:nth-child(1) img {
+  width: 100%;
+}
+.finaliseSign section:nth-child(2) h2 {
+  text-align: center;
+  width: 100%;
+}
+.finaliseSign section:nth-child(2) {
+  background-color: var(--cpd1);
+  padding: 20px 0;
+}
+.finaliseSign h1,
+.finaliseSign h2 {
+  margin: auto;
+  text-align: center;
+  /* border-bottom: solid 2px var(--cwd4); */
+  display: inline-block;
+  color: var(--colorPrincipal);
+}
+.finaliseSign h2 {
+  padding-bottom: 5px;
+}
+
+.finaliseSign .stepper {
+  width: 90%;
+  margin: 20px auto;
+  display: flex;
+  justify-content: space-between;
+}
+.stepper span {
+  color: var(--cbd4);
+  background-color: var(--cwd4);
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  transition: 0.5s ease;
+}
+.stepper span.activeStep {
+  color: white;
+  background-color: var(--colorPrincipal);
+}
+.finaliseSign form {
+  width: 90%;
+  margin: auto;
+}
+.finaliseSign form input,
+.finaliseSign form select,
+.finaliseSign form textarea {
+  background-color: var(--ow4);
+}
+.finaliseSign form button {
+  padding: 10px 25px;
+}
+.finaliseSign form button {
+  background-color: var(--colorPrincipal);
+  color: white;
+  transition: all 0.5s;
+}
+.signFinished {
+  text-align: center;
+  max-width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.signFinished img {
+  max-width: 80%;
+  max-height: 250px;
+}
+.signFinished i {
+  font-size: 30px;
+  display: block;
+}
+
+.iconUploader {
+  padding: 10px;
+  background-color: var(--cwd2);
+  color: var(--cbd4);
+  margin-left: 0;
+  margin-right: auto;
+}
+.iconUploader i {
+  font-size: 20px;
+}
+.iconUploader.fileIsUploaded {
+  background-color: var(--colorPrincipal);
+  color: white;
+}
+.iconUploader input {
+  display: none;
+}
+.previewImg {
+  display: flex;
+  position: relative;
+  margin-right: auto;
+}
+.previewImg img {
+  height: 80px;
+  width: 80px;
+}
+.previewImg i {
+  position: absolute;
+  background-color: var(--colorSecond);
+  color: white;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 20px;
+  height: 20px;
+  width: 20px;
+  top: -10px;
+  right: -10px;
+}
+@media screen and (max-width: 512px) {
+  .finaliseSign {
+    width: 90%;
+  }
+  .finaliseSign > section {
+    width: 100%;
+  }
+  .finaliseSign .stepper {
+    width: 95%;
+  }
+  .stepper span {
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+  }
+}

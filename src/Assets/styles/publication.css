@@ -1,0 +1,228 @@
+.publicationsPart {
+}
+.publicationsPart-title {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: var(--cpd1);
+  padding: 20px 30px;
+  justify-content: space-around;
+}
+.publicationsPart-title h2 {
+  max-width: 80%;
+}
+.publicationsPart-title img {
+  width: 10%;
+  max-height: 100px;
+}
+
+.filterResults {
+  /* background-color: brown; */
+  padding: 10px 5px;
+  width: 95%;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filterResults select {
+  background-color: var(--cwd4);
+}
+.filterResults button {
+  background-color: var(--colorSecond);
+  color: white;
+}
+
+.publicationsPart-categorys {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 40px 0;
+}
+.ppc-title {
+  margin: 20px 0;
+}
+.ppc-itemsSlide {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.ppc-itemsSlide > div {
+}
+.ppc-published-items {
+  width: 90%;
+  margin: auto;
+}
+
+.notAccessible {
+  width: 90%;
+  margin: auto;
+  padding: 30px 0;
+  text-align: center;
+}
+.notAccessible a {
+  background-color: var(--colorSecond);
+  color: white;
+  padding: 5px 15px;
+  margin: 10px;
+}
+
+.itemsPagination {
+  width: 80%;
+  margin: 20px auto;
+  background-color: var(--colorPrincipal);
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+.itemsPagination > a:first-child {
+  margin-right: auto;
+  color: white;
+}
+.itemsPagination > a:last-child {
+  margin-left: auto;
+  color: white;
+}
+.itemsPagination section {
+  max-width: 80%;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  text-decoration-color: white;
+  color: white;
+}
+.itemsPagination section a {
+  display: inline-block;
+  line-height: 40px;
+  text-align: center;
+  background-color: white;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  margin: 0 10px;
+}
+
+/* Detail Card */
+.modalDetailProfil {
+  width: 50% !important;
+  height: 80% !important;
+  background-color: white;
+}
+.candidateORemployerProfilDetail {
+  display: flex;
+  flex-direction: column;
+}
+.cORePD-switcher {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.cORePD-switcher span {
+  font-weight: bold;
+  transition: all 0.5s;
+  padding: 5px 0;
+}
+.cORePD-switcher input {
+  display: none;
+}
+.cORePD-switcher input:checked + span {
+  color: var(--colorPrincipal) !important;
+  border-bottom: solid 1px var(--colorPrincipal);
+  /* border-top: solid 1px var(--colorPrincipal); */
+}
+
+.cORePD-result {
+  /* background-color: tomato; */
+  padding: 20px 0;
+}
+.cORePD-r-C1 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.cORePD-r-C1 section {
+  display: flex;
+  flex-direction: column;
+  /* background-color: violet; */
+}
+.cORePD-r-C1 section:nth-child(1) {
+  width: 40%;
+  align-items: center;
+  justify-content: center;
+}
+.cORePD-r-C1 section img {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+}
+.cORePD-r-C1 section button {
+  background-color: var(--colorSecond);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+.cORePD-r-C1 section:nth-child(2) {
+  width: 55%;
+}
+.cORePD-r-C1 section:nth-child(2) div {
+  margin-bottom: 10px;
+}
+.cORePD-r-C1 section:nth-child(2) b {
+  margin-left: 20px;
+}
+
+.cORePD-r-C2,
+.cORePD-r-C3,
+.cORePD-r-C4 {
+}
+.cORePD-result > div:not(.cORePD-r-C1) section {
+  display: flex;
+  flex-direction: column;
+}
+.cORePD-result > div:not(.cORePD-r-C1) section div {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.cORePD-result > div:not(.cORePD-r-C1) section b {
+  margin-left: 20px;
+}
+/* End */
+@media screen and (max-width: 512px) {
+  .publicationsPart-title h2 {
+    font-size: 15px;
+  }
+  .publicationsPart-title img {
+    object-fit: contain;
+    width: 20%;
+  }
+  .ppc-published-items {
+    width: 100%;
+  }
+  .ppc-itemsSlide {
+    justify-content: center;
+  }
+  .itemsPagination {
+    width: 95%;
+  }
+  .itemsPagination section a {
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Modal detail */
+  .modalDetailProfil {
+    width: 95% !important;
+    height: 90% !important;
+    background-color: white;
+  }
+  .cORePD-r-C1 section:nth-child(1) {
+    width: 100%;
+  }
+  .cORePD-r-C1 section:nth-child(2) {
+    margin-top: 30px;
+    width: 100%;
+  }
+  /* End */
+}

@@ -1,0 +1,248 @@
+.card1,
+.card2 {
+  border-radius: 15px;
+  overflow: hidden;
+  width: calc(100% / 5.5);
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  margin: 5px 0 !important;
+  background-color: white;
+}
+.card1-head {
+  height: 40%;
+  width: 100%;
+  background-color: var(--colorPrincipal);
+  position: relative;
+}
+.card1-head img {
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--cwd2);
+  border: solid 2px white;
+}
+.card1-body {
+  text-align: center;
+  width: 90%;
+  margin: auto;
+  margin-top: 30px;
+}
+.card1-body b {
+}
+.card1-body p:nth-child(2) {
+  width: 95%;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.card1-body i {
+  color: var(--colorPrincipal);
+}
+.card1-foot {
+  width: 100%;
+  text-align: right;
+  padding: 10px 0 0 0;
+}
+.card1-foot a {
+  width: 50%;
+  display: inline-block;
+  margin-top: auto;
+  background-color: var(--colorPrincipal);
+  color: white;
+  padding: 5px 8px;
+  border-radius: 20px 0 20px 0;
+}
+/* Fin */
+
+/* card2 */
+.card2-head {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card2-head img {
+  height: 60px;
+  width: 60px;
+  border: solid 2px var(--colorPrincipal);
+  background-color: var(--cwd2);
+}
+.card2-body {
+  text-align: center;
+}
+.card2-body b {
+  /* background-color: violet; */
+}
+.card2-body b {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.card2-body span {
+  color: grey;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.card2-body p:nth-child(2) {
+}
+.card2-body i {
+}
+.card2-foot {
+  width: 100%;
+  margin-top: auto;
+  border-top: solid 2px var(--cwd2);
+}
+.card2-foot a {
+  display: inline-block;
+  text-align: center;
+  padding: 5px 0px;
+  color: var(--colorSecond);
+}
+.card2-foot a:nth-child(1) {
+  width: 40%;
+  border-right: solid 2px var(--cwd2);
+}
+.card2-foot a:nth-child(2) {
+  width: 60%;
+}
+/* Fin */
+
+/* Card 3 */
+/* Fin */
+
+/* Card 4 */
+.card4,
+.card5 {
+  width: calc(100% / 4.5);
+  height: 300px;
+  border: solid 2px var(--cwd1);
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: white;
+  position: relative;
+}
+.card4-absolute-top,
+.card4-absolute-bottom {
+  position: absolute;
+  right: 0px;
+}
+.card4-absolute-top {
+  top: 20px;
+  background-color: var(--colorThird);
+  color: white;
+  padding: 5px;
+}
+.card4-absolute-bottom {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  top: 55%;
+  right: 10px;
+}
+.card4-header {
+  width: 100%;
+  height: 65%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card4-header img {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+.card4-body {
+  height: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card4-body b {
+  color: var(--colorThird);
+}
+.card4-body span,
+.card4-body p {
+  color: grey;
+}
+/* Fin */
+
+/* Card 5 */
+.card5-head {
+  height: 40%;
+  display: flex;
+}
+.card5-head img {
+  width: 100%;
+  height: 100%;
+}
+.card5-body {
+  height: 45%;
+}
+.card5-b-title {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card5-b-divider-3,
+.card5-b-divider-2 {
+  height: 50%;
+  width: 100%;
+  border-top: solid 1px var(--cwd2);
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card5-b-divider-3 > p,
+.card5-b-divider-2 > p {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-right: solid 1px var(--cwd2);
+}
+.card5-b-divider-3 span,
+.card5-b-divider-2 span {
+  font-size: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+.card5-foot {
+  height: 15%;
+  background-color: var(--colorPrincipal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card5-foot a {
+  color: white;
+}
+/* Fin */
+
+@media screen and (max-width: 512px) {
+  .card4,
+  .card5 {
+    width: calc(100% / 2.1);
+    height: 250px;
+  }
+}

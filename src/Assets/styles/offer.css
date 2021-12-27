@@ -1,0 +1,245 @@
+.offerBanner {
+  width: 100%;
+  margin: auto;
+  padding: 20px 0;
+  background-color: var(--cpd5);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+}
+.offerBanner section {
+  max-width: 76%;
+}
+.offerBanner img {
+  max-width: 20%;
+  max-height: 20vh;
+}
+/* Pub banniere */
+.go-pubBanner {
+  width: 80%;
+  margin: 20px auto;
+  background-color: var(--cwd2);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+}
+.go-pB-item {
+  /* background-image: url("../images/illustrations/bg/circle1.svg");
+  background-repeat: no-repeat;
+  background-position: -250% 80%; */
+  width: 100%;
+  display: flex !important;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px 0;
+  height: 30vh;
+}
+.go-pB-item img {
+  max-width: 30%;
+  height: 95%;
+}
+.go-pB-item a {
+  padding: 10px 20px;
+  background-color: var(--colorPrincipal);
+  color: white;
+}
+.go-pB-item div {
+  color: var(--colorSecond);
+  position: relative;
+}
+.go-pB-item h3 {
+  font-size: 3vw;
+}
+.go-pB-item p {
+  font-size: 2vw;
+}
+.go-pB-item span {
+  background-color: var(--colorThird);
+  color: white;
+  position: absolute;
+  top: 0;
+  padding: 5px 10px;
+}
+/* End */
+.globalOfferLayout {
+  width: 100%;
+  background-color: var(--cwd1);
+}
+.gol-searchBar {
+  padding: 30px 0;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  justify-content: center;
+}
+.gol-searchBar input {
+  width: 80%;
+  border-radius: 50px 0 0 50px;
+}
+.gol-searchBar button {
+  width: 15%;
+  padding: initial;
+  border-radius: 0 50px 50px 0;
+}
+
+.gol-filterANDcards {
+  padding: 10px 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+/* Partie Filtre */
+.gol-mobileFilterBtn {
+  display: none;
+  transition: all 0.5s;
+}
+.filterSidebar {
+  padding: 10px 0;
+  width: 25%;
+  border: solid 2px var(--cwd2);
+  background-color: white;
+}
+.filterSidebar h3 {
+  /* width: 90%; */
+  color: var(--cpd5);
+  margin: 10px auto;
+  text-align: center;
+}
+.filterSidebar form {
+  width: 95%;
+  margin: auto;
+}
+.filterSidebar form input,
+.filterSidebar form select {
+  background-color: var(--cwd2);
+}
+.filterSidebar form button {
+  color: white;
+  background-color: var(--colorPrincipal);
+}
+/* Fin */
+
+/* Liste des Cartes */
+.gol-fAc-cards {
+  width: 72%;
+}
+.gol-fAc-c-header {
+  width: 100%;
+  border: solid 2px var(--cwd2);
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 20px;
+}
+.gol-fAc-c-cardList {
+  margin: 20px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  /* background-color: white; */
+}
+.gol-fAc-c-cardList > div {
+  margin: 10px 0;
+}
+.gol-fAc-cards img {
+}
+/* Fin */
+
+.addOfferPart {
+  /* width: 100%; */
+}
+.addOfferForm {
+  width: 90%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px 10px;
+  margin: auto;
+}
+.addOfferForm h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+.addOfferForm form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.addOfferForm form > div {
+  width: 45%;
+}
+.addOfferForm form > .formBtn {
+  width: 100%;
+  margin: 10px 0;
+}
+.addOfferForm .formBtn button {
+  background-color: var(--colorPrincipal);
+  color: white;
+}
+#formAreaDescription {
+  width: 95%;
+  margin: auto;
+}
+#formAreaDescription textarea {
+  max-height: 250px;
+  min-height: 100px;
+}
+.addOfferForm form > div input,
+.addOfferForm form > div select,
+.addOfferForm form > div textarea {
+  background-color: var(--cwd2);
+}
+
+@media screen and (max-width: 512px) {
+  /* Pub banner */
+  .go-pubBanner {
+    width: 90%;
+  }
+  .go-pB-item {
+    background-position: -880% 90%;
+  }
+  .go-pB-item h3 {
+    font-size: 6vw;
+  }
+  .go-pB-item p {
+    font-size: 4vw;
+  }
+  /* End */
+  .addOfferForm form > div {
+    width: 95%;
+    margin: 0 auto 10px auto;
+  }
+
+  /*  */
+  .gol-mobileFilterBtn {
+    display: block;
+    width: 90%;
+    margin: auto;
+  }
+  .gol-mobileFilterBtn button {
+    background-color: var(--cpd5);
+    padding: 15px 40px;
+    color: white;
+  }
+  .filterSidebar {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    transition: all 0.5s;
+  }
+  .toggleFilterSidebar {
+    max-height: 2000px;
+    overflow: initial;
+    padding: 10px 0;
+  }
+  /* End */
+  /*  */
+  .gol-fAc-cards {
+    width: 100%;
+  }
+  /* ENd */
+}
