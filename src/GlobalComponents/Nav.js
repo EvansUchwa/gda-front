@@ -1,10 +1,25 @@
-import { useContext, useState } from "react"
+import { useState } from "react"
+import { adminMenu, entrepriseMenu, candidatMenu } from "../RawData/links";
 import { Link, useNavigate } from "react-router-dom"
 import { Modal } from "./Modal"
-import { UserContext } from '../Contexts/userContext';
+import { SimpleImage, UrlImage } from "./Img";
+import { useAuth } from "../hooks/authHooks";
 const toggleDashNav = () => {
     document.querySelector('.dashbordNav').classList.toggle('dashbordNav-visible')
     document.querySelector('.dashboardPart').classList.toggle('dashboardPartAlign')
+}
+const toggleOptionsNav = (event) => {
+    event.target.nextElementSibling.classList.toggle('native-options-visible')
+    if (event.target.attributes['class'].value == 'dashMenuDropdown') {
+        event.target.children[0].classList.toggle('mdi-rotate-90')
+    }
+}
+function dispatchUserPic(userType) {
+    if (userType == 'CANDIDAT') {
+        return 'photo1_url'
+    } else if (userType == 'ENTREPRISE') {
+        return 'logo_url';
+    }
 }
 
 export const Nav = () => {
@@ -12,12 +27,6 @@ export const Nav = () => {
     const handleMobileMenu = () => {
         document.querySelector('.nav-links').classList.toggle('nav-links-visible')
     }
-
-    const navLinksTab = [{ text: 'Nos Services', url: '/Nos-services', id: '' },
-    { text: 'Nos Formations', url: '/Formations', id: '' },
-    { text: 'Nos Offres', url: 'Publications', id: 'offerLinks' },
-    { text: 'Contact', url: '/Contact', id: '' }]
-
 
     return <header>
         <section className="nav-contact">
@@ -31,7 +40,9 @@ export const Nav = () => {
         </section>
         <nav className="simpleNav">
             <div className="nav-logo">
-                <img src={require('../Assets/images/logo.png').default} />
+                <Link to='/'>
+                    <SimpleImage props={{ src: 'logo.png', alt: 'Website logo' }} />
+                </Link>
             </div>
 
             <div className="nav-mobileBtn">
@@ -40,15 +51,13 @@ export const Nav = () => {
 
             <div className="nav-links">
                 <Link to="/">Accueil</Link>
-                {
-                    navLinksTab.map((link, index) => <Link to={link.url}
-                        key={"link-nav" + index} id={link.id}>
-                        {link.text}
-                        {index == 2
-                            ? <OfferLinks props={{ className: "allTypeOfferLinks", id: "" }} />
-                            : ''}
-                    </Link>)
-                }
+                <Link to="/Formations">Nos Formations</Link>
+                <Link to="/Services">Nos Service</Link>
+                <div id="offerLinks">
+                    <span>Nos offres</span>
+                    <OfferLinks props={{ className: "allTypeOfferLinks", id: "" }} />
+                </div>
+                <Link to="/Contact">Contact</Link>
                 <OfferLinks props={{ className: "allTypeOfferLinksMobile", id: "" }} />
 
                 <div className="nav-authLinks">
@@ -65,53 +74,78 @@ export const Nav = () => {
 
 
 export const AsideDashNav = () => {
-    const context = useContext(UserContext);
-    const { userType } = context.userInfo;
-    const { setUserIsConnected } = context;
-    const navigate = useNavigate();
+    const { authedInfo, userType, logout } = useAuth();
+    const { other, general } = authedInfo;
+
     return <aside className="dashbordNav">
         <section className="dashbordNav-toggler">
             <i className="mdi mdi-arrow-left" onClick={() => toggleDashNav()}></i>
         </section>
-        <section className="dashbordNav-logo">
-            <img alt='Aside Nav logo' src={require('../Assets/images/logo.png').default} />
+        <section className="dashbordNav-userConnected">
+            <UrlImage props={{
+                src: other[dispatchUserPic(userType)], id: '', rounded: true,
+                alt: 'Aside Nav Profil pic', className: ''
+            }} />
+            <p>
+                <b>{general.name}</b><br />
+                <span>Compte {userType.toLowerCase()}</span>
+            </p>
         </section>
 
         <section className="dashbordNav-links">
-            <Link onClick={() => toggleDashNav()} to={"/Dashboard/" + userType}>
+            <Link onClick={() => toggleDashNav()} to={"/Dashboard"}>
                 <i className="mdi mdi-view-dashboard"></i> Dashboard</Link>
             {
                 (() => {
-                    if (userType == 'Candidat') {
+                    if (userType == 'candidat') {
                         return <>
-                            <Link onClick={() => toggleDashNav()}
-                                to=""><i className="mdi mdi-account-tie"></i>Mes Candidatures</Link>
+                            {candidatMenu.map((lk, index) => <Link to={lk.link}
+                                key={'candidatMenuLink' + index}>
+                                <i className={"mdi " + lk.icons}></i>
+                                {lk.ph}
+                            </Link>)}
                         </>
                     }
-                    if (userType == 'Recruteur') {
+                    else if (userType == 'recruteur') {
                         return <>
-                            <Link onClick={() => toggleDashNav()}
-                                to="/Ajouter-offre"><i className="mdi mdi-plus"></i>Publier une offre</Link>
-                            <Link onClick={() => toggleDashNav()}
-                                to=""><i className="mdi mdi-bag-checked"></i>Mes offres d'emploi</Link>
-                            <Link onClick={() => toggleDashNav()}
-                                to=""><i className="mdi mdi-account-tie"></i>Mes candidats</Link>
-                            <Link onClick={() => toggleDashNav()}
-                                to=""><i className="mdi mdi-toolbox"></i>Logiciel de gestion</Link>
+                            {
+                                entrepriseMenu.map((lk, index) => <Link to={lk.link}
+                                    key={'entrepriseMenuLink' + index}>
+                                    {lk.ph}
+                                </Link>)
+                            }
                         </>
                     }
-                    else if (userType == 'Vip') {
-                        return;
+                    else if (userType == 'Admin') {
+                        return <>
+                            {
+                                adminMenu.map((am, index) => <div key={"adminMenu" + index}>
+                                    <i className={"mdi " + am.menuIcon}></i>
+                                    <span className="dashMenuDropdown"
+                                        onClick={(event) => toggleOptionsNav(event)}>
+                                        {am.menuName}
+                                        <i className="mdi mdi-chevron-right"></i>
+                                    </span>
+                                    <section>
+                                        {
+                                            am.menuOptions.map((amM0, index) => <Link
+                                                key={am.menuName + 'subLink' + index}
+                                                onClick={() => toggleDashNav()}
+                                                to={"/Admin/" + am.menuName + amM0.link}>{amM0.ph}
+                                            </Link>)
+                                        }
+                                    </section>
+                                </div>)
+                            }
+                        </>;
                     }
                 })()
             }
             <Link onClick={() => toggleDashNav()} to=""><i className="mdi mdi-account"></i>Mon Profil</Link>
             <Link onClick={(event) => {
                 event.preventDefault();
-                toggleDashNav();
-                setUserIsConnected(false)
-                navigate("/Authentification/Connexion");
-            }} to="/Authentification/Connexion"><i className="mdi mdi-logout"></i>Se deconnectez</Link>
+                logout()
+            }} to="#"><i className="mdi mdi-logout"></i>Se deconnectez</Link>
         </section>
 
     </aside>
@@ -120,46 +154,51 @@ export const AsideDashNav = () => {
 }
 
 export const TopDashNav = () => {
-    const context = useContext(UserContext);
-    const { userType } = context.userInfo
-    const toggleOptionsNav = (event) => {
-        event.target.nextElementSibling.classList.toggle('native-options-visible')
-    }
+    const { authedInfo, userType, logout } = useAuth()
+    const { other } = authedInfo;
     const [toggleModal, setToggleModal] = useState(false)
-
     const modalContent = <>
-        <SearchBarForCandidateOrEmployerUser props={{ typeSearchBar: userType }} />
+        <SearchBarForCandidateOrEmployerUser props={{ typeSearchBar: userType.toLowerCase() }} />
     </>
 
     return <nav className="dashTopNav">
-        <div className="dashTopNav-toggler">
-            <i className="mdi mdi-menu" onClick={() => toggleDashNav()}></i>
-        </div>
+        <>
+            <div className="dashTopNav-toggler">
+                <i className="mdi mdi-menu" onClick={() => toggleDashNav()}></i>
+            </div>
 
-        <div className="dashTopNav-user">
-            <section className="du-notifications">
-                <i className="mdi mdi-bell-outline" onClick={(event) => toggleOptionsNav(event)}></i>
-                <div className="du-options">
-                    <span>Nofitication 1</span>
-                    <span>Nofitication 2</span>
-                    <span>Nofitication 3</span>
-                </div>
-            </section>
-            <section className="du-search">
-                <i className="mdi mdi-magnify" onClick={() => setToggleModal(true)}></i>
-                {toggleModal ? <Modal props={{ content: modalContent, setToggleModal }} /> : ''}
-            </section>
-            <section className="du-userInfo">
-                <img className="rounded" alt='User connected pic'
-                    src={require('../Assets/images/profils/random1.jpg').default}
-                    onClick={(event) => toggleOptionsNav(event)} />
-                <div className="du-options">
-                    <Link to="">Mon profil</Link>
-                    <Link to="">Modifier profil</Link>
-                    <Link to="">Deconnexion</Link>
-                </div>
-            </section>
-        </div>
+            <div className="dashTopNav-user">
+                <section className="du-notifications">
+                    <i className="mdi mdi-bell-outline" onClick={(event) => toggleOptionsNav(event)}></i>
+                    <div className="du-options">
+                        <span>Nofitication 1</span>
+                        <span>Nofitication 2</span>
+                        <span>Nofitication 3</span>
+                    </div>
+                </section>
+                <section className="du-search">
+                    <i className="mdi mdi-magnify" onClick={() => setToggleModal(true)}></i>
+                    {toggleModal ? <Modal props={{ content: modalContent, setToggleModal }} /> : ''}
+                </section>
+                <section className="du-userInfo">
+                    <img src={other[dispatchUserPic(userType)]}
+                        className="rounded"
+                        alt="Aside Nav Profil pic"
+                        onClick={(event) => toggleOptionsNav(event)} />
+
+                    <div className="du-options">
+                        <Link to="">Mon profil</Link>
+                        <Link to="">Modifier profil</Link>
+                        <Link to="#" onClick={(event) => {
+                            event.preventDefault();
+                            logout()
+                        }}>Deconnexion</Link>
+                    </div>
+                </section>
+            </div>
+        </>
+
+
     </nav>
 }
 
@@ -249,8 +288,8 @@ const OfferLinks = ({ props }) => {
     const { className, id } = props
     return <div className={className} id={id}>
         <Link to="/GDA-Offre/Emplois">Emplois</Link>
-        <Link to="/GDA-Offre/Immobilier&type=Location">Immobilier(Location) </Link>
-        <Link to="/GDA-Offre/Immobilier&type=Achat">Immobilier(Achat)</Link>
+        <Link to="/GDA-Offre/Immobilier/Location">Immobilier(Location) </Link>
+        <Link to="/GDA-Offre/Immobilier/Achat">Immobilier(Achat)</Link>
         <Link to="/GDA-Offre/Boutique">Boutique</Link>
     </div>
 }

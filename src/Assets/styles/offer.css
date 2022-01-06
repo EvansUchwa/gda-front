@@ -1,154 +1,11 @@
-.offerBanner {
-  width: 100%;
-  margin: auto;
-  padding: 20px 0;
-  background-color: var(--cpd5);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  color: white;
-}
-.offerBanner section {
-  max-width: 76%;
-}
-.offerBanner img {
-  max-width: 20%;
-  max-height: 20vh;
-}
-/* Pub banniere */
-.go-pubBanner {
-  width: 80%;
-  margin: 20px auto;
-  background-color: var(--cwd2);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
-}
-.go-pB-item {
-  /* background-image: url("../images/illustrations/bg/circle1.svg");
-  background-repeat: no-repeat;
-  background-position: -250% 80%; */
-  width: 100%;
-  display: flex !important;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 20px 0;
-  height: 30vh;
-}
-.go-pB-item img {
-  max-width: 30%;
-  height: 95%;
-}
-.go-pB-item a {
-  padding: 10px 20px;
-  background-color: var(--colorPrincipal);
-  color: white;
-}
-.go-pB-item div {
-  color: var(--colorSecond);
-  position: relative;
-}
-.go-pB-item h3 {
-  font-size: 3vw;
-}
-.go-pB-item p {
-  font-size: 2vw;
-}
-.go-pB-item span {
-  background-color: var(--colorThird);
-  color: white;
-  position: absolute;
-  top: 0;
-  padding: 5px 10px;
-}
-/* End */
-.globalOfferLayout {
-  width: 100%;
-  background-color: var(--cwd1);
-}
-.gol-searchBar {
-  padding: 30px 0;
+/*  */
+.filterResults {
   width: 80%;
   margin: auto;
   display: flex;
-  border-radius: 20px;
-  overflow: hidden;
-  justify-content: center;
-}
-.gol-searchBar input {
-  width: 80%;
-  border-radius: 50px 0 0 50px;
-}
-.gol-searchBar button {
-  width: 15%;
-  padding: initial;
-  border-radius: 0 50px 50px 0;
-}
-
-.gol-filterANDcards {
-  padding: 10px 0;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-/* Partie Filtre */
-.gol-mobileFilterBtn {
-  display: none;
-  transition: all 0.5s;
-}
-.filterSidebar {
-  padding: 10px 0;
-  width: 25%;
-  border: solid 2px var(--cwd2);
-  background-color: white;
-}
-.filterSidebar h3 {
-  /* width: 90%; */
-  color: var(--cpd5);
-  margin: 10px auto;
-  text-align: center;
-}
-.filterSidebar form {
-  width: 95%;
-  margin: auto;
-}
-.filterSidebar form input,
-.filterSidebar form select {
-  background-color: var(--cwd2);
-}
-.filterSidebar form button {
-  color: white;
-  background-color: var(--colorPrincipal);
-}
-/* Fin */
-
-/* Liste des Cartes */
-.gol-fAc-cards {
-  width: 72%;
-}
-.gol-fAc-c-header {
-  width: 100%;
-  border: solid 2px var(--cwd2);
-  background-color: white;
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 5px 20px;
 }
-.gol-fAc-c-cardList {
-  margin: 20px 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  /* background-color: white; */
-}
-.gol-fAc-c-cardList > div {
-  margin: 10px 0;
-}
-.gol-fAc-cards img {
-}
-/* Fin */
-
+/*  */
 .addOfferPart {
   /* width: 100%; */
 }
@@ -192,6 +49,145 @@
 .addOfferForm form > div textarea {
   background-color: var(--cwd2);
 }
+
+/* Liste des offres */
+.ppc-title {
+  text-align: center;
+  padding: 30px 0;
+}
+.ppc-itemsSlide {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+/*  */
+
+/* Pagination */
+.itemsPagination {
+  background-color: white;
+  padding: 10px;
+  margin: 30px auto;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 50px;
+}
+.itemsPagination > a {
+  color: var(--colorPrincipal);
+  background-color: var(--colorPrincipal);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 40px;
+}
+.itemsPagination > section {
+  min-width: 60%;
+  max-width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+.itemsPagination > section a {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 100%;
+  background-color: var(--cwd2);
+  color: grey;
+}
+.pageActive {
+  background-color: var(--colorPrincipal) !important;
+  color: white !important;
+}
+/*  */
+
+/*  */
+.modalDetailProfil {
+  width: 250px;
+}
+.modalDetailProfil input {
+  display: none;
+}
+.modalDetailProfil input:checked + span {
+  background-color: var(--colorPrincipal);
+  color: white;
+}
+.mdpBody {
+  /* background-color: yellow; */
+}
+.mdpb-switcher {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  /* background-color: var(--cpd1); */
+}
+.mdpb-switcher span {
+  transition: all 0.5s;
+  background-color: var(--cwd2);
+  color: grey;
+  padding: 4px 8px;
+}
+.mdpb-imageAndContact {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+.mdpb-imageAndContact img {
+  width: 40%;
+  height: 200px;
+}
+.mdpb-imageAndContact div {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+}
+.mdpb-imageAndContact a {
+  padding: 5px 15px;
+  border-radius: 30px;
+  text-align: center;
+}
+.mdpb-result > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mdpb-infosTextList div {
+  margin: 10px 0;
+}
+.mdpb-infosTextList span {
+  color: var(--cpd4);
+  font-weight: bold;
+  margin-right: 10px;
+}
+.mdpb-infosTextList b {
+  margin-left: 10px;
+  color: var(--cwd4);
+}
+/*  */
+
+/* Offer add modal */
+.offerAddedMsg {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.offerAddedMsg img {
+  max-width: 80%;
+  max-height: 200px;
+}
+.offerAddedMsg a {
+  padding: 5px 15px;
+  background-color: var(--colorPrincipal);
+  color: white;
+}
+/* Fin */
 
 @media screen and (max-width: 512px) {
   /* Pub banner */
@@ -242,4 +238,32 @@
     width: 100%;
   }
   /* ENd */
+
+  /* Liste carte */
+  .ppc-itemsSlide {
+    width: 100%;
+  }
+  /* Fin */
+
+  /* Pagination */
+  .itemsPagination {
+    padding: 5px;
+    width: 95%;
+  }
+  .itemsPagination > a {
+  }
+  .itemsPagination > section {
+    flex-wrap: wrap;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 50%;
+    /* background-color: hotpink; */
+  }
+  .itemsPagination > section a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+  /*  */
 }

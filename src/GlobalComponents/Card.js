@@ -1,49 +1,79 @@
 import { Link } from 'react-router-dom';
-import { SimpleImage } from './Img';
+import { ProfilImage, SimpleImage, UrlImage } from './Img';
 export const JobCard = ({ props }) => {
-    const { jobId, jobAutor, jobAutorImg, jobType, localisation, likes, views } = props;
+    const { job, setToggleModal, setModalInfoId } = props
+    const { adresse, date_cloture, description, domaine_competence,
+        id, nbre_view,
+        niveau_etude, post, type_contrat, mission } = job;
+
     return <div className="card1" >
         <div className="card1-head">
-            <img className='rounded' alt={'Image of mostViewed Job N' + jobId}
-                src={require('../Assets/images/illustrations/contact.svg').default} />
+            <b>{type_contrat + ' ' + post}</b>
+            <span><i className='mdi mdi-map-marker-circle'></i> {adresse}</span>
+            {/* <img className='rounded' alt={'Image of mostViewed Job N 2'}
+                src={require('../Assets/images/illustrations/contact.svg').default} /> */}
         </div>
 
         <div className="card1-body">
-            <b>{jobAutor}</b>
-            <p>{jobType}</p>
+            <p>{mission ? mission : description}</p>
             <p>
-                <span>{likes} <i className='mdi mdi-heart'></i> </span>
-                <span>{views} <i className='mdi mdi-eye'></i> </span>
+                <span><i className='mdi mdi-eye'></i> {nbre_view}</span>
+                <span><i className='mdi mdi-school'></i> {niveau_etude}</span>
+
             </p>
         </div>
 
         <div className="card1-foot">
-            <Link to=''>Consulter</Link>
+            <Link to='#' onClick={(event) => {
+                event.preventDefault()
+                setModalInfoId(id)
+                setToggleModal(true)
+            }}>Voir plus  </Link>
         </div>
 
     </div>
 }
 
 export const CandidateCard = ({ props }) => {
-    const { setToggleModal, candidateId, candidateFirstName, candidateLastName, candidateSkill,
-        candidateDescription } = props;
+    const { id, code_cvtheque, nom, prenom,
+        poste_envisager, photo1_url,
+        competences } = props.candidatInfo;
+    const { setToggleModal, setModalId } = props
 
     return <div className="card2" >
         <div className="card2-head">
-            <img className='rounded' alt={'Image of latest Job N' + candidateId}
-                src={require('../Assets/images/illustrations/contact.svg').default} />
+            {
+                photo1_url != 'https://www.gda-services.com/public/candidats/image/'
+                    ?
+                    <UrlImage props={{
+                        src: photo1_url,
+                        alt: 'Candidate card pic' + code_cvtheque,
+                        className: 'rounded'
+                    }} />
+                    :
+                    <ProfilImage props={{
+                        src: 'defaultUserPic.png',
+                        alt: 'Default candidate card pic' + code_cvtheque,
+                        className: 'rounded'
+                    }} />
+            }
+
         </div>
 
         <div className="card2-body">
-            <b>{candidateFirstName + ' ' + candidateLastName}</b>
-            <p>{candidateSkill}</p>
+            <b>{nom + ' ' + prenom}</b>
+            <p>{poste_envisager}</p>
             <span>
-                {candidateDescription}
+                {competences}
             </span>
         </div>
 
         <div className="card2-foot">
-            <Link to='#' onClick={() => setToggleModal(true)}>Profil  </Link>
+            <Link to='#' onClick={(event) => {
+                event.preventDefault()
+                setModalId(id)
+                setToggleModal(true)
+            }}>Profil  </Link>
             <Link to='#'>Contacter </Link>
         </div>
 

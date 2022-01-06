@@ -60,22 +60,30 @@ export const SelectModal = ({ props }) => {
 
 
 export const Input = ({ props }) => {
-    const { type, name, value, placeholder, id, onChange, onClick, handleChange, handleClick, isPasswordField } = props;
+    const { type, name, value, placeholder, className, id,
+        handleChange, handleClick, isPasswordField } = props;
     if (['text', 'mail', 'number', 'search', 'time', 'date'].includes(type)) {
-        return <input type={type} placeholder={'Ex: ' + placeholder} name={name}
-            onClick={() => onClick ? handleClick() : ''}
-            onChange={(event) => onChange ? handleChange(event) : ''} />
+        return <input type={type} placeholder={placeholder}
+            className={className ? className : ''}
+            id={id ? id : ''}
+            name={name} value={value}
+            onClick={() => handleClick ? handleClick() : ''}
+            onChange={(event) => handleChange ? handleChange(event) : ''} />
     }
     else if (type == 'password') {
-        return <input type={isPasswordField ? 'password' : 'text'} placeholder={placeholder} name={name}
-            onClick={() => onClick ? handleClick() : ''}
-            onChange={(event) => onChange ? handleChange(event) : ''} />
+        return <input type={isPasswordField ? 'password' : 'text'} placeholder={placeholder}
+            name={name} value={value}
+            className={className ? className : ''}
+            id={id ? id : ''}
+            onClick={() => handleClick ? handleClick() : ''}
+            onChange={(event) => handleChange ? handleChange(event) : ''} />
     }
     else {
         return <input type={type} name={name} id={id}
             value={value} />
     }
 }
+
 
 export const Select = ({ props }) => {
     const { name, defaultValue, id, options, onChange, handleChange } = props;

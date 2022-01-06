@@ -1,5 +1,32 @@
+.mailContainer {
+  width: 90%;
+  margin: 10px auto;
+  padding: 100px 0;
+  background-color: var(--cwd2);
+}
+
+.mc-validateMailForm {
+  text-align: center;
+}
+.mc-validateMailForm h1 {
+  color: var(--colorSecond);
+}
+.mc-validateMailForm form {
+  text-align: center;
+  width: 30%;
+  margin: auto;
+  color: var(--colorSecond);
+}
+.mc-validateMailForm form button {
+  background-color: var(--colorSecond);
+  color: white;
+}
+.mc-validateMailForm form a {
+  background-color: var(--colorSecond);
+  padding: 5px 15px;
+  color: white;
+}
 .hasSigned {
-  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,5 +118,9 @@
   .apf-form {
     margin-top: 20px;
     width: 100%;
+  }
+
+  .mc-validateMailForm form {
+    width: 90%;
   }
 }

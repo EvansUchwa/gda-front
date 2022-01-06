@@ -1,16 +1,18 @@
 import { isValidChar, isValidLenght, isValidNumberValue } from '../Tools/formValidator';
 import { CurrentStep } from '../GlobalComponents/Steps';
 import { useState } from 'react'
-import { stepCandidateValidator } from '../RawData/stepCandidat';
-import { stepEmployerValidator } from '../RawData/stepEmployer';
+import { stepApporteurValidator, insertApporteurDataOnLastStep } from '../RawData/stepApporteur';
+import { stepCandidateValidator, insertCandidateDataOnLastStep } from '../RawData/stepCandidat';
+import { stepEmployerValidator, insertEntrepriseDataOnLastStep } from '../RawData/stepEmployer';
+import { useAuth } from '../hooks/authHooks';
 
 export const Stepper = ({ props }) => {
-    const { currentStep, userType } = props
-    const dispatchNumberSteps = (userType) => {
+    const { currentStep, setUserInfo } = props
+    const dispatchNumberSteps = () => {
         return [0, 1, 2]
     }
 
-    const steps = dispatchNumberSteps(userType);
+    const steps = dispatchNumberSteps();
 
     return <section className='stepper'>
         {
@@ -23,6 +25,8 @@ export const Stepper = ({ props }) => {
 
 export const StepForm = ({ props }) => {
     const { currentStep, setCurrentStep, userType } = props;
+    const { authedInfo, updateOtherUserInfo, apiInfos } = useAuth();
+
     const [errors, setErrors] = useState([]);
     const [userOtherInfo, setUserOtherInfo] = useState({
         nom: '', prenom: '',
@@ -33,7 +37,7 @@ export const StepForm = ({ props }) => {
         pays: '', ville: '', nationalité: '',
         moyen_de_deplacement: '', situation_matrimoniale: '',
         domaine_de_competence: '', autre_competence: '',
-        photo_1: '', photo_2: '',
+        photo_1: '', photo_2: '', profil: '',
 
         nom_entreprise: '', mail_entreprise: '',
         type_entreprise: '', logo_entreprise: '',
@@ -43,10 +47,13 @@ export const StepForm = ({ props }) => {
     const validForm = (stepId) => {
         var cond = "";
         ;
-        if (userType == 'Candidat') {
+        if (userType == 'candidat') {
             cond = stepCandidateValidator(stepId, userOtherInfo)
-        } else if (userType == 'Recruteur') {
+        } else if (userType == 'entreprise') {
             cond = stepEmployerValidator(stepId, userOtherInfo)
+        }
+        else if (userType == 'apporteur') {
+            cond = stepApporteurValidator(stepId, userOtherInfo)
         }
 
         if (cond && errors.length <= 0) {
@@ -58,7 +65,7 @@ export const StepForm = ({ props }) => {
 
     const handleChange = (event) => {
         const name = event.target.name;
-        const value = event.target.value;
+        var value = event.target.value;
         const errMsgName = event.target.attributes['errmsgname'].value;
 
         if (['nom', 'prenom', 'lieu_de_naissance', 'filière_serie', 'ecole', 'nom_entreprise']
@@ -94,18 +101,35 @@ export const StepForm = ({ props }) => {
             isValidLenght(errors, setErrors, name, value, 4, 4, 'Votre ' + errMsgName + ' ')
         }
         if (['logo_entreprise', 'photo_1', 'photo_2'].includes(name)) {
-            let [file] = event.target.files;
+            let file = event.target.files[0];
             if (file) {
+                let imgUrl = URL.createObjectURL(file)
                 setTimeout(() => {
-                    document.getElementById(name + '-preview').src = URL.createObjectURL(file)
+                    document.getElementById(name + '-preview').src = imgUrl
                 }, 500)
+
+                value = file
             }
+
         }
         setUserOtherInfo({ ...userOtherInfo, [name]: value })
     }
 
     const handleSubmit = (event, currentStep) => {
+        const mail = authedInfo.general.email;
         event.preventDefault();
+        if (currentStep == 3) {
+            if (userType == 'candidat') {
+                insertCandidateDataOnLastStep(userOtherInfo, mail, updateOtherUserInfo, apiInfos)
+            }
+            else if (userType == 'entreprise') {
+                insertEntrepriseDataOnLastStep(userOtherInfo, mail, updateOtherUserInfo, apiInfos)
+            }
+            else if (userType == 'apporteur') {
+                insertApporteurDataOnLastStep(userOtherInfo, mail, updateOtherUserInfo, apiInfos)
+            }
+
+        }
         setCurrentStep(currentStep + 1)
     }
 

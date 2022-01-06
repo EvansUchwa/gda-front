@@ -3,6 +3,7 @@ import { IllustrationImage } from '../GlobalComponents/Img'
 import { useNavigate } from 'react-router-dom';
 import { candidateSteps } from '../RawData/stepCandidat';
 import { employerSteps } from '../RawData/stepEmployer';
+import { apporteurSteps } from '../RawData/stepApporteur';
 
 export const CurrentStep = ({ props }) => {
     const { userType, currentStep, handleChange, handleSubmit, errors,
@@ -11,18 +12,19 @@ export const CurrentStep = ({ props }) => {
         setUserOtherInfo({ ...userOtherInfo, [name]: '' })
     }
     const dispatchTypeSteps = (userType) => {
-        if (userType == 'Candidat') {
+        if (userType == 'candidat') {
             return candidateSteps;
-        } else if (userType == 'Recruteur') {
+        } else if (userType == 'entreprise') {
             return employerSteps
-        } else if (userType == 'Vip') {
-            return;
+        } else if (userType == 'apporteur') {
+            return apporteurSteps;
         }
     }
 
     const steps = dispatchTypeSteps(userType);
 
-    return <form onSubmit={(event) => handleSubmit(event, currentStep)}>
+    return <form encType="multipart/form-data" method='post'
+        onSubmit={(event) => handleSubmit(event, currentStep)}>
         {
             steps['step' + currentStep].map((stepField, index) => <div key={"formInput+" + index}
                 className='formSegment'>
@@ -61,7 +63,7 @@ export const CurrentStep = ({ props }) => {
                                     <i className='mdi mdi-file-upload-outline'></i>
                                     <span>Cliquez ici pour uploader l'image</span>
                                     <input placeholder='Hey' type='file'
-                                        name={stepField.name} value={userOtherInfo[stepField.name]}
+                                        name={stepField.name}
                                         onChange={(event) => handleChange(event)}
                                         errmsgname={stepField.errmsgname}
                                         id={stepField.id}
@@ -94,9 +96,12 @@ export const CurrentStep = ({ props }) => {
 
 export const WaitForDashboardRedirect = () => {
     const navigate = useNavigate();
-    setTimeout(() => navigate('/Dashboard', {}), 2000)
+    setTimeout(() => {
+        window.location = '/';
+    }, 5000)
     return <div className='signFinished'>
-        <p>Veuillez patientez pendant que nous finalisons votre compte,vous serez ensuite redirigez sur votre dashboard
+        <p>Veuillez patientez pendant que nous finalisons votre compte,vous serez redirigez sur votre
+            dashboard dans quelque secondes
             <i className="mdi mdi-spin mdi-loading"></i>
         </p>
         <IllustrationImage props={{ src: 'happy1.svg', alt: 'Happy Sign Img' }} />

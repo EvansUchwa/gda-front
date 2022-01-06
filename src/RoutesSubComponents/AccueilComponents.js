@@ -1,9 +1,7 @@
-import { Fade, Reveal } from 'react-reveal'
+import { Reveal } from 'react-reveal'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import { Typewriter } from 'react-simple-typewriter'
-// import * as THREE from 'three'
-// import GLOBE from '../Assets/scripts/vanta.globe.min.js'
 
 export const AccueilBanner = () => {
 

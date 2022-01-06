@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { GlobalOfferLayout } from "../RoutesSubComponents/Global-offerComponents.js"
-// import './Assets/styles/materialdesignicons.min.css'
 
 const toggleFilterSidebar = (event) => {
     event.preventDefault();
@@ -125,8 +124,8 @@ const FilterImmobilierForm = ({ props }) => {
 
 const Global_Offer = () => {
     const urlPram = useParams()
-    const dispatchOfferFilterComponent = (typeOffer) => {
-        if (['Boutique', 'Immobilier&type=Location', 'Immobilier&type=Achat', 'Emplois'].includes(typeOffer)) {
+    const dispatchOfferFilterComponent = (typeOffer, subTypeOffer = null) => {
+        if (['Boutique', 'Immobilier', 'Emplois'].includes(typeOffer)) {
 
             if (typeOffer == 'Boutique') {
                 return <FilterBoutiqueForm />
@@ -135,7 +134,7 @@ const Global_Offer = () => {
                 return <p>Pour acceder ....</p>
             }
             else {
-                return <FilterImmobilierForm props={{ type: typeOffer.split('&type=')[1] }} />
+                return <FilterImmobilierForm props={{ type: subTypeOffer }} />
             }
 
         } else {
@@ -147,7 +146,7 @@ const Global_Offer = () => {
     return <GlobalOfferLayout
         props={{
             typeOffer: urlPram.typeOffer,
-            filterFormComponent: dispatchOfferFilterComponent(urlPram.typeOffer),
+            filterFormComponent: dispatchOfferFilterComponent(urlPram.typeOffer, urlPram.subTypeOffer),
             toggleFilterSidebar
         }} />;
 }

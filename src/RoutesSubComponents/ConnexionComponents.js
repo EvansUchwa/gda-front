@@ -1,19 +1,20 @@
 import { Link } from 'react-router-dom';
 import { Input } from '../GlobalComponents/form';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../Contexts/userContext';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../hooks/authHooks';
 
-const baseApi = 'https://www.gda-services.com';
-const headerApi = {
-    "Authorization": "3979af088d2327ca3e1303ed4be4c2de",
-    "Name": "GDA",
-    "Version": "1.0"
-}
+
 export const AuthConnexion = () => {
     const navigate = useNavigate();
+    const simpleBtn = <button className='semiRounded'>Connexion</button>;
+    const btnOnDataLoad = <button className='semiRounded'>Connexion en cours
+        <i className='mdi mdi-spin mdi-loading'></i></button>;
+    const [formBtn, setFormBtn] = useState(simpleBtn)
+    const { apiInfos, login, setUserInfo } = useAuth();
+    const { baseApi, headerApi } = apiInfos
     const [connexionFields, setConnexionFields] = useState({
         pseudoORmail: '',
         password: ''
@@ -25,10 +26,11 @@ export const AuthConnexion = () => {
         }
         return false;
     }
+
+
     const [connexionFieldsIsValid, setCFIV] = useState(checkCFIV())
     const [isPasswordField, setIPF] = useState(true);
-    const context = useContext(UserContext);
-    const setUserIsConnected = context.setUserIsConnected;
+    const [error, setError] = useState(null)
 
     useEffect(() => { setCFIV(checkCFIV()) }, [connexionFields])
 
@@ -39,35 +41,48 @@ export const AuthConnexion = () => {
     }
 
     const handleFormSubmit = (event) => {
+        setFormBtn(btnOnDataLoad)
         event.preventDefault();
-        // axios.post(baseApi + "/api/auth/register/user", {
-        //     "username": connexionFields.pseudoORmail,
-        //     "password": connexionFields.password,
-        // }, { headers: headerApi })
-        //     .then(res => console.log(res))
-        //     .catch(err => console.log(err))
-        setUserIsConnected(true)
-        navigate('/Choice')
+        axios.post(baseApi + "/api/auth/login", {
+            "username": connexionFields.pseudoORmail,
+            "password": connexionFields.password,
+        }, { headers: headerApi })
+            .then(res => {
+                console.log(res.data)
+                if (res.data === "L'adresse email n'est verifier") {
+                    navigate('/Mail/valider-mail')
+                }
+                else if (res.data == 'Adresse email  ou mot de passe incorrect') {
+                    setError(res.data)
+                }
+                else {
+                    // console.log(res.data)
+                    setUserInfo({ general: res.data.data, other: res.data.dataOrder })
+                    login()
+                }
+                setFormBtn(simpleBtn)
+            })
+            .catch(err => console.log(err))
 
     }
 
     const inputTabs = [
         {
-            label: 'Mail Ou Pseudo', type: 'text', name: 'pseudoORmail', value: '', placeholder: 'AaZz ou momMail@gmail.com',
-            onchange: true, onclick: false
+            label: 'Mail Ou Pseudo', type: 'text', name: 'pseudoORmail',
+            value: '', placeholder: 'AaZz ou momMail@gmail.com',
         },
         {
-            label: 'Mot de passe', type: 'password', name: 'password', value: '', placeholder: 'MonMotdepasse',
-            onchange: true, onclick: false
+            label: 'Mot de passe', type: 'password', name: 'password',
+            value: '', placeholder: 'MonMotdepasse', ipf: true
         },
     ]
     return <form onSubmit={(event) => handleFormSubmit(event)}>
         {inputTabs.map((it, index) => <section className='formSegment' key={'inputTab-' + index}>
             <label>{it.label}</label>
             <Input props={{
-                type: it.type, name: it.name, value: it.value, placeholder: it.placeholder, id: it.id,
-                onChange: it.onchange, onClick: it.onclick, handleChange: handleFieldChange,
-                handleClick: null, isPasswordField
+                type: it.type, name: it.name,
+                placeholder: it.placeholder, id: it.id,
+                handleChange: handleFieldChange, isPasswordField
             }} />
         </section>)}
         <div className='formViewPassword'>
@@ -77,13 +92,15 @@ export const AuthConnexion = () => {
             </label>
         </div>
         <div className="formBtn">
+            <b className="errorField" >{error}</b>
             {
                 connexionFieldsIsValid ?
-                    <button className='semiRounded' type='submit'>Connexion</button>
+                    formBtn
                     :
                     <button className='semiRounded formBtnDisable' disabled >Connexion</button>
             }
         </div>
+
         <div className='formOtherAuth'>
             <p>Vous n'avez pas de compte ? <Link to='/Authentification/Inscription'>Inscription</Link> </p>
         </div>

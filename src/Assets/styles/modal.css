@@ -16,7 +16,6 @@
   width: 100%;
 }
 /* ENd modal */
-
 .modal1 {
   z-index: 99999999999999;
   position: fixed;
@@ -62,6 +61,34 @@
 .mb1-footer button {
   padding: 8px 15px;
 }
+
+/* Modal Confirmation */
+.modalConfirmation {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modalConfirmation b {
+  color: grey;
+  max-width: 90%;
+}
+.modalConfirmation section {
+  padding: 10px 0;
+}
+.modalConfirmation section button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  color: white;
+}
+.modalConfirmation section button:first-child {
+  background-color: var(--successColor);
+}
+.modalConfirmation section button:last-child {
+  background-color: var(--errorColor);
+}
+/* End */
 @media screen and (max-width: 512px) {
   .modal1-body {
     min-width: 85%;

@@ -5,16 +5,30 @@
   --cpd2: #a1c3f7;
   --cpd3: #4288f0;
   --cpd4: #0b3f8e;
-  --cpd5: #0b3f8e;
+  --cpd5: #082a5e;
 
-  --colorSecond: #2f2e41;
-
+  --colorSecond: #29363d;
+  /* #2f2e41 */
   --colorThird: #fe6e73;
 }
 body {
-  background-image: url("../images/illustrations/bg/pBg.svg");
-  background-position: 300% 0%;
+}
+.bodyNotConnected {
+  background-image: url("../images/illustrations/bg/pBg2.svg");
+  /* background-position: -80% 0%; */
+  background-position: 200% 0%;
+  /* background-size: cover; */
   background-repeat: no-repeat;
+}
+.bodyConnected {
+}
+.whitePageBg {
+  position: fixed;
+  z-index: 9999999999;
+  top: 0;
+  bottom: 0;
+  background-color: white;
+  width: 100%;
 }
 @font-face {
   font-family: "Poppins-Light";
@@ -78,6 +92,9 @@ b {
   max-height: 300px !important;
   overflow: initial !important;
 }
+.native-dropDownIcon-transform {
+  transform: rotate(90deg) !important;
+}
 
 .formBtnDisable {
   background-color: var(--cwd3) !important;
@@ -92,7 +109,10 @@ b {
   margin-bottom: 10px;
 }
 .errorField {
-  color: red;
+  color: var(--errorColor);
+}
+.successField {
+  color: var(--successColor);
 }
 .section-divider {
   background-color: var(--cpd3);
@@ -145,6 +165,8 @@ nav.simpleNav a {
 }
 #offerLinks {
   position: relative;
+  color: white;
+  cursor: pointer;
 }
 #offerLinks:hover .allTypeOfferLinks {
   max-height: 200px;
@@ -152,14 +174,16 @@ nav.simpleNav a {
   opacity: 1;
 }
 .allTypeOfferLinks {
+  border-radius: 10px;
   position: absolute;
   display: flex;
   flex-direction: column;
   right: -50%;
   left: -50%;
-  top: 100%;
-  background-color: lightcoral;
+  top: 105%;
+  background-color: white;
   z-index: 99999;
+  padding: 5px 0;
   width: 250%;
   max-height: 0;
   overflow: hidden;
@@ -167,7 +191,9 @@ nav.simpleNav a {
   opacity: 0;
 }
 .allTypeOfferLinks a {
-  padding: 10px 15px;
+  font-size: 14px;
+  padding: 5px 0 5px 10px;
+  color: var(--colorPrincipal) !important;
 }
 .allTypeOfferLinksMobile {
   display: none;
@@ -176,7 +202,8 @@ nav.simpleNav a {
   display: inline-flex;
 }
 .nav-logo img {
-  height: 50px;
+  width: 150px;
+  max-height: 80px;
   object-fit: contain !important;
 }
 
@@ -185,7 +212,6 @@ nav.simpleNav a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* background-color: yellow; */
 }
 .nav-links > a:hover {
   /* transform: scale(1.1); */
@@ -209,8 +235,8 @@ nav.simpleNav a {
 }
 
 .nav-authLinks a {
-  background-color: var(--colorPrincipal);
-  color: white;
+  background-color: white;
+  color: var(--colorPrincipal) !important;
 }
 
 /* End simple nav */
@@ -263,7 +289,7 @@ nav.simpleNav a {
 .du-userInfo img {
   height: 40px;
   width: 40px;
-  background-color: var(--cpd3);
+  background-color: var(--cwd1);
 }
 .du-options {
   min-width: 150px;
@@ -296,18 +322,20 @@ nav.simpleNav a {
   color: white;
 }
 .dashbordNav-visible {
-  left: 0 !important;
+  left: 0px !important;
   opacity: 1 !important;
 }
 .dashbordNav {
+  scrollbar-width: thin;
   width: 250px;
   height: 100vh;
+  overflow-y: auto;
   position: fixed;
   display: flex;
   flex-direction: column;
   top: 0;
+  left: -100%;
   opacity: 0;
-  left: -250px;
   transition: all 0.5s;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
@@ -317,7 +345,7 @@ nav.simpleNav a {
 .dashbordNav-toggler,
 .dashbordNav-userConnected,
 .dashbordNav-links {
-  width: 90%;
+  width: 95%;
 }
 .dashbordNav-toggler {
   padding: 10px 0;
@@ -327,37 +355,70 @@ nav.simpleNav a {
   font-size: 25px;
   color: white;
 }
-.dashbordNav-logo {
+.dashbordNav-userConnected {
+  padding: 20px 0;
   margin: 0 auto;
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
-  color: white;
 }
-.dashbordNav-logo img {
-  width: 80%;
-  height: 100px;
-  object-fit: contain;
+.dashbordNav-userConnected img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  background-color: var(--cwd1);
 }
 
 .dashbordNav-links {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 20px 10px;
 }
-.dashbordNav-links a {
+
+.dashbordNav-links > a,
+.dashbordNav-links > div {
   transition: all 0.5s ease;
+  padding: 5px;
+  color: var(--colorSecond);
+  cursor: pointer;
+  margin-bottom: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.dashbordNav-links > div section {
+  width: 100%;
+  max-height: 0;
+  overflow-y: hidden;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s;
+}
+.dashbordNav-links > div section.native-options-visible {
+  margin: 10px 0;
+}
+.dashbordNav-links > div section a {
   padding: 10px 5px;
+  background-color: var(--cwd2);
   color: var(--colorSecond);
 }
-.dashbordNav-links a:hover {
-  background-color: var(--colorSecond);
-  color: white;
+.dashbordNav-links a:hover,
+.dashbordNav-links > div:hover {
+  background-color: var(--cwd1);
+  color: var(--colorSecond);
 }
-.dashbordNav-links i {
+.dashbordNav-links a:hover i,
+.dashbordNav-links > div:hover i {
+  color: var(--colorPrincipal);
+}
+.dashbordNav-links a > i,
+.dashbordNav-links div > i {
   margin-right: 10px;
+  color: grey;
+  border-right: solid 2px var(--cwd3);
+  padding: 0 10px;
+  font-size: 25px;
+  /* background-color: violet; */
 }
 /* End Dashboard Nav */
 
@@ -414,9 +475,8 @@ footer a {
 }
 
 @media screen and (max-width: 512px) {
-  body {
-    background-position: 70% 0%;
-    /* background-size: 90% 20%; */
+  .bodyNotConnected {
+    background-position: 5% -15%;
     background-size: 200%;
   }
 
@@ -455,7 +515,7 @@ footer a {
     max-height: 0;
     overflow: hidden;
     transition: all 0.5s;
-    background-color: var(--cpd4);
+    background-color: var(--colorPrincipal);
   }
   .nav-links > a {
     color: white !important;

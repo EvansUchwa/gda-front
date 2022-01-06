@@ -10,6 +10,10 @@
   --cbd3: #262626;
   --cbd4: #333333;
 
+  --googleColor: #c22322;
+  --whatsappColor: #46c756;
+  --telColor: #128c7e;
+
   --ob2: rgba(0, 0, 0, 0.2);
   --ob4: rgba(0, 0, 0, 0.4);
   --ob6: rgba(0, 0, 0, 0.6);
@@ -21,9 +25,6 @@
   --ow6: rgba(255, 255, 255, 0.6);
   --ow8: rgba(255, 255, 255, 0.8);
   --ow10: rgba(255, 255, 255, 1);
-
-  --colorPrincipal: #fe6e73;
-  --colorSecond: #6c63ff;
 
   --errorColor: #ff3c38;
   --successColor: #38d368;
@@ -39,6 +40,18 @@
   --largeIcon: calc(var(--textSize) * 2);
 
   --myFont1: "Poppins-Regular";
+}
+.googleColor {
+  color: white;
+  background-color: var(--googleColor) !important;
+}
+.whatsappColor {
+  color: white;
+  background-color: var(--whatsappColor) !important;
+}
+.telColor {
+  color: white;
+  background-color: var(--telColor) !important;
 }
 
 html,
@@ -293,25 +306,53 @@ div.formBtn {
 
 /* Error PAge */
 .errorPage {
-  height: 80vh;
+  height: 100vh;
+  background-color: var(--colorSecond);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 .errorPage img {
-  height: 200px;
-  width: 200px;
-  object-fit: contain;
+  max-width: 80%;
+  max-height: 80%;
 }
-/*  */
+.errorPage h1 {
+  color: var(--errorColor);
+}
+.errorPage a {
+  padding: 5px 15px;
+  margin: 10px;
+  color: white;
+  background-color: var(--errorColor);
+}
+/* ENd */
 
 /* slick */
 .slick-arrow {
   padding: 0 !important;
   display: inherit !important;
 }
-/* fin slick */
+/* */
+
+/* Loaders */
+.fixedLoader {
+  z-index: 999999999;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--ob4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fixedLoader i {
+  font-size: 10vh;
+  color: var(--cwd2);
+}
+/*  */
 
 /* Responsive */
 @media screen and (max-width: 512px) {

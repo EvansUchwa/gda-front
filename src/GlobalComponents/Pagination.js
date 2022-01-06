@@ -1,20 +1,22 @@
 import { Link } from "react-router-dom"
-export const Pagination = () => {
-    const pagesTab = [0, 0, 0, 0, 0]
+export const Pagination = ({ props }) => {
+    const { pageInfos } = props
+    const { totalPage, currentPage, link } = pageInfos;
+    const items = [];
+    for (let index = 0; index < totalPage; index++) {
+        items.push(<Link to={link + '/' + (index + 1)}
+            className={currentPage === (index + 1) ? 'pageActive' : ''}
+            key={'pageItem' + index}>
+            {index + 1} </Link>)
+    }
+    const n = [0, 0, 0, 0];
     return <div className="itemsPagination">
-        <Link to='/'>Prev</Link>
+        <Link to={link + '/' + (currentPage > 1 ? currentPage - 1 : 1)}>Prev </Link>
         <section>
-            <Link to='/'>1</Link>
-            <Link to='/'>2</Link>
-            <Link to='/'>3</Link>
-            <Link to='/'>4</Link>
-            <Link to='/'>5</Link>
-            <Link to='/'>1</Link>
-            <Link to='/'>2</Link>
-            <Link to='/'>3</Link>
-            <Link to='/'>4</Link>
-            <Link to='/'>5</Link>
+            {
+                items.map((index, item) => index)
+            }
         </section>
-        <Link to='/'>Next</Link>
+        <Link to={link + '/' + (currentPage < totalPage ? currentPage + 1 : totalPage)}>Next</Link>
     </div>
 }

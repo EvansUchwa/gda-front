@@ -1,4 +1,4 @@
-import { useState } from "react";
+import '../Assets/styles/gda.css'
 import { Link } from "react-router-dom";
 import { HomeCard, ProductCard } from "../GlobalComponents/Card";
 import { IllustrationImage } from "../GlobalComponents/Img";

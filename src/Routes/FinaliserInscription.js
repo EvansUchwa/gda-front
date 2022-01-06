@@ -1,6 +1,4 @@
 import '../Assets/styles/finalisation.css'
-import React, { useContext } from "react"
-import { UserContext } from "../Contexts/userContext"
 import {
     WaitForDashboardRedirect
 } from '../GlobalComponents/Steps.js'
@@ -8,32 +6,32 @@ import { Stepper } from '../RoutesSubComponents/FinaliserInscriptionComponents';
 import { StepForm } from '../RoutesSubComponents/FinaliserInscriptionComponents';
 import { useState } from 'react';
 import { IllustrationImage } from '../GlobalComponents/Img';
+import { useAuth } from '../hooks/authHooks';
 
 const FinaliserInscription = () => {
-
+    const { userType } = useAuth()
     const [currentStep, setCurrentStep] = useState(1);
-    const context = useContext(UserContext);
-    const { userType } = context.userInfo;
 
     return <div className="finaliseSign">
-        <section>
-            <h1>Finalisation de votre compte</h1>
-            <IllustrationImage props={{ src: 'step1.svg', alt: 'Ok bomer' }} />
-        </section>
         {
-            currentStep <= 3 ?
+            currentStep <= 3 ? <>
                 <section>
-                    <h2>Etape {currentStep}</h2>
+                    <h1>Finalisation de votre compte</h1>
+                    <IllustrationImage props={{ src: 'step1.svg', alt: 'Ok bomer' }} />
+                </section>
+                <section>
+                    <h2>Etape {currentStep}  </h2>
                     {
-                        ['Candidat', 'Recruteur', 'Vip'].includes(userType)
+                        ['candidat', 'entreprise', 'apporteur'].includes(userType.toLowerCase())
                             ?
                             <>
-                                <Stepper props={{ currentStep, userType }} />
-                                <StepForm props={{ currentStep, setCurrentStep, userType }} />
+                                <Stepper props={{ currentStep }} />
+                                <StepForm props={{ currentStep, setCurrentStep, userType: userType.toLowerCase() }} />
                             </>
-                            : <i className='mdi mdi-spin mdi-loading'></i>
+                            : <p>Une erreur s'est produite ,vous ne pouvez pas aller plus loin</p>
                     }
                 </section>
+            </>
                 : <WaitForDashboardRedirect />
         }
     </div>

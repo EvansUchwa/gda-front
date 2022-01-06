@@ -10,11 +10,27 @@
   margin: 5px 0 !important;
   background-color: white;
 }
+.card1 {
+  width: calc(100% / 2.5);
+  border-bottom: solid 4px var(--cpd3);
+}
 .card1-head {
   height: 40%;
   width: 100%;
-  background-color: var(--colorPrincipal);
+  background-color: var(--cpd3);
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.card1-head b {
+  /* background-color: violet; */
+  text-transform: uppercase;
+}
+.card1-head span {
+  /* background-color: violet; */
 }
 .card1-head img {
   height: 60px;
@@ -34,7 +50,7 @@
 }
 .card1-body b {
 }
-.card1-body p:nth-child(2) {
+.card1-body p:nth-child(1) {
   width: 95%;
   font-size: 14px;
   overflow: hidden;
@@ -43,22 +59,37 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.card1-body i {
-  color: var(--colorPrincipal);
+.card1-body p:nth-child(2) {
+  display: flex;
+  background-color: var(--cwd2);
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.card1 span {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+.card1 span i {
+  color: var(--cpd5);
+  font-size: 25px;
+  margin-right: 10px;
 }
 .card1-foot {
   width: 100%;
-  text-align: right;
-  padding: 10px 0 0 0;
+  text-align: center;
+  padding: 2px 0;
 }
 .card1-foot a {
-  width: 50%;
-  display: inline-block;
+  width: 99%;
+  font-weight: bolder;
+  margin: auto;
+  text-align: center;
   margin-top: auto;
-  background-color: var(--colorPrincipal);
-  color: white;
-  padding: 5px 8px;
-  border-radius: 20px 0 20px 0;
+  border-top: solid 4px var(--cwd2);
+  color: var(--cpd3);
+  padding: 10px 0;
+  border-radius: 0 0 10px 10px;
 }
 /* Fin */
 
@@ -78,16 +109,21 @@
 }
 .card2-body {
   text-align: center;
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
 }
 .card2-body b {
-  /* background-color: violet; */
 }
 .card2-body b {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  width: 100%;
 }
-.card2-body span {
+.card2-body span,
+.card2-body p:nth-child(2) {
   color: grey;
   font-size: 12px;
   text-overflow: ellipsis;
@@ -97,6 +133,8 @@
   -webkit-box-orient: vertical;
 }
 .card2-body p:nth-child(2) {
+  font-weight: bold;
+  color: var(--colorSecond);
 }
 .card2-body i {
 }
@@ -240,6 +278,11 @@
 /* Fin */
 
 @media screen and (max-width: 512px) {
+  .card1 {
+    width: calc(95%);
+    height: 250px;
+  }
+  .card2,
   .card4,
   .card5 {
     width: calc(100% / 2.1);

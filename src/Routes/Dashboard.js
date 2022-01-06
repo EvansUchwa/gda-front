@@ -1,24 +1,40 @@
-import { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 import '../Assets/styles/dashboard.css'
-import { UserContext } from '../Contexts/userContext';
 
-import { DashWelcomeBanner, DashboardFastLinks, DashboardStats } from "../RoutesSubComponents/dashboardComponents";
+import { DashWelcomeBanner, DashboardFastLinks, DashboardStats, AccountNotActivated } from "../RoutesSubComponents/dashboardComponents";
+import { useAuth } from '../hooks/authHooks';
 
 const Dashboard = () => {
-    const context = useContext(UserContext);
-    const { userType } = context.userInfo
+    const { authedInfo, userType } = useAuth();
+
+    // const { contact, tel } = authedInfo.other;
+
     return <>
-        <div className="dashboardPart">
-            <DashWelcomeBanner props={{ userType }} />
-            <DashboardStats props={{ userType }} />
-            <DashboardFastLinks props={{ userType }} />
-        </div>
+        {
+            (() => {
+                if (authedInfo !== null && authedInfo.other !== null) {
+                    const { name } = authedInfo.general;
+                    return <div className="dashboardPart">
+                        <DashWelcomeBanner props={{ userType: userType.toLowerCase(), name }} />
+                        <DashboardStats props={{ userType: userType.toLowerCase() }} />
+                        {
+                            (() => {
+                                if (userType != 'Admin') {
+                                    return <DashboardFastLinks props={{ userType: userType.toLowerCase() }} />
+                                } else {
+                                    return <p>Nothing</p>
+                                }
+                            })()
+                        }
+                    </div>
+                } else {
+                    return <Navigate to='/Finaliser-Inscription' replace />
+                }
+            })()
+        }
+        <AccountNotActivated />
     </>
 
 }
 
 export default Dashboard;
-
-{/* <div className="inDeveloppement">
-        <p>En cours de creation ... <i className="mdi mdi-spin mdi-loading"></i></p>
-    </div> */}

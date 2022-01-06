@@ -1,11 +1,13 @@
 import { addJobFormFields, addJobFormValidator } from "../RawData/addJobForm"
 import { useState } from "react";
+import { useAuth } from '../hooks/authHooks';
+import axios from 'axios';
+import { Modal } from "../GlobalComponents/Modal";
+import { IllustrationImage } from "../GlobalComponents/Img"
+import { Link } from 'react-router-dom';
 
 const validForm = (userType, offerInfo, errors) => {
     var cond = false;
-    // if (userType == 'Recruteur') {
-
-    // }
     cond = addJobFormValidator(offerInfo);
 
     if (cond && errors.length == 0) {
@@ -15,14 +17,16 @@ const validForm = (userType, offerInfo, errors) => {
     }
 }
 export const AddOfferForm = ({ props }) => {
-    const { userType } = props
+    const { userId, userType, apiInfos } = useAuth();
+    const [toggleModal, setToggleModal] = useState(false);
     const formFields = addJobFormFields;
     const [offerInfo, setOfferInfo] = useState(
         {
             date_de_cloture: '', adresse: '',
             type_de_contrat: '', niveau_detude: '',
             moyen_de_deplacement: '', poste: '', salaire: '',
-            domaine_de_competence: '', description: ''
+            domaine_de_competence: '', mission: '',
+            profil: '', poste_a_pourvoir: '',
         });
     const [errors, setError] = useState([])
 
@@ -35,14 +39,46 @@ export const AddOfferForm = ({ props }) => {
     }
 
     const handleSubmit = (event) => {
+        const { baseApi, headerApi } = apiInfos
         event.preventDefault();
-        alert('Poste Ajouter')
+        axios.post(baseApi + "/api/offres/store-offres", {
+            "post": offerInfo.poste,
+            "adresse": offerInfo.adresse,
+            "moyen_deplacement": offerInfo.moyen_de_deplacement,
+            'mission': offerInfo.mission,
+            'profil': offerInfo.profil,
+            'niveau_etude': offerInfo.niveau_detude,
+            'salaire': offerInfo.type_de_contrat,
+            'type_contrat': offerInfo.type_de_contrat,
+            'domaine_competence': offerInfo.domaine_de_competence,
+            'date_cloture': offerInfo.date_de_cloture,
+            'entreprise_id': userId,
+            'poste_apouvoir': offerInfo.poste_a_pourvoir
 
+        },
+            { headers: headerApi })
+            .then(res => {
+                if (res.data === 'object' && res.data.post) {
+                    setToggleModal(true);
+                } else {
+                    alert('Une erreur sest produite,veuillez reesayez')
+                }
+            })
+            .catch(err => console.log(err))
     }
+
+    const addModal = <div className="offerAddedMsg">
+        <IllustrationImage props={{
+            src: 'modal/added.svg',
+            alt: 'Modal added image'
+        }} />
+        <p>Votre offre d'emplois a bien été ajouté !!!</p>
+        <Link to="#">Cliquez ici pour voir</Link>
+    </div>
 
     return <div className="addOfferForm" id="addJobForm">
         <h1>Ajouter une nouvelle offre d'emplois</h1>
-        <form>
+        <form onSubmit={(event) => handleSubmit(event)}>
             {
                 formFields.map((fF, index) => <div key={'add-job-field' + index}
                     className="formSegment" id={fF.id}>
@@ -84,5 +120,12 @@ export const AddOfferForm = ({ props }) => {
                 {validForm(userType, offerInfo, errors)}
             </div>
         </form>
+        {
+            toggleModal ?
+                <Modal props={{
+                    content: addModal, setToggleModal, className: ''
+                }} />
+                : ''
+        }
     </div>
 }

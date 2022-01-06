@@ -1,40 +1,34 @@
+import axios from "axios";
 export const candidateSteps = {
     step1: [
         {
             comp: 'input', label: 'Nom', htmlType: 'text', name: 'nom',
             value: '', ph: 'AaZz', id: '', errmsgname: "nom",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'input', label: 'Prenom', htmlType: 'text', name: 'prenom',
             value: '', ph: 'AaZz', id: '', errmsgname: "prenom",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'select', label: 'Sexe', name: 'sexe', value: '',
             options: [{ value: 'Homme', ph: 'Homme' }, { value: 'Femme', ph: 'Femme' }],
             id: '', errmsgname: "sexe",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'input', label: 'Age', htmlType: 'number', name: 'age', value: '',
             ph: '18', id: '', errmsgname: "age",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'input', label: 'Lieu de Naissance', htmlType: 'text', name: 'lieu_de_naissance',
             value: '', ph: 'AaZz', id: '', errmsgname: "lieu de naissance",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'input', label: 'Numero de telephone 1', htmlType: 'number', name: 'numero_1',
             value: '', ph: '00000000', id: '', errmsgname: "numero",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'input', label: 'Numero de telephone 2', htmlType: 'number', name: 'numero_2',
             value: '', ph: '00000000', id: '', errmsgname: "numero",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         }],
     step2: [
         {
@@ -47,18 +41,16 @@ export const candidateSteps = {
                 { value: 'BAC + 3', ph: 'BAC + 3' },
                 { value: 'Master', ph: 'Master' }, { value: 'Doctorat', ph: 'Doctorat' }],
             value: '', ph: '18', id: '', errmsgname: "niveau d'etude",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         ,
         {
-            comp: 'input', label: 'Filière ou serie', htmlType: 'text', name: 'filière_serie',
-            value: '', ph: 'AaZz', id: '', errmsgname: "filière ou serie",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
+            comp: 'input', label: 'Filière et/ou serie', htmlType: 'text', name: 'filière_serie',
+            value: '', ph: 'AaZz', id: 'Serie au collège/Lycée,Filère universitaire,etc..',
+            errmsgname: "filière ou serie",
         },
         {
             comp: 'input', label: 'Ecole', htmlType: 'text', name: 'ecole',
-            value: '', ph: 'AaZz', id: '', errmsgname: "école",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
+            value: '', ph: 'Ecole 1,Ecole 2,etc..', id: '', errmsgname: "école",
         },
         {
             comp: 'select', label: 'Pays', name: 'pays',
@@ -66,7 +58,6 @@ export const candidateSteps = {
                 { value: 'Benin', ph: 'Benin' },
                 { value: 'Ac', ph: 'AVh' },],
             value: '', ph: '18', id: '', errmsgname: "pays",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'select', label: 'Ville', name: 'ville',
@@ -76,14 +67,12 @@ export const candidateSteps = {
                 { value: 'Parakou', ph: 'Parakou' }
             ],
             value: '', ph: '18', id: '', errmsgname: "ville",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'select', label: 'Nationalité', name: 'nationalité',
             options: [
                 { value: 'Beninoise', ph: 'Beninoise' }],
             value: '', ph: '18', id: '', errmsgname: "nationalité",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'select', label: 'Moyen de deplacement', name: 'moyen_de_deplacement',
@@ -91,7 +80,6 @@ export const candidateSteps = {
                 { value: 'Oui', ph: 'Oui' }, { value: 'Non', ph: 'Non' },
                 { value: 'Bientot', ph: 'Bientot' }],
             value: '', ph: '18', id: '', errmsgname: "moyen de deplacement",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'select', label: 'Situation matrimoniale', name: 'situation_matrimoniale',
@@ -103,18 +91,15 @@ export const candidateSteps = {
                 { value: 'Marié(e) sans enfant', ph: 'Marié(e) sans enfant' },
                 { value: 'Marié(e) avec enfant', ph: 'Marié(e) avec enfant' }],
             value: '', ph: '18', id: '', errmsgname: "situation matrimoniale",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         }],
     step3: [
         {
             comp: 'input', label: 'Poste_envisagé', htmlType: 'text', name: 'poste_envisagé', value: '',
             ph: '18', id: '', errmsgname: "poste envisagé",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'input', label: 'Salaire envisagé', htmlType: 'number', name: 'salaire_envisagé',
             value: '', ph: 'AaZz', id: '', errmsgname: "salaire envisagé",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'select', label: 'Domaine de competence', name: 'domaine_de_competence',
@@ -122,22 +107,18 @@ export const candidateSteps = {
                 { value: 'Marketting', ph: 'Marketting' }, { value: 'Bureautique', ph: 'Bureautique' },
                 { value: 'Commerce', ph: 'Commerce' }],
             value: '', ph: '18', id: '', errmsgname: "domaine de competence",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'textarea', label: 'Autre competence', htmlType: 'number', name: 'autre_competence',
             value: '', ph: 'AaZz', id: '', errmsgname: "autre competence",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'input', label: 'Photo 1', htmlType: 'file', name: 'photo_1',
             value: '', ph: 'AaZz', id: 'photo_1', errmsgname: "photo 1",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         },
         {
             comp: 'input', label: 'Photo 2', htmlType: 'file', name: 'photo_2',
             value: '', ph: 'AaZz', id: 'photo_2', errmsgname: "photo 2",
-            onChange: false, onClick: false, handleChange: '', handleClick: ''
         }
     ],
 }
@@ -169,4 +150,39 @@ export const stepCandidateValidator = (stepId, userOtherInfo) => {
             && domaine_de_competence != "" && autre_competence != ""
             && (photo_1 != "" || photo_2 != "");
     }
+}
+
+export const insertCandidateDataOnLastStep = (userOtherInfo, mail, updateOtherUserInfo, apiInfos) => {
+    const { baseApi, headerApi } = apiInfos;
+
+    const formData = new FormData()
+    formData.append("email", mail)
+    formData.append("nom", userOtherInfo.nom)
+    formData.append("prenom", userOtherInfo.prenom)
+    formData.append("sexe", userOtherInfo.sexe)
+    formData.append("date_naissance", "2020-12-21")
+    formData.append("lieu", userOtherInfo.lieu_de_naissance)
+    formData.append("tel", userOtherInfo.numero_1)
+    formData.append("tel2", userOtherInfo.numero_2)
+    formData.append("adresse", userOtherInfo.ville)
+    formData.append("niveau", userOtherInfo.niveau_detude)
+    formData.append("situation_matrimonial", userOtherInfo.situation_matrimoniale)
+    formData.append("filiere", userOtherInfo.filière_serie)
+    formData.append("ecole", userOtherInfo.ecole)
+    formData.append("competences", userOtherInfo.domaine_de_competence)
+    formData.append("autre_competence", userOtherInfo.autre_competence)
+    formData.append("experience", "Une experience")
+    formData.append("poste_envisager", userOtherInfo.poste_envisagé)
+    formData.append("moyens_de_deplacement", userOtherInfo.moyen_de_deplacement)
+    formData.append("pretention_salarials", userOtherInfo.salaire_envisagé)
+    formData.append("pays", userOtherInfo.pays)
+    formData.append("nationality", userOtherInfo.nationalité)
+    formData.append("photo1", userOtherInfo.photo_1)
+    formData.append("photo2", userOtherInfo.photo_2)
+
+    axios.post(baseApi + '/api/auth/register/candidat/sept', formData, { headers: headerApi })
+        .then(res => {
+            updateOtherUserInfo(res.data.data)
+        })
+        .catch(err => console.log(err))
 }

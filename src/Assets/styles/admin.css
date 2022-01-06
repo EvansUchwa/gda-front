@@ -1,0 +1,112 @@
+.adminPart {
+  /* background-color: lightcoral; */
+}
+.table-goodBtn {
+  background-color: var(--successColor);
+}
+.table-badBtn {
+  background-color: var(--errorColor);
+}
+.table-normalBtn {
+  background-color: var(--colorPrincipal);
+}
+.searchOnTable {
+  width: 80%;
+  margin: auto;
+  padding: 10px 0;
+  text-align: center;
+}
+.searchOnTable input {
+  width: 50%;
+}
+.adminPart h1 {
+  text-align: center;
+}
+
+.adminPart section {
+  width: 80%;
+  margin: auto;
+}
+.table1 {
+  width: 100%;
+  background-color: white;
+  margin: auto;
+  text-align: center;
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+}
+.table1 tr {
+  border-bottom: solid 2px var(--cwd2) !important;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-around;
+}
+.table1 tr td {
+  /* overflow: hidden; */
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+.table1 tr td span {
+  width: 95%;
+  margin: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.table1 th:nth-child(1),
+.table1 tr td:nth-child(1) {
+  width: 10%;
+}
+
+.table1 th:nth-child(2),
+.table1 tr td:nth-child(2) {
+  width: 25%;
+}
+
+.table1 th:nth-child(3),
+.table1 tr td:nth-child(3) {
+  width: 45%;
+}
+.table1 th:nth-child(4),
+.table1 tr td:nth-child(4) {
+  width: 20%;
+}
+.table1 tr td:nth-child(4) {
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.table1 tr td:nth-child(1),
+.table1 tr td:nth-child(2),
+.table1 tr td:nth-child(3) {
+  border-right: solid 1px var(--cwd2);
+}
+.table1 button {
+  padding: 5px 15px;
+  margin: 5px 0;
+  color: white;
+}
+
+@media screen and (max-width: 512px) {
+  .searchOnTable input {
+    width: 90%;
+  }
+  .adminPart section {
+    width: 98%;
+    margin: auto;
+  }
+
+  /* Tableau */
+  .table1 th {
+    font-size: 14px;
+  }
+  .table1 td {
+    font-size: 13px;
+  }
+  .table1 button {
+    padding: 5px;
+    font-size: 12px;
+  }
+  /* Fin */
+}

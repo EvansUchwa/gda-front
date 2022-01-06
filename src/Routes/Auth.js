@@ -12,11 +12,10 @@ const Auth = () => {
     const getAuthView = () => {
         if (typeAuth === 'Connexion') {
             setAuthView({ title: 'Connectez vous', component: <AuthConnexion /> })
-        } else if (['Inscription', 'Inscription&role=candidat', 'Inscription&role=recruteur'].includes(typeAuth)) {
-            let role = '';
-            if (['Inscription&role=candidat', 'Inscription&role=recruteur'].includes(typeAuth)) {
-                const roleTabs = typeAuth.split('&role=')
-                role = roleTabs[1];
+        } else if (['Inscription', 'Inscription/candidat', 'Inscription/entreprise'].includes(typeAuth)) {
+            let role = ''
+            if (urlParams.typeAccount) {
+                role = urlParams.typeAccount
             }
             setAuthView({
                 title: "Inscrivez vous",

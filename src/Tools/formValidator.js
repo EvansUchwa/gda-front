@@ -11,7 +11,16 @@ export const toggleFormBtnClickable = (formFieldsIsValid, btnAnimation = null) =
 export const getError = (fieldName, errors) => {
     const errorList = errors.filter(item => item.name == fieldName);
     if (errorList.length > 0) {
-        return errorList.map(err => <span className="errorField" key={err.type}>{err.error}</span>)
+        return errorList.map(err => <b className="errorField"
+            key={err.type}>{err.error}</b>)
+    }
+}
+
+export const getSuccess = (fieldName, success) => {
+    const successList = success.filter(item => item.name == fieldName);
+    if (successList.length > 0) {
+        return successList.map(scs => <b className="successField"
+            key={scs.type}>{scs.success}</b>)
     }
 }
 

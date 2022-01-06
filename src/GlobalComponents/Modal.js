@@ -15,3 +15,15 @@ export const Modal = ({ props }) => {
         </div>
     </div>
 }
+
+export const ConfirmationModal = ({ props }) => {
+    const { setToggleModal, className, confirmMsg, data } = props
+    const modalContent = <div className="modalConfirmation">
+        <b>Voulez vous vraiment {confirmMsg} {data.id} ? </b>
+        <section>
+            <button className="semiRounded">Oui</button>
+            <button className="semiRounded">Non</button>
+        </section>
+    </div>
+    return <Modal props={{ content: modalContent, setToggleModal: setToggleModal, className }} />
+}
