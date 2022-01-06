@@ -169,6 +169,9 @@
 }
 
 @media screen and (max-width: 512px) {
+  .formationOrServicePart h1 {
+    color: var(--colorSecond);
+  }
   .formation-card {
     width: 95%;
     margin: 10px auto;

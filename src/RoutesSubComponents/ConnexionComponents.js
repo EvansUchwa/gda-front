@@ -91,8 +91,8 @@ export const AuthConnexion = () => {
                 Voir mot de passe
             </label>
         </div>
+        <b className="errorField" >{error}</b>
         <div className="formBtn">
-            <b className="errorField" >{error}</b>
             {
                 connexionFieldsIsValid ?
                     formBtn

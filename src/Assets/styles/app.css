@@ -15,9 +15,7 @@ body {
 }
 .bodyNotConnected {
   background-image: url("../images/illustrations/bg/pBg2.svg");
-  /* background-position: -80% 0%; */
-  background-position: 200% 0%;
-  /* background-size: cover; */
+  background-position: 110% 0%;
   background-repeat: no-repeat;
 }
 .bodyConnected {
@@ -107,6 +105,14 @@ b {
 }
 .formSegment label {
   margin-bottom: 10px;
+}
+.errorField,
+.successField {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
 }
 .errorField {
   color: var(--errorColor);
@@ -476,8 +482,8 @@ footer a {
 
 @media screen and (max-width: 512px) {
   .bodyNotConnected {
-    background-position: 5% -15%;
-    background-size: 200%;
+    background-position: 40% 0%;
+    background-size: 120% 50vh;
   }
 
   .nav-mobileBtn {
