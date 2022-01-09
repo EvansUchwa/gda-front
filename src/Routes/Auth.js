@@ -3,7 +3,8 @@ import '../Assets/styles/auth.css';
 import { AuthConnexion } from '../RoutesSubComponents/ConnexionComponents';
 import { AuthInscription } from '../RoutesSubComponents/InscriptionComponents';
 import { useParams } from 'react-router-dom';
-import { Fade } from 'react-reveal';
+import Pulse from 'react-reveal/Pulse';
+
 
 
 const Auth = () => {
@@ -33,21 +34,20 @@ const Auth = () => {
     return <div className="authPart" >
 
         <div className='authPart-form'>
-            <Fade left>
-                <div className="apf-img">
-                    <img alt={'Authentication simple Banner'}
-                        src={require('../Assets/images/illustrations/register2.svg').default} />
-                </div>
-            </Fade>
 
-            <Fade right>
+            <div className="apf-img">
+                <img alt={'Authentication simple Banner'}
+                    src={require('../Assets/images/illustrations/register2.svg').default} />
+            </div>
+
+            <Pulse >
                 <div className="apf-form">
                     <h2>{authView.title}</h2>
                     {
                         authView.component
                     }
                 </div>
-            </Fade>
+            </Pulse>
         </div>
     </div>
 }

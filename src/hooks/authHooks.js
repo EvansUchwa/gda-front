@@ -22,7 +22,7 @@ export const useAuthProvider = () => {
     }
 
     return {
-        userId: authedInfo !== null ? authedInfo.other.id : null,
+        userId: authedInfo && authedInfo.other !== null ? authedInfo.other.id : null,
         userType: authedInfo !== null ? authedInfo.general.role : '',
         apiInfos,
         authedInfo,
@@ -48,6 +48,28 @@ export const useAuthProvider = () => {
         },
         accountIsActivated() {
             return authedInfo.general.is_active !== "0" ? true : false
+        },
+        dispatchUserPic() {
+            const userType = authedInfo !== null ? authedInfo.general.role : '';
+            if (userType == 'ENTREPRISE') {
+                return 'logo_url'
+            } else if (userType == 'CANDIDAT') {
+                return 'photo1_url'
+            }
+        },
+        dispatchProfilPic(profilType) {
+            if (profilType == 'entreprise') {
+                return 'logo_url'
+            } else if (profilType == 'candidat') {
+                return 'photo1_url'
+            }
+        },
+        dispatchLocation(userType) {
+            if (userType == 'entreprise') {
+                return 'situation_geographie'
+            } else if (userType == 'candidat') {
+                return 'adresse'
+            }
         }
     }
 }

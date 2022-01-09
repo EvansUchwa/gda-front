@@ -16,6 +16,7 @@ import Offres_Emplois from './Routes/Offres_Emplois.js'
 import Add_offer from './Routes/Add-offer';
 import Formations from './Routes/Formations';
 import Services from './Routes/Services';
+import Profil from './Routes/Profil';
 import { Error } from './Routes/Error';
 import { AsideDashNav, TopDashNav, Nav } from './GlobalComponents/Nav';
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -27,11 +28,10 @@ import { useEffect } from 'react';
 import Global_Offer from './Routes/Global-Offers';
 import Admin from './Routes/Admin';
 import { AuthProvider, useAuth } from './hooks/authHooks';
-import { Modal } from './GlobalComponents/Modal';
-
-import { modalAccountNotActivatedContent } from './RawData/modal';
+import Modifier from './Routes/Modifier';
 
 const RequireAuth = ({ children }) => {
+  const location = useLocation();
   const { authed, userType, authedInfo } = useAuth();
 
   return authed === true ? <>
@@ -53,12 +53,25 @@ const NotRequiredAuth = ({ children }) => {
       <div className='bodyNotConnected'>
         <Nav />
         {children}
-        {/* <p>Home</p> */}
       </div>
       : <Navigate to="/Dashboard" />}
     <Footer />
   </>
 }
+
+const AnyoneAuth = ({ children }) => {
+  const { authed, userType } = useAuth();
+  return <>
+    {authed === false ? <Nav />
+      : <>
+        <AsideDashNav />
+        <TopDashNav />
+      </>}
+    {children}
+  </>
+}
+
+
 const RequireActivation = ({ children }) => {
   const { accountIsActivated } = useAuth();
   const setToggleModal = () => {
@@ -93,6 +106,10 @@ function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
+    if (document.querySelector('.dashbordNav-visible')) {
+      document.querySelector('.dashbordNav').classList.toggle('dashbordNav-visible')
+      // document.querySelector('.dashboardPart').classList.toggle('dashboardPartAlign')
+    }
     handleMobileMenu()
   }, [pathName])
   const routesTab = [
@@ -105,13 +122,22 @@ function App() {
     { path: '/Authentification/:typeAuth', components: <Auth />, requireAuth: false },
     { path: '/Authentification/:typeAuth/:typeAccount', components: <Auth />, requireAuth: false },
 
+    { path: '/Profil/:profilType/:profilId', components: <Profil />, requireAuth: true },
     { path: '/Mail/:mailAction', components: <MailAction />, requireAuth: false },
-    { path: '/Choice', components: <Choice />, requireAuth: true },
+    { path: '/Modifier/:cible', components: <Modifier />, requireAuth: true },
+
+    // { path: '/Choice', components: <Choice />, requireAuth: true },
 
     { path: '/Dashboard', components: <Dashboard />, requireAuth: true },
+    { path: '/Profil', components: <Profil />, requireAuth: true },
+
     { path: '/Finaliser-Inscription', components: <FinaliserInscription />, requireAuth: true },
 
-    { path: '/Candidats/:type/:page', components: <RequireActivation><Candidats /></RequireActivation>, requireAuth: true },
+    {
+      path: '/Candidats/:type/:page', components: <RequireActivation>
+        {<Candidats />}
+      </RequireActivation>, requireAuth: true
+    },
     {
       path: '/Offres-Emplois/:type/:page', components: <RequireActivation>
         <Offres_Emplois />
@@ -128,7 +154,7 @@ function App() {
             path={route.path}
             element={
               (() => {
-                if (route.requireAuth) {
+                if (route.requireAuth == true) {
                   return <RequireAuth>
                     {route.components}
                   </RequireAuth>
@@ -137,6 +163,11 @@ function App() {
                   return <NotRequiredAuth>
                     {route.components}
                   </NotRequiredAuth>
+                }
+                else if (route.requireAuth == 'anyone') {
+                  return <AnyoneAuth>
+                    {route.components}
+                  </AnyoneAuth>
                 }
               })()
 

@@ -1,24 +1,29 @@
 import { useState } from "react"
-import { adminMenu, entrepriseMenu, candidatMenu } from "../RawData/links";
+import { NotDropableSidebarLink, IsDropableSidebarLink } from "./NavLink";
 import { Link, useNavigate } from "react-router-dom"
 import { Modal } from "./Modal"
 import { SimpleImage, UrlImage } from "./Img";
 import { useAuth } from "../hooks/authHooks";
-const toggleDashNav = () => {
-    document.querySelector('.dashbordNav').classList.toggle('dashbordNav-visible')
-    document.querySelector('.dashboardPart').classList.toggle('dashboardPartAlign')
+
+const toggleSideBar = () => {
+    document.querySelector('.dashbordNav').classList.toggle('dashbordNav-visible');
+    document.querySelector('.dashboardPart').classList.toggle('dashboardPartAlign');
 }
+
 const toggleOptionsNav = (event) => {
     event.target.nextElementSibling.classList.toggle('native-options-visible')
     if (event.target.attributes['class'].value == 'dashMenuDropdown') {
         event.target.children[0].classList.toggle('mdi-rotate-90')
     }
 }
+
 function dispatchUserPic(userType) {
     if (userType == 'CANDIDAT') {
         return 'photo1_url'
     } else if (userType == 'ENTREPRISE') {
         return 'logo_url';
+    } else {
+        return 'profil_url'
     }
 }
 
@@ -79,7 +84,7 @@ export const AsideDashNav = () => {
 
     return <aside className="dashbordNav">
         <section className="dashbordNav-toggler">
-            <i className="mdi mdi-arrow-left" onClick={() => toggleDashNav()}></i>
+            <i className="mdi mdi-arrow-left" onClick={() => toggleSideBar()} ></i>
         </section>
         <section className="dashbordNav-userConnected">
             <UrlImage props={{
@@ -93,55 +98,19 @@ export const AsideDashNav = () => {
         </section>
 
         <section className="dashbordNav-links">
-            <Link onClick={() => toggleDashNav()} to={"/Dashboard"}>
-                <i className="mdi mdi-view-dashboard"></i> Dashboard</Link>
+            <Link to={"/Dashboard"}><i className="mdi mdi-view-dashboard"></i> Dashboard</Link>
             {
                 (() => {
-                    if (userType == 'candidat') {
-                        return <>
-                            {candidatMenu.map((lk, index) => <Link to={lk.link}
-                                key={'candidatMenuLink' + index}>
-                                <i className={"mdi " + lk.icons}></i>
-                                {lk.ph}
-                            </Link>)}
-                        </>
-                    }
-                    else if (userType == 'recruteur') {
-                        return <>
-                            {
-                                entrepriseMenu.map((lk, index) => <Link to={lk.link}
-                                    key={'entrepriseMenuLink' + index}>
-                                    {lk.ph}
-                                </Link>)
-                            }
-                        </>
-                    }
-                    else if (userType == 'Admin') {
-                        return <>
-                            {
-                                adminMenu.map((am, index) => <div key={"adminMenu" + index}>
-                                    <i className={"mdi " + am.menuIcon}></i>
-                                    <span className="dashMenuDropdown"
-                                        onClick={(event) => toggleOptionsNav(event)}>
-                                        {am.menuName}
-                                        <i className="mdi mdi-chevron-right"></i>
-                                    </span>
-                                    <section>
-                                        {
-                                            am.menuOptions.map((amM0, index) => <Link
-                                                key={am.menuName + 'subLink' + index}
-                                                onClick={() => toggleDashNav()}
-                                                to={"/Admin/" + am.menuName + amM0.link}>{amM0.ph}
-                                            </Link>)
-                                        }
-                                    </section>
-                                </div>)
-                            }
-                        </>;
+                    if (['admin'].includes(userType)) {
+                        return <IsDropableSidebarLink props={{ userType, toggleOptionsNav }} />;
+                    } else {
+                        return <NotDropableSidebarLink props={{ userType }} />
                     }
                 })()
             }
-            <Link onClick={() => toggleDashNav()} to=""><i className="mdi mdi-account"></i>Mon Profil</Link>
+            <Link to="/Profil"><i className="mdi mdi-account"></i>Mon Profil</Link>
+            <Link to="/Modifier/Profil"><i className="mdi mdi-account"></i>Modifier Profil</Link>
+
             <Link onClick={(event) => {
                 event.preventDefault();
                 logout()
@@ -157,14 +126,11 @@ export const TopDashNav = () => {
     const { authedInfo, userType, logout } = useAuth()
     const { other } = authedInfo;
     const [toggleModal, setToggleModal] = useState(false)
-    const modalContent = <>
-        <SearchBarForCandidateOrEmployerUser props={{ typeSearchBar: userType.toLowerCase() }} />
-    </>
 
     return <nav className="dashTopNav">
         <>
             <div className="dashTopNav-toggler">
-                <i className="mdi mdi-menu" onClick={() => toggleDashNav()}></i>
+                <i className="mdi mdi-menu" onClick={() => toggleSideBar()}></i>
             </div>
 
             <div className="dashTopNav-user">
@@ -178,7 +144,7 @@ export const TopDashNav = () => {
                 </section>
                 <section className="du-search">
                     <i className="mdi mdi-magnify" onClick={() => setToggleModal(true)}></i>
-                    {toggleModal ? <Modal props={{ content: modalContent, setToggleModal }} /> : ''}
+                    {/* {toggleModal ? <Modal props={{ content: modalContent, setToggleModal }} /> : ''} */}
                 </section>
                 <section className="du-userInfo">
                     <img src={other[dispatchUserPic(userType)]}
@@ -202,87 +168,6 @@ export const TopDashNav = () => {
     </nav>
 }
 
-const SearchBarForCandidateOrEmployerUser = ({ props }) => {
-    const { typeSearchBar } = props;
-
-    const tabs = [
-        {
-            title1: 'Rechercher des employeur avec le poste ou la localisation',
-            title2: 'Rechercher des employeurs avec leur nom',
-            typeSearchBar, label1: 'Poste', label2: 'Localisation', label3: 'Nom de l\'entreprise', ph: 'AaZz',
-            selectFormData1: ['Comptable', 'Community Manager', 'Commercial', 'Avocat', 'Consultant'],
-            selectFormData2: ['Cotonou', 'Abomey-Calavi', 'Parakou', 'Bohicon', 'Consultant']
-        },
-        {
-            title1: 'Rechercher des candidat(e)s avec le niveau ou domaine de competence',
-            title2: 'Rechercher des candidat(e)s avec leurs noms,prenoms ou pseudos',
-            typeSearchBar, label1: 'Compétence', label2: 'Niveau d\'etude', label3: 'Pseudo,Nom ou Prenom du candidat', ph: 'AaZz',
-            selectFormData1: ['Marketing', 'Ressource humaine', 'Finance et/ou Comptabilité', 'Informatique', 'Environnement'],
-            selectFormData2: ['Bac', 'Bac + 1', 'Bac + 2 ou BTS', 'Bac + 3 ou License', 'Master', 'Doctorat']
-        }];
-
-    const dispatchSearchForm = (userType) => {
-        if (userType === 'Candidat') {
-            return tabs[0];
-        } else if (userType === 'Recruteur') {
-            return tabs[1];
-        }
-        else if (userType == 'VIP') {
-            return <p>Formulaire Vip en cours de creation ...</p>;
-        }
-        else {
-            return <p>Ty d'utilisateur Inconnu</p>;
-        }
-    }
-    const [searchFormData, setSFD] = useState(dispatchSearchForm(typeSearchBar));
-
-    return <>{
-        typeof searchFormData === 'object' ? <>
-            <h4>{searchFormData.title1}</h4>
-            <form>
-                <div className="formSegment">
-                    <label>{searchFormData.label1}</label>
-                    <select>
-                        <option>Choisir</option>
-                        {
-                            searchFormData.selectFormData1.map((opt, index) => <option key={'ss1' + index}>
-                                {opt}
-                            </option>)
-                        }
-                    </select>
-                </div>
-                <div className="formSegment">
-                    <label>{searchFormData.label2}</label>
-                    <select>
-                        <option>Choisir</option>
-                        {
-                            searchFormData.selectFormData2.map((opt, index) => <option key={'ss1' + index}>
-                                {opt}
-                            </option>)
-                        }
-                    </select>
-                </div>
-                <div className="formBtn">
-                    <button>Rechercher</button>
-                </div>
-            </form>
-
-            <h4>{searchFormData.title2}</h4>
-            <form>
-                <div className="formSegment" id="fsSearchCandidateOrEntrepriseName">
-                    <label>{searchFormData.label3}</label>
-                    <input type='search' placeholder="Nom d'entreprise" />
-                </div>
-                <div className="formBtn">
-                    <button>Rechercher</button>
-                </div>
-            </form>
-        </> : <p>
-            Type d'utilisateur inconnus
-        </p>
-
-    } </>
-}
 
 const OfferLinks = ({ props }) => {
     const { className, id } = props

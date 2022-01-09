@@ -1,9 +1,9 @@
 import { getError } from '../Tools/formValidator';
 import { IllustrationImage } from '../GlobalComponents/Img'
-import { useNavigate } from 'react-router-dom';
 import { candidateSteps } from '../RawData/stepCandidat';
 import { employerSteps } from '../RawData/stepEmployer';
 import { apporteurSteps } from '../RawData/stepApporteur';
+import { boutiquierSteps } from '../RawData/stepBoutiquier';
 
 export const CurrentStep = ({ props }) => {
     const { userType, currentStep, handleChange, handleSubmit, errors,
@@ -18,6 +18,9 @@ export const CurrentStep = ({ props }) => {
             return employerSteps
         } else if (userType == 'apporteur') {
             return apporteurSteps;
+        }
+        else if (userType == 'boutiquier') {
+            return boutiquierSteps;
         }
     }
 
@@ -95,7 +98,6 @@ export const CurrentStep = ({ props }) => {
 
 
 export const WaitForDashboardRedirect = () => {
-    const navigate = useNavigate();
     setTimeout(() => {
         window.location = '/';
     }, 5000)

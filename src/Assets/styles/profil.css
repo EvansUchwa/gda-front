@@ -1,0 +1,59 @@
+.dp-profil {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.profilInfos {
+  background-color: white;
+  padding: 20px 0;
+}
+.profilPost {
+  padding: 20px 0;
+  width: 65%;
+  background-color: white;
+}
+
+.pi-general,
+.pi-other {
+  width: 90%;
+  margin: auto;
+}
+.pi-general {
+  text-align: center;
+  border-bottom: solid 3px var(--cwd2);
+}
+.pi-general img {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+}
+.pi-general p {
+  margin-bottom: 5px;
+}
+.pi-general span,
+.pi-general i {
+  margin-right: 5px;
+}
+.pi-general b {
+  color: var(--colorPrincipal);
+}
+.pi-general i {
+  color: var(--colorPrincipal);
+}
+
+.pi-other {
+  padding: 20px 0;
+}
+.pi-other b {
+  color: var(--colorPrincipal);
+}
+
+.profilPost > h3 {
+  text-align: center;
+}
+
+.profilPost > div {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

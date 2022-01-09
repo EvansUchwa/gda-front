@@ -22,7 +22,7 @@ const FinaliserInscription = () => {
                 <section>
                     <h2>Etape {currentStep}  </h2>
                     {
-                        ['candidat', 'entreprise', 'apporteur'].includes(userType.toLowerCase())
+                        ['candidat', 'entreprise', 'apporteur', 'boutiquier'].includes(userType.toLowerCase())
                             ?
                             <>
                                 <Stepper props={{ currentStep }} />

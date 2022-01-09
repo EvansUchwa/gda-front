@@ -14,7 +14,7 @@ const Offres_Emplois = () => {
     const [jobOffers, setJobOffers] = useState([])
     const [pageInfos, setPageInfos] = useState({
         totalPage: 12,
-        currentPage: parseInt(5),
+        currentPage: parseInt(page),
         link: '/Offres-Emplois/' + type
     })
 

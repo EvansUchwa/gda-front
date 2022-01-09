@@ -14,7 +14,7 @@
 body {
 }
 .bodyNotConnected {
-  background-image: url("../images/illustrations/bg/pBg2.svg");
+  background-image: url("../images/pBg2.png");
   background-position: 110% 0%;
   background-repeat: no-repeat;
 }
@@ -83,6 +83,24 @@ b {
   padding: 10px 15px;
 }
 /* End Dev msg  */
+
+/*  */
+.notAccessible {
+  padding: 50px 0;
+  text-align: center;
+}
+.notAccessible p {
+  font-weight: bolder;
+  margin: 10px 0;
+}
+.notAccessible a,
+.notAccessible button {
+  padding: 10px 25px;
+  background-color: var(--colorPrincipal);
+  color: white;
+  margin: 0 10px;
+}
+/*  */
 
 .native-options-visible {
   opacity: 1 !important;
@@ -428,6 +446,12 @@ nav.simpleNav a {
 }
 /* End Dashboard Nav */
 
+/* Modal Size */
+.updateModal {
+  width: 250px;
+}
+/*  */
+
 /* Footer */
 footer {
   background-color: var(--colorSecond);
@@ -482,8 +506,8 @@ footer a {
 
 @media screen and (max-width: 512px) {
   .bodyNotConnected {
-    background-position: 40% 0%;
-    background-size: 120% 50vh;
+    background-position: 50% 0%;
+    background-size: 110% 250px;
   }
 
   .nav-mobileBtn {

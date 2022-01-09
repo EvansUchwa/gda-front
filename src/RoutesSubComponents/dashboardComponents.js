@@ -26,10 +26,16 @@ export const DashWelcomeBanner = ({ props }) => {
 export const DashboardFastLinks = ({ props }) => {
     const { userType } = props
     return <div className="dash-fastLinks">
-        <h2>{userType == 'entreprise' ? 'Les profiles de candidats' : 'Les offres'} </h2>
-        <OfferAndCandidatePreviewSection props={{ offerType: 'latest', userType }} />
-        <OfferAndCandidatePreviewSection props={{ offerType: 'mostViewed', userType }} />
-        <OfferAndCandidatePreviewSection props={{ offerType: 'suggestion', userType }} />
+        {(() => {
+            if (['entreprise', 'candidat', 'admin'].includes(userType)) {
+                return <>
+                    <h2>{userType == 'entreprise' ? 'Les profiles de candidats' : 'Les offres'} </h2>
+                    <OfferAndCandidatePreviewSection props={{ offerType: 'latest', userType }} />
+                    <OfferAndCandidatePreviewSection props={{ offerType: 'mostViewed', userType }} />
+                    <OfferAndCandidatePreviewSection props={{ offerType: 'suggestion', userType }} />
+                </>
+            }
+        })()}
     </div>
 }
 

@@ -14,7 +14,12 @@ const Candidats = () => {
     const [candidats, setCandidats] = useState([])
     const [listApiData, setListApiData] = useState(null);
     const [pageInfos, setPageInfos] = useState({})
+    const [loader, setLoader] = useState()
+
+
     useEffect(() => {
+        setCandidats([])
+        setLoader(<FixedLoader />)
         let apiComplete = "";
         if (type === 'latest') {
             apiComplete = '/api/candidats/list-candidat?page=' + page
@@ -40,19 +45,21 @@ const Candidats = () => {
                         link: '/Candidats/' + type
                     })
                 }
-
+                setLoader('')
             })
             .catch(err => console.log(err))
-    }, [])
+    }, [page])
 
     return <div className="dashboardPart">
         <CandidateOrEmployerFilter props={{ userType: 'Employeur' }} />
+        <CandidatesList props={{ candidats }} />
         {
-            candidats.length ?
-                <CandidatesList props={{ candidats }} />
-                : <FixedLoader />
+            // candidats.length ?
+            // <CandidatesList props={{ candidats }} />
+            // : <FixedLoader />
+            loader
         }
-        {/* <Pagination props={{ pageInfos }} /> */}
+        <Pagination props={{ pageInfos }} />
     </div>
 }
 

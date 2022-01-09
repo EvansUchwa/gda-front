@@ -7,7 +7,7 @@ import { ProfilDetailModal } from '../GlobalComponents/SiteModal';
 
 export const CandidatesList = ({ props }) => {
     const [toggleModal, setToggleModal] = useState(false);
-    const { candidats, baseApi, headerApi } = props
+    const { candidats } = props
     const [modalId, setModalId] = useState()
 
     return <div className="ppc-published-items">

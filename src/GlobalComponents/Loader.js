@@ -3,3 +3,8 @@ export const FixedLoader = () => {
         <i className="mdi mdi-spin mdi-loading"></i>
     </div>
 }
+
+
+export const SimpleIconLoader = () => {
+    return <i className="mdi mdi-spin mdi-loading"></i>
+}

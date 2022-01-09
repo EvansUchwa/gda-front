@@ -6,33 +6,37 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { simpleInscriptionFields } from '../RawData/form';
 import { useAuth } from '../hooks/authHooks';
+import { dispatchBtn } from '../Tools/formValidator';
 
 export const AuthInscription = ({ props }) => {
+    const btnContent = "S'inscrire"
     const navigate = useNavigate();
     const { apiInfos } = useAuth();
     const { baseApi, headerApi } = apiInfos
-    const [inscriptionFields, setInscriptionFields] = useState({
-        role: props.role,
-        pseudo: '', mail: '',
-        nom: '', prenom: '',
-        password: '', password_confirmation: '',
-        name: "wilfried",
-    })
-    const [errors, setErrors] = useState([]);
-    const [isPasswordField, setIPF] = useState(true);
 
-    const checkIFIV = () => {
+    const [errors, setErrors] = useState([]);
+    const [error, setError] = useState('');
+    const [isPasswordField, setIPF] = useState(true);
+    const [formBtn, setFormBtn] = useState(dispatchBtn('simple', btnContent))
+
+    const [inscriptionFields, setInscriptionFields] = useState({
+        role: props.role, pseudo: '', mail: '',
+        password: '', password_confirmation: '',
+    })
+
+    const checkFormValidity = (inscriptionFields) => {
         const { role, pseudo, mail, nom, prenom, password, password_confirmation } = inscriptionFields;
-        if (['candidata', 'entreprise', 'apporteur'].includes(role)) {
+        if (['candidat', 'entreprise', 'apporteur', 'boutiquier'].includes(role)) {
             if (pseudo !== '' && mail !== '' && password !== ''
                 && password_confirmation == password && errors.length === 0) {
-                return <button className='semiRounded' type='submit'>S'inscrire</button>
+                return true;
             }
         }
-        return <button className='semiRounded formBtnDisable' disabled >S'inscrire</button>;
+        return false;
     }
 
     const handleFormSubmit = (event) => {
+        setFormBtn(dispatchBtn('onLoad', btnContent))
         event.preventDefault();
         axios.post(baseApi + "/api/auth/register/user", {
             "name": inscriptionFields.pseudo,
@@ -41,7 +45,14 @@ export const AuthInscription = ({ props }) => {
             "password_confirmation": inscriptionFields.password_confirmation,
             "role": inscriptionFields.role.toUpperCase()
         }, { headers: headerApi })
-            .then(res => navigate('/Mail/valider-mail', {}))
+            .then(res => {
+                if (res.data === "l'adresse email existe d\u00e9j\u00e0") {
+                    setError('Email deja utilisé')
+                } else {
+                    navigate('/Mail/valider-mail', {})
+                }
+                setFormBtn(dispatchBtn('simple', btnContent))
+            })
             .catch(err => console.log(err))
 
     }
@@ -80,6 +91,7 @@ export const AuthInscription = ({ props }) => {
                 <option value="candidat">Un(e) candidat(e)</option>
                 <option value="entreprise">Une entreprise</option>
                 <option value="apporteur">Un(e) apporteur(se) d'affaire(Parrain) </option>
+                <option value="boutiquier">Un commercant(e)(ayant une boutique) </option>
             </select>
         </section>
         {inscriptionFields.role != '' ?
@@ -104,8 +116,9 @@ export const AuthInscription = ({ props }) => {
                 Voir mot de passe
             </label>
         </div>
+        <span className='errorField'>{error}</span>
         <div className="formBtn">
-            {checkIFIV()}
+            {checkFormValidity(inscriptionFields) ? formBtn : dispatchBtn('disable', btnContent)}
         </div>
         <div className='formOtherAuth'>
             <p>Vous avez deja un compte ? <Link to='/Authentification/Connexion'>Connexion</Link> </p>

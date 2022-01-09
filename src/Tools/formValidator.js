@@ -8,6 +8,17 @@ export const toggleFormBtnClickable = (formFieldsIsValid, btnAnimation = null) =
 
 }
 
+export const dispatchBtn = (type, content) => {
+    const btns = {
+        simple: <button className='semiRounded'>{content}</button>,
+        onLoad: <button className='semiRounded'>{content}
+            <i className='mdi mdi-spin mdi-loading'></i></button>,
+        disable: <button className='semiRounded formBtnDisable' disabled >{content}</button>
+    }
+
+    return btns[type]
+}
+
 export const getError = (fieldName, errors) => {
     const errorList = errors.filter(item => item.name == fieldName);
     if (errorList.length > 0) {

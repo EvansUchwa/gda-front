@@ -44,8 +44,8 @@ export const apporteurSteps = {
             value: '', ph: '18', id: '', errmsgname: "ville"
         },
         {
-            comp: 'input', label: 'Photo', htmlType: 'file', name: 'profil',
-            value: '', ph: 'AaZz', id: 'profil', errmsgname: "photo de profil",
+            comp: 'input', label: 'Photo 1', htmlType: 'file', name: 'profil',
+            value: '', ph: 'AaZz', id: 'profil_photo', errmsgname: "photo de profil",
         }
     ],
 }

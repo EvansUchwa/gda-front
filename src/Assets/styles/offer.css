@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
 }
-/*  */
+/* Form */
 .addOfferPart {
   /* width: 100%; */
 }
@@ -61,6 +61,56 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+/*  */
+
+/* Update Form  */
+.updateInfoPart {
+  width: 90%;
+  margin: auto;
+  background-color: white;
+  padding: 40px 0;
+}
+.updateInfoPart H1 {
+  text-align: center;
+}
+.updateInfoPart > div {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.formUpdateSection {
+  width: 45%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cpd1);
+  padding: 10px 0;
+  position: relative;
+}
+.formUpdateSection label {
+  width: 90%;
+  margin: 10px auto;
+}
+.formUpdateSection section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: auto;
+}
+.formUpdateSection button {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  background-color: var(--colorPrincipal);
+  color: white;
+  padding: 10px 25px;
+}
+.updateModal button {
+  background-color: var(--colorPrincipal);
+  color: white;
 }
 /*  */
 
@@ -136,7 +186,8 @@
 }
 .mdpb-imageAndContact img {
   width: 40%;
-  height: 200px;
+  height: 250px;
+  object-fit: contain;
 }
 .mdpb-imageAndContact div {
   margin-left: auto;
@@ -149,6 +200,14 @@
   padding: 5px 15px;
   border-radius: 30px;
   text-align: center;
+}
+.mdpb-imageAndContact h5,
+.mdpb-imageAndContact b {
+  text-align: center;
+}
+.mdpb-imageAndContact div > a:first-child {
+  background-color: var(--colorPrincipal);
+  color: white;
 }
 .mdpb-result > div {
   display: flex;
@@ -190,6 +249,9 @@
 /* Fin */
 
 @media screen and (max-width: 512px) {
+  .formUpdateSection {
+    width: 95%;
+  }
   /* Pub banner */
   .go-pubBanner {
     width: 90%;

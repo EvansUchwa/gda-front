@@ -12,7 +12,7 @@ const Dashboard = () => {
     return <>
         {
             (() => {
-                if (authedInfo !== null && authedInfo.other !== null) {
+                if (authedInfo !== null && (authedInfo.other !== null)) {
                     const { name } = authedInfo.general;
                     return <div className="dashboardPart">
                         <DashWelcomeBanner props={{ userType: userType.toLowerCase(), name }} />

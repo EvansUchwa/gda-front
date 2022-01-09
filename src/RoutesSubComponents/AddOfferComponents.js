@@ -58,7 +58,7 @@ export const AddOfferForm = ({ props }) => {
         },
             { headers: headerApi })
             .then(res => {
-                if (res.data === 'object' && res.data.post) {
+                if (res.data.post) {
                     setToggleModal(true);
                 } else {
                     alert('Une erreur sest produite,veuillez reesayez')

@@ -1,6 +1,7 @@
 import { isValidChar, isValidLenght, isValidNumberValue } from '../Tools/formValidator';
 import { CurrentStep } from '../GlobalComponents/Steps';
 import { useState } from 'react'
+import { stepBoutiquierValidator, insertBoutiquierDataOnLastStep } from '../RawData/stepBoutiquier';
 import { stepApporteurValidator, insertApporteurDataOnLastStep } from '../RawData/stepApporteur';
 import { stepCandidateValidator, insertCandidateDataOnLastStep } from '../RawData/stepCandidat';
 import { stepEmployerValidator, insertEntrepriseDataOnLastStep } from '../RawData/stepEmployer';
@@ -43,6 +44,8 @@ export const StepForm = ({ props }) => {
         type_entreprise: '', logo_entreprise: '',
         ifu: '', localisation_entreprise: '',
         description_entreprise: '',
+
+        type_commerce: '', description: ''
     });
     const validForm = (stepId) => {
         var cond = "";
@@ -54,6 +57,9 @@ export const StepForm = ({ props }) => {
         }
         else if (userType == 'apporteur') {
             cond = stepApporteurValidator(stepId, userOtherInfo)
+        }
+        else if (userType == 'boutiquier') {
+            cond = stepBoutiquierValidator(stepId, userOtherInfo)
         }
 
         if (cond && errors.length <= 0) {
@@ -100,7 +106,7 @@ export const StepForm = ({ props }) => {
         if (name == 'ifu') {
             isValidLenght(errors, setErrors, name, value, 4, 4, 'Votre ' + errMsgName + ' ')
         }
-        if (['logo_entreprise', 'photo_1', 'photo_2'].includes(name)) {
+        if (['logo_entreprise', 'photo_1', 'photo_2', 'profil'].includes(name)) {
             let file = event.target.files[0];
             if (file) {
                 let imgUrl = URL.createObjectURL(file)
@@ -117,6 +123,7 @@ export const StepForm = ({ props }) => {
 
     const handleSubmit = (event, currentStep) => {
         const mail = authedInfo.general.email;
+        const userRankId = authedInfo.general.id;
         event.preventDefault();
         if (currentStep == 3) {
             if (userType == 'candidat') {
@@ -127,6 +134,8 @@ export const StepForm = ({ props }) => {
             }
             else if (userType == 'apporteur') {
                 insertApporteurDataOnLastStep(userOtherInfo, mail, updateOtherUserInfo, apiInfos)
+            } else if (userType == 'boutiquier') {
+                insertBoutiquierDataOnLastStep(userOtherInfo, userRankId, mail, updateOtherUserInfo, apiInfos)
             }
 
         }
