@@ -76,7 +76,7 @@ export const updateProfilFormFieds = {
             options: [
                 { value: 'Oui', ph: 'Oui' }, { value: 'Non', ph: 'Non' },
                 { value: 'Bientot', ph: 'Bientot' }],
-            value: '', ph: '18', id: '', errmsgname: "moyen de deplacement",
+            value: '', ph: '18', id: '', errmsgname: "moyen de deplacement", dbKey: "moyens_de_deplacement"
         },
         {
             comp: 'select', label: 'Situation matrimoniale', name: 'situation_matrimoniale',
@@ -87,15 +87,15 @@ export const updateProfilFormFieds = {
                 { value: 'En couple libre avec enfant', ph: 'En couple libre avec enfant' },
                 { value: 'Marié(e) sans enfant', ph: 'Marié(e) sans enfant' },
                 { value: 'Marié(e) avec enfant', ph: 'Marié(e) avec enfant' }],
-            value: '', ph: '18', id: '', errmsgname: "situation matrimoniale",
+            value: '', ph: '18', id: '', errmsgname: "situation matrimoniale", dbKey: 'situation_matrimonial'
         },
         {
-            comp: 'input', label: 'Poste_envisagé', htmlType: 'text', name: 'poste_envisagé', value: '',
-            ph: '18', id: '', errmsgname: "poste envisagé",
+            comp: 'input', label: 'Poste envisagé', htmlType: 'text', name: 'poste_envisagé', value: '',
+            ph: '18', id: '', errmsgname: "poste envisagé", dbKey: 'poste_envisager'
         },
         {
             comp: 'input', label: 'Salaire envisagé', htmlType: 'number', name: 'salaire_envisagé',
-            value: '', ph: 'AaZz', id: '', errmsgname: "salaire envisagé",
+            value: '', ph: 'AaZz', id: '', errmsgname: "salaire envisagé", dbKey: "pretention_salarials"
         },
         {
             comp: 'select', label: 'Domaine de competence', name: 'domaine_de_competence',
@@ -106,7 +106,7 @@ export const updateProfilFormFieds = {
         },
         {
             comp: 'textarea', label: 'Autre competence', htmlType: 'number', name: 'autre_competence',
-            value: '', ph: 'AaZz', id: '', errmsgname: "autre competence",
+            value: '', ph: 'AaZz', id: '', errmsgname: "autre competence", dbKey: 'autre_competence'
         },
         {
             comp: 'experience', label: 'Experience', htmlType: 'number', name: 'experience',

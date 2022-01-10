@@ -23,10 +23,11 @@
 .addOfferForm form {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .addOfferForm form > div {
   width: 45%;
+  margin-bottom: 20px;
 }
 .addOfferForm form > .formBtn {
   width: 100%;
@@ -38,7 +39,6 @@
 }
 #formAreaDescription {
   width: 95%;
-  margin: auto;
 }
 #formAreaDescription textarea {
   max-height: 250px;
@@ -119,7 +119,7 @@
 }
 .mdpb-switcher {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 10px 0;
   /* background-color: var(--cpd1); */
 }
@@ -167,15 +167,20 @@
 
 .mdpb-infosTextList div {
   margin: 10px 0;
+  padding: 10px 1%;
+  background-color: var(--cwd1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .mdpb-infosTextList span {
-  color: var(--cpd4);
+  color: grey;
   font-weight: bold;
-  margin-right: 10px;
+  max-width: 65%;
 }
 .mdpb-infosTextList b {
-  margin-left: 10px;
-  color: var(--cwd4);
+  color: var(--colorSecond);
+  max-width: 35%;
 }
 /*  */
 

@@ -5,6 +5,8 @@ import { SimpleIconLoader } from "../GlobalComponents/Loader";
 import { JobCard } from "../GlobalComponents/Card";
 import axios from 'axios'
 import { userDataKey } from "../RawData/key";
+import { Modal } from "../GlobalComponents/Modal";
+import { ProfilDetailModal } from "../GlobalComponents/SiteModal";
 
 export const ProfilLayout = ({ props }) => {
     const { dispatchUserPic, dispatchLocation } = useAuth();
@@ -104,8 +106,12 @@ export const ProfilPosts = ({ props }) => {
     const { apiInfos } = useAuth()
     const { profilId } = props
     const [profilPosts, setProfilPosts] = useState();
-    const setToggleModal = () => { };
-    const setModalInfoId = () => { };
+    const [toggleModal, setToggleModal] = useState(false);
+    const [modalInfoId, setModalInfoId] = useState();
+    const offerModal = <ProfilDetailModal props={{
+        modalId: modalInfoId,
+        userType: 'candidat'
+    }} />;
 
     const obj = {
         adresse: 'kdksdjkd', date_cloture: '09/12/2000',
@@ -137,6 +143,10 @@ export const ProfilPosts = ({ props }) => {
                         : 'Aucune offre posté par cette entreprise'
                     : <SimpleIconLoader />
             }
+            {toggleModal ? <Modal props={{
+                content: offerModal, setToggleModal,
+                className: "modalDetailProfil"
+            }} /> : ''}
         </div>
     </>
 }

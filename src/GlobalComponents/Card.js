@@ -74,7 +74,11 @@ export const CandidateCard = ({ props }) => {
                 setModalId(id)
                 setToggleModal(true)
             }}>Profil  </Link>
-            <Link to='#'>Contacter </Link>
+            <Link to='#' onClick={(event) => {
+                event.preventDefault()
+                setModalId(id)
+                setToggleModal(true)
+            }}>Contacter </Link>
         </div>
 
     </div>

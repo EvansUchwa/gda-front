@@ -104,6 +104,12 @@
   color: white;
   padding: 10px 25px;
 }
+.formUpdateSection img {
+  object-fit: contain;
+  height: 80px;
+  width: 80px;
+  border: solid 2px var(--cwd4);
+}
 .updateModal button {
   background-color: var(--colorPrincipal);
   color: white;

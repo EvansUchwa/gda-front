@@ -13,7 +13,11 @@ export const dispatchBtn = (type, content) => {
         simple: <button className='semiRounded'>{content}</button>,
         onLoad: <button className='semiRounded'>{content}
             <i className='mdi mdi-spin mdi-loading'></i></button>,
-        disable: <button className='semiRounded formBtnDisable' disabled >{content}</button>
+        disable: <button className='semiRounded formBtnDisable' disabled >{content}</button>,
+        disableAndLoad: <button className='semiRounded formBtnDisable' disabled >{content}
+            <i className='mdi mdi-spin mdi-loading'></i>
+        </button>
+
     }
 
     return btns[type]

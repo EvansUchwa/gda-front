@@ -3,8 +3,10 @@ import { useState } from "react";
 import { Modal } from "../GlobalComponents/Modal";
 import { UpdateInfoModal } from "../GlobalComponents/SiteModal";
 import { useAuth } from "../hooks/authHooks";
+import { UrlImage } from "../GlobalComponents/Img";
 
 export const UpdateProfilForm = () => {
+    var urlImgRegex = /(https?:\/\/.*\.(?:png|jpg))/i;
     const { userType, authedInfo } = useAuth();
     function handleSubmit(event) {
         return;
@@ -18,7 +20,15 @@ export const UpdateProfilForm = () => {
                 key={'upField-' + index}>
                 <label><b>{upf.label}</b> </label>
                 <section>
-                    <p>{upf.dbKey ? authedInfo.other[upf.dbKey] : 'data'} </p>
+                    {
+                        (() => {
+                            if (urlImgRegex.test(authedInfo.other[upf.dbKey])) {
+                                return <UrlImage props={{ src: authedInfo.other[upf.dbKey], alt: 'Image updater preview' }} />
+                            } else {
+                                return !['type'].includes(upf.dbKey) ? <p>{upf.dbKey ? authedInfo.other[upf.dbKey] : 'data'} </p> : ''
+                            }
+                        })()
+                    }
                 </section>
                 <button onClick={(event) => {
                     setUpField(upf)

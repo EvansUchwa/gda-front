@@ -5,20 +5,22 @@ import axios from 'axios';
 import { Modal } from "../GlobalComponents/Modal";
 import { IllustrationImage } from "../GlobalComponents/Img"
 import { Link } from 'react-router-dom';
+import { dispatchBtn } from '../Tools/formValidator'
 
 const validForm = (userType, offerInfo, errors) => {
     var cond = false;
     cond = addJobFormValidator(offerInfo);
 
     if (cond && errors.length == 0) {
-        return <button className='semiRounded'>Ajouter l'offre</button>
+        return true
     } else {
-        return <button disabled className='formBtnDisable semiRounded'>Non</button>
+        return false;
     }
 }
 export const AddOfferForm = ({ props }) => {
     const { userId, userType, apiInfos } = useAuth();
     const [toggleModal, setToggleModal] = useState(false);
+    const [formBtn, setFormBtn] = useState(dispatchBtn('simple', 'Ajouter'));
     const formFields = addJobFormFields;
     const [offerInfo, setOfferInfo] = useState(
         {
@@ -40,6 +42,7 @@ export const AddOfferForm = ({ props }) => {
 
     const handleSubmit = (event) => {
         const { baseApi, headerApi } = apiInfos
+        setFormBtn(dispatchBtn('disableAndLoad', 'Ajout en cours'))
         event.preventDefault();
         axios.post(baseApi + "/api/offres/store-offres", {
             "post": offerInfo.poste,
@@ -58,6 +61,7 @@ export const AddOfferForm = ({ props }) => {
         },
             { headers: headerApi })
             .then(res => {
+                setFormBtn(dispatchBtn('simple', 'Ajouter'))
                 if (res.data.post) {
                     setToggleModal(true);
                 } else {
@@ -73,7 +77,7 @@ export const AddOfferForm = ({ props }) => {
             alt: 'Modal added image'
         }} />
         <p>Votre offre d'emplois a bien été ajouté !!!</p>
-        <Link to="#">Cliquez ici pour voir</Link>
+        <Link to="/Profil">Cliquez ici pour voir</Link>
     </div>
 
     return <div className="addOfferForm" id="addJobForm">
@@ -117,7 +121,10 @@ export const AddOfferForm = ({ props }) => {
                 </div>)
             }
             <div className="formBtn">
-                {validForm(userType, offerInfo, errors)}
+                {
+                    validForm(userType, offerInfo, errors) ?
+                        formBtn : dispatchBtn('disable', 'Ajouter')
+                }
             </div>
         </form>
         {

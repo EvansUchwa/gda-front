@@ -15,7 +15,7 @@ export const userDataKey = {
         { title: 'Telephone 2', key: 'tel2' },
         { title: 'Niveau', key: 'niveau' },
         { title: 'Competence', key: 'competences' },
-        { title: 'Filiere etudié', key: 'filiere' },
+        { title: 'Poste evisagé', key: 'poste_envisager' },
         { title: 'Ecole', key: 'ecole' },
         { title: 'Moyen de deplacement', data: 'moyens_de_deplacement' },
         { title: 'Experience', key: 'experience' },

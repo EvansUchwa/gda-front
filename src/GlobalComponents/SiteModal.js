@@ -4,7 +4,7 @@ import { UrlImage } from "./Img";
 import axios from 'axios';
 import { useAuth } from '../hooks/authHooks'
 import { handleUserFieldInfoChange } from "../Tools/formFunction";
-import { getError } from "../Tools/formValidator";
+import { dispatchBtn, getError } from "../Tools/formValidator";
 import { userDetailModalKey } from "../RawData/key";
 export const ProfilDetailModal = ({ props }) => {
     const { apiInfos, dispatchProfilPic } = useAuth();
@@ -80,9 +80,9 @@ export const ProfilDetailModal = ({ props }) => {
                         }
                     })()
                 }
-                <Link to="" className='googleColor'>Gmail</Link>
-                <Link to="" className='telColor'> Sms</Link>
-                <Link to="" className=' whatsappColor'> Whatsapp</Link>
+                <a href="mailto:name@rapidtables.com" target='_blank' className='googleColor'>Gmail</a>
+                <a href="#" target='_blank' className='telColor'>Sms</a>
+                <a href="https://wa.me/15551234567" target='_blank' className=' whatsappColor'>Whatsapp</a>
             </div>
         </section>
         <section className='mdpb-switcher'>
@@ -105,9 +105,8 @@ export const ProfilDetailModal = ({ props }) => {
                     {
                         userDetailModalKey[userType]['tab' + currentTab].map((info, index) => <div
                             key={'mdpb-iTl' + index}>
-                            <b>{info.title}</b>
-                            <i className="mdi mdi-arrow-right"></i>
-
+                            <b>{info.title} :</b>
+                            {/* <i className="mdi mdi-arrow-right"></i> */}
                             <span>{modalData[info.key]}</span>
                         </div>)
                     }
@@ -124,6 +123,7 @@ export const ProfilDetailModal = ({ props }) => {
 export const UpdateInfoModal = ({ props }) => {
     const { userType, apiInfos, authedInfo, updateUserInfo } = useAuth()
     const { upField, initialData, setToggleModal } = props;
+    const [formBtn, setFormBtn] = useState(dispatchBtn('simple', 'Sauvegarder'))
     const [userNewInfo, setUserNewInfo] = useState({
         nom: initialData.nom, prenom: initialData.prenom,
         sexe: initialData.sexe, date: initialData.date_naissance, lieu_de_naissance: initialData.lieu,
@@ -131,7 +131,8 @@ export const UpdateInfoModal = ({ props }) => {
         numero_1: initialData.tel, numero_2: initialData.tel2,
         niveau_detude: initialData.niveau, filière_serie: initialData.filiere, ecole: initialData.ecole,
         pays: initialData.pays, ville: initialData.adresse, nationalité: initialData.nationality,
-        moyen_de_deplacement: initialData.nom, situation_matrimoniale: initialData.situation_matrimonial,
+        moyen_de_deplacement: initialData.moyens_de_deplacement,
+        situation_matrimoniale: initialData.situation_matrimonial,
         domaine_de_competence: initialData.competences, autre_competence: initialData.autre_competence,
         photo_1: initialData.photo1_url, photo_2: initialData.photo2_url,
 
@@ -148,6 +149,8 @@ export const UpdateInfoModal = ({ props }) => {
     }
 
     function handleSubmit(event) {
+        setFormBtn(dispatchBtn('disable', 'Sauvegarder'))
+
         event.preventDefault();
 
         const { baseApi, headerApi } = apiInfos
@@ -171,7 +174,7 @@ export const UpdateInfoModal = ({ props }) => {
             formData.append("nom", userNewInfo.nom)
             formData.append("prenom", userNewInfo.prenom)
             formData.append("sexe", userNewInfo.sexe)
-            formData.append("date_naissance", "2020-12-21")
+            formData.append("date_naissance", userNewInfo.date)
             formData.append("lieu", userNewInfo.lieu_de_naissance)
             formData.append("tel", userNewInfo.numero_1)
             formData.append("tel2", userNewInfo.numero_2)
@@ -194,10 +197,10 @@ export const UpdateInfoModal = ({ props }) => {
         axios.post(baseApi + "/api/auth/update/profil/user", formData, { headers: headerApi })
             .then(res => {
                 if (res.data) {
-                    // updateOtherUserInfo(res.data.dataOrder)
-                    // updateGeneralUserInfo(res.data.data)
                     updateUserInfo(res.data)
                     setToggleModal(false)
+                    setFormBtn(dispatchBtn('simple', 'Sauvegarder'))
+
                 }
             })
             .catch(err => console.log(err))
@@ -276,7 +279,7 @@ export const UpdateInfoModal = ({ props }) => {
         <div className="formBtn">
             {
                 userNewInfo[upField.name] != '' && errors.length === 0 ?
-                    <button>Sauvegarder</button> :
+                    formBtn :
                     <button className="formBtnDisable">Sauvegarder</button>
             }
         </div>
