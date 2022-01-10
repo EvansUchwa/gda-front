@@ -8,6 +8,41 @@ export const toggleFormBtnClickable = (formFieldsIsValid, btnAnimation = null) =
 
 }
 
+export const dispatchInputOrSelect = (formValueObj, setFormValueObj, field, handleChange, errors, setErrors) => {
+    return <>
+        {
+            (() => {
+                if (field.comp === 'input' && field.htmlType != 'file') {
+                    return <input placeholder='Hey' type={field.htmlType}
+                        name={field.name} value={formValueObj[field.name]}
+                        onChange={(event) => handleChange(event,
+                            formValueObj, setFormValueObj,
+                            errors, setErrors)}
+                        errmsgname={field.errmsgname}
+                        placeholder={"Ex: " + field.ph}
+                        autoComplete="off"
+                    />
+                } else if (field.comp === 'select') {
+                    return <select defaultValue={formValueObj[field.name]}
+                        name={field.name}
+                        onChange={(event) => handleChange(event,
+                            formValueObj, setFormValueObj,
+                            errors, setErrors)}
+                        errmsgname={field.errmsgname}>
+                        <option value="">Choisir...</option>
+                        {
+                            field.options.map((sop, index) => <option
+                                key={'option' + index + field.name}>
+                                {sop.ph}
+                            </option>)
+                        }
+                    </select>
+                }
+            })()
+        }
+    </>
+}
+
 export const dispatchBtn = (type, content) => {
     const btns = {
         simple: <button className='semiRounded'>{content}</button>,
@@ -22,6 +57,8 @@ export const dispatchBtn = (type, content) => {
 
     return btns[type]
 }
+
+
 
 export const getError = (fieldName, errors) => {
     const errorList = errors.filter(item => item.name == fieldName);

@@ -5,6 +5,10 @@
   display: flex;
   justify-content: space-between;
 }
+.filterResults button {
+  background-color: var(--colorPrincipal);
+  color: white;
+}
 /* Form */
 .addOfferPart {
   /* width: 100%; */
@@ -105,7 +109,7 @@
 
 /*  */
 .modalDetailProfil {
-  width: 250px;
+  width: 40%;
 }
 .modalDetailProfil input {
   display: none;
@@ -204,6 +208,9 @@
 /* Fin */
 
 @media screen and (max-width: 512px) {
+  .modalDetailProfil {
+    width: 95%;
+  }
   /* Pub banner */
   .go-pubBanner {
     width: 90%;

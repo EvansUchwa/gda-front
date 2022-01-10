@@ -9,7 +9,7 @@ export const DashWelcomeBanner = ({ props }) => {
     const { userType, name } = props
     const dispatchDashHelloAction = () => {
         if (userType == 'candidat') {
-            return <Link to="">Mettre a jour mon profil</Link>
+            return <Link to="/Modifier/Profil">Mettre a jour mon profil</Link>
         } else if (userType == 'entreprise') {
             return <Link to="/Ajouter-offre">Postez une nouvelle offre</Link>
         } else {
@@ -34,7 +34,11 @@ export const DashboardFastLinks = ({ props }) => {
                     <h2>{userType == 'entreprise' ? 'Les profiles de candidats' : 'Les offres'} </h2>
                     <OfferAndCandidatePreviewSection props={{ offerType: 'latest', userType }} />
                     <OfferAndCandidatePreviewSection props={{ offerType: 'mostViewed', userType }} />
-                    <OfferAndCandidatePreviewSection props={{ offerType: 'suggestion', userType }} />
+                    {
+                        userType === 'candidat' ?
+                            <OfferAndCandidatePreviewSection props={{ offerType: 'suggestion', userType }} />
+                            : ''
+                    }
                 </>
             }
         })()}
@@ -42,6 +46,7 @@ export const DashboardFastLinks = ({ props }) => {
 }
 
 export const DashboardStats = ({ props }) => {
+    const { authedInfo } = useAuth();
     const { userType } = props
 
     const statsObj = {
@@ -49,7 +54,7 @@ export const DashboardStats = ({ props }) => {
             { number: 3, title: 'Offres postés', icon: "mdi-book" },
         ],
         CANDIDAT: [
-            { number: 'Non definis', title: 'Autres Statistique', icon: "mdi-book" }
+            // { number: 'Non definis', title: 'Autres Statistique', icon: "mdi-book" }
         ],
         ADMIN: [
             { number: 8, title: 'Candidats inscrits', icon: "mdi-book" },
@@ -62,7 +67,7 @@ export const DashboardStats = ({ props }) => {
     return <div className="dash-stats">
         <h2>Statistiques</h2>
         <section className="ds-section">
-            <b>10 entreprise <br /> ont visité votre profil </b>
+            <b>{authedInfo.other.nbre_view} personnes <br /> ont visité votre profil </b>
             <i className="mdi mdi-eye"></i>
         </section>
         {

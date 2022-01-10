@@ -142,10 +142,9 @@ export const TopDashNav = () => {
                         <span>Nofitication 3</span>
                     </div>
                 </section>
-                <section className="du-search">
+                {/* <section className="du-search">
                     <i className="mdi mdi-magnify" onClick={() => setToggleModal(true)}></i>
-                    {/* {toggleModal ? <Modal props={{ content: modalContent, setToggleModal }} /> : ''} */}
-                </section>
+                </section> */}
                 <section className="du-userInfo">
                     <img src={other[dispatchUserPic(userType)]}
                         className="rounded"
@@ -153,8 +152,8 @@ export const TopDashNav = () => {
                         onClick={(event) => toggleOptionsNav(event)} />
 
                     <div className="du-options">
-                        <Link to="">Mon profil</Link>
-                        <Link to="">Modifier profil</Link>
+                        <Link to="/Profil">Mon profil</Link>
+                        <Link to="/Modifier/Profil">Modifier profil</Link>
                         <Link to="#" onClick={(event) => {
                             event.preventDefault();
                             logout()

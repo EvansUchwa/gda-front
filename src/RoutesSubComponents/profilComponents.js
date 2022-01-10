@@ -56,10 +56,10 @@ const ProfilHead = ({ props }) => {
                 if (userType === 'entreprise') {
                     return <>
                         <h2>{infos.nom_entreprise}</h2>
-                        <p>
+                        {/* <p>
                             <span>Reprensentant de :</span>
-                            <b>Nom entreprise</b>
-                        </p>
+                            <b>{infos.nom_entreprise}</b>
+                        </p> */}
                     </>
                 } else {
                     return <>

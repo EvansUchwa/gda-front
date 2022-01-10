@@ -6,37 +6,30 @@ import axios from "axios";
 import { useAuth } from "../hooks/authHooks";
 import { useParams } from "react-router-dom";
 import { FixedLoader } from "../GlobalComponents/Loader";
+import { dispatchCandidatListApi } from "../RawData/links";
+import { DataNotFound } from '../GlobalComponents/Message'
 
 const Candidats = () => {
     const { apiInfos } = useAuth();
-    const { baseApi, headerApi } = apiInfos;
+    const { baseApi, headerApi, userType } = apiInfos;
     const { type, page } = useParams();
-    const [candidats, setCandidats] = useState([])
-    const [listApiData, setListApiData] = useState(null);
+    const [candidats, setCandidats] = useState();
     const [pageInfos, setPageInfos] = useState({})
-    const [loader, setLoader] = useState()
-
+    const [load, setLoad] = useState('')
+    const [apiLink, setApiLink] = useState(dispatchCandidatListApi(type, 'get'))
+    const dispatchAxiosQuery = (method, data) => {
+        if (method == 'post') {
+            return axios.post(baseApi + apiLink.link + '' + page, data, { headers: headerApi })
+        } else {
+            return axios.get(baseApi + apiLink.link + '' + page, { headers: headerApi })
+        }
+    }
 
     useEffect(() => {
-        setCandidats([])
-        setLoader(<FixedLoader />)
-        let apiComplete = "";
-        if (type === 'latest') {
-            apiComplete = '/api/candidats/list-candidat?page=' + page
-        } else if (type === 'mostViewed') {
-            apiComplete = "/api/candidats/candidat-plus-visite"
-        }
-        else if (type === 'suggestion') {
-            apiComplete = '/api/candidats/list-candidat?page=' + page
-        }
-        axios.get(baseApi + apiComplete,
-            { headers: headerApi })
+        setLoad(<FixedLoader />)
+        dispatchAxiosQuery(apiLink.method, apiLink.data)
             .then(res => {
-                setListApiData(res.data)
-
-                if (['mostViewed'].includes(type)) {
-                    setCandidats(res.data)
-                } else {
+                if (res.data !== undefined && res.data.data) {
                     setCandidats(res.data.data)
                     setPageInfos({
                         ...pageInfos,
@@ -44,20 +37,25 @@ const Candidats = () => {
                         currentPage: parseInt(page),
                         link: '/Candidats/' + type
                     })
+
+                } else {
+                    setCandidats([])
                 }
-                setLoader('')
+                setLoad('')
+
             })
             .catch(err => console.log(err))
-    }, [page])
+    }, [page, apiLink])
 
     return <div className="dashboardPart">
-        <CandidateOrEmployerFilter props={{ userType: 'Employeur' }} />
-        <CandidatesList props={{ candidats }} />
+        <CandidateOrEmployerFilter props={{ userType: 'ENTREPRISE', setApiLink }} />
+        {load}
         {
-            // candidats.length ?
-            // <CandidatesList props={{ candidats }} />
-            // : <FixedLoader />
-            loader
+            candidats ?
+                candidats.length ?
+                    <CandidatesList props={{ candidats }} />
+                    : <DataNotFound props={{ dataType: 'aucun profil ne correspond a votre recherche' }} />
+                : <FixedLoader />
         }
         {
             pageInfos.totalPage > 1 ?

@@ -24,7 +24,10 @@ export const UpdateProfilForm = () => {
                         (() => {
                             if (urlImgRegex.test(authedInfo.other[upf.dbKey])) {
                                 return <UrlImage props={{ src: authedInfo.other[upf.dbKey], alt: 'Image updater preview' }} />
-                            } else {
+                            } else if (authedInfo.other[upf.dbKey] == 'https://www.gda-services.com/public/candidats/image/') {
+                                return <p>Aucun Fichier</p>
+                            }
+                            else {
                                 return !['type'].includes(upf.dbKey) ? <p>{upf.dbKey ? authedInfo.other[upf.dbKey] : 'data'} </p> : ''
                             }
                         })()

@@ -1,10 +1,9 @@
 export const sidebarLinks = {
     CANDIDAT: [
-        { ph: 'Mes candidatures', link: '#', icons: 'mdi-anchor' },
-        { ph: 'Les entreprise', link: '#', icons: 'mdi-heart' }
+
     ],
     ENTREPRISE: [
-        { ph: 'Offre posté', link: '#', icons: 'mdi-heart' },
+        // { ph: 'Offre posté', link: '#', icons: 'mdi-heart' },
     ],
     ADMIN: [
         {
@@ -43,4 +42,41 @@ export const sidebarLinks = {
             { ph: 'Fiche de performance', link: '#' }]
         }
     ]
+}
+
+
+export const dispatchCandidatListApi = (type, method, data = null) => {
+    const obj = {
+        latest: '/api/candidats/list-candidat?page=',
+        mostViewed: '/api/candidats/candidat-plus-visite?page=',
+        az: "/api/candidats/search-filtre-sortingBy?page=",
+        za: '/api/candidats/search-filtre-sortingBy?page=',
+        filter: "/api/candidats/search-filtre-options?page="
+    }
+
+
+    if (['az', 'za'].includes(type)) {
+        return { link: obj[type], method: method, data: { sortingBy: data } };
+    } else {
+        return { link: obj[type], method: method, data: data };
+    }
+}
+
+
+export const dispatchEnterpriseListApi = (type, method, data = null) => {
+    const obj = {
+        latest: '/api/offres/dernier-offres?page=',
+        mostViewed: '/api/offres/offres-populaire?page=',
+        suggestion: "/api/offres/offres-recommander/" + data + "?page=",
+        az: "/api/offres/search-filtre-sortingBy?page=",
+        za: '/api/offres/search-filtre-sortingBy?page=',
+        filter: "/api/offres/search-filtre-options?page="
+    }
+
+
+    if (['az', 'za'].includes(type)) {
+        return { link: obj[type], method: method, data: { sortingBy: data } };
+    } else {
+        return { link: obj[type], method: method, data: data };
+    }
 }

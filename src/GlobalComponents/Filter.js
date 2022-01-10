@@ -1,97 +1,102 @@
+import axios from "axios";
 import { useState } from "react";
+import { useAuth } from "../hooks/authHooks";
+import { candidatsFields, enterpriseFields, jobFields } from "../RawData/fields";
+import { dispatchCandidatListApi } from "../RawData/links";
 import { Modal } from "./Modal";
+import { dispatchInputOrSelect } from "../Tools/formValidator";
 
-const filterForCandidate = <>
-    <div className="jobOfferFilter">
-        <h2>Filtrer les jobs</h2>
-        <form>
-            <div className="formSegment">
-                <label>Poste</label>
-                <input type="text" placeholder="Poste Recherché" />
-            </div>
-            <div className="formSegment">
-                <label>Niveau d'etude</label>
-                <select >
-                    <option value=''>CEP</option>
-                    <option>BEPC</option>
-                    <option>BAC</option>
-                    <option>BAC + 1</option>
-                    <option>ETc...</option>
-                </select>
-            </div>
-            <div className="formSegment">
-                <label>Type de contrat</label>
-                <select >
-                    <option>Stage</option>
-                    <option>CDI</option>
-                    <option>CDD</option>
-                </select>
-            </div>
-            <div className="formSegment">
-                <label>Ville</label>
-                <select >
-                    <option value=''>Cotonou</option>
-                    <option>Bohicon</option>
-                    <option>ABomey-Calavi</option>
-                    <option>ETc...</option>
-                </select>
-            </div>
-            <div className="formSegment">
-                <label>Domaine de Competence</label>
-                <input type="number" placeholder="Salaire recherché en CFA" />
-            </div>
-        </form>
-    </div>
-</>
+const FilterElementList = ({ props }) => {
+    const { userType, setApiLink, setToggleModal } = props;
+    const [filterFields, setFilterFileds] = useState({
+        niveau_detude: '', domaine_de_competence: '', ville: ''
+    });
 
-const filterForEmployer = <>
-    <div className="jobOfferFilter">
-        <h2>Filtrer les candidats</h2>
-        <form>
-            <div className="formSegment">
-                <label>Niveau d'etude</label>
-                <select >
-                    <option value=''>CEP</option>
-                    <option>BEPC</option>
-                    <option>BAC</option>
-                    <option>BAC + 1</option>
-                    <option>ETc...</option>
-                </select>
-            </div>
-            <div className="formSegment">
-                <label>Domaine de Competence</label>
-                <select >
-                    <option value=''>Environnement</option>
-                    <option>Consulting</option>
-                    <option>ETc...</option>
-                </select>
-            </div>
-            <div className="formSegment">
-                <label>Experiences dans le domaine</label>
-                <select >
-                    <option value=''>6 mois</option>
-                    <option>1 ans</option>
-                    <option>2 ans</option>
-                    <option>5 ans</option>
-                    <option>+5 ans</option>
-                </select>
-            </div>
-        </form>
-    </div>
-</>
+    const filterObj = {
+        CANDIDAT: [
+            candidatsFields.niveau,
+            enterpriseFields.localisation,
+            jobFields.salaire,
+            jobFields.contrat
+        ],
+        ENTREPRISE: [
+            candidatsFields.niveau,
+            candidatsFields.domaine_competence
+        ]
+    }
+
+    const handleChange = (event) => {
+        const value = event.target.value;
+        const name = event.target.name;
+
+        setFilterFileds({ ...filterFields, [name]: value });
+    }
+    const handleFilterSubmit = (event) => {
+        event.preventDefault();
+        let bodyData = {};
+        if (userType === 'ENTREPRISE') {
+            bodyData = {
+                'niveau': filterFields.niveau_detude,
+                'competences': filterFields.domaine_de_competence,
+                'experience': "",
+            }
+        } else {
+            bodyData = {
+                'post': "nodddm",
+                'niveau_etude': "bepc",
+                'type_contrat': "type_contrat",
+                'adresse': "adresse",
+                'domaine_competence': "domaine_competence",
+            }
+        }
+        setApiLink(dispatchCandidatListApi('filter', 'post', bodyData))
+        setToggleModal(false)
+    }
+    return <>
+        <div className="jobOfferFilter">
+            <h2>Filtrer les jobs</h2>
+            <form onSubmit={(event => handleFilterSubmit(event))}>
+                {
+                    filterObj[userType].map((field, index) => <div className="formSegment"
+                        key={'filter seg' + index}>
+                        <label>{field.label}</label>
+                        {
+                            dispatchInputOrSelect(filterObj, setFilterFileds, field, handleChange, [], [])
+                        }
+                    </div>)
+                }
+                <div className="formBtn">
+                    <button>Appliquer</button>
+                </div>
+            </form>
+        </div>
+    </>
+}
+
+
 export const CandidateOrEmployerFilter = ({ props }) => {
-    const { userType } = props;
+    const { apiInfos } = useAuth();
+    const { baseApi, headerApi } = apiInfos;
+    const { userType, setApiLink } = props;
     const [toggleModal, setToggleModal] = useState(false)
-    const modalContent = userType === 'Candidat' ? filterForCandidate : filterForEmployer;
+    const modalContent = <FilterElementList props={{ userType, setApiLink, setToggleModal }} />;
+
+    const handleSortChange = (event) => {
+        let value = event.target.value;
+        // low_high
+        if (value != '') {
+            setApiLink(dispatchCandidatListApi(value, 'post', value))
+        }
+    }
 
     return <div className="filterResults">
         <section>
-            <select className="semiRounded">
+            <select className="semiRounded" onChange={(event) => handleSortChange(event)} defaultValue={""}>
                 <option value=''>Trier ...</option>
-                <option>De A a Z</option>
-                <option>De Z a Z</option>
-                <option>De Moins recent a Plus recent</option>
-                <option>De Plus recent a Moins recent</option>
+                <option value='az'>De A a Z</option>
+                <option value='za'>De Z a Z</option>
+                <option value="">De Moins recent a Plus recent</option>
+                <option value="latest">De Plus recent a Moins recent</option>
             </select>
         </section>
 

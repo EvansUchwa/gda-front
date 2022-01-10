@@ -36,7 +36,7 @@ const Profil = () => {
             setProfilInfo(authedInfo.other)
         }
 
-    }, [])
+    }, [params])
 
     function getProfilId() {
         return (profilId && profilId > 0 ? profilId : authedInfo.other.id)

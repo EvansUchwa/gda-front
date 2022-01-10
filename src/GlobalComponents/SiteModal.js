@@ -7,10 +7,9 @@ import { handleUserFieldInfoChange } from "../Tools/formFunction";
 import { dispatchBtn, getError } from "../Tools/formValidator";
 import { userDetailModalKey } from "../RawData/key";
 export const ProfilDetailModal = ({ props }) => {
-    const { apiInfos, dispatchProfilPic } = useAuth();
+    const { apiInfos } = useAuth();
     const { modalId, userType } = props
     const [modalData, setModalData] = useState({});
-    const [etp, setEtp] = useState();
 
     const detailProfilLink = (userType === 'candidat') ?
         ('entreprise/' + modalData.entreprise_id) : ('candidat/' + modalData.id);
@@ -49,11 +48,20 @@ export const ProfilDetailModal = ({ props }) => {
         setCurrentTab(value)
     }
     const dispatchModalPic = (userType) => {
+        let pic = ''
         if (userType == 'entreprise') {
-            return modalData.photo1_url
-        } else {
+            pic = modalData.photo1_url
+        } else if (userType) {
             const { entreprises } = modalData;
-            return entreprises ? entreprises.logo_url : '';
+            pic = entreprises ? entreprises.logo_url : '';
+        }
+
+        if (pic && pic != 'https://www.gda-services.com/public/candidats/image/'
+            && pic != 'https://www.gda-services.com/public/pages/') {
+            return pic
+        } else {
+            return 'https://raw.githubusercontent.com/EvansUchwa/Evans-img/main/defaultUserPic.png'
+
         }
     }
 
@@ -80,9 +88,9 @@ export const ProfilDetailModal = ({ props }) => {
                         }
                     })()
                 }
-                <a href="mailto:name@rapidtables.com" target='_blank' className='googleColor'>Gmail</a>
-                <a href="#" target='_blank' className='telColor'>Sms</a>
-                <a href="https://wa.me/15551234567" target='_blank' className=' whatsappColor'>Whatsapp</a>
+                <a href="mailto:contact@gda-services.com" target='_blank' className='googleColor'>Gmail</a>
+                <a href="#" target='_blank' className='telColor'>Appel</a>
+                <a href="https://wa.me/22994326044" target='_blank' className=' whatsappColor'>Whatsapp</a>
             </div>
         </section>
         <section className='mdpb-switcher'>

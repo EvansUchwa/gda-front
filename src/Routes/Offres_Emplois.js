@@ -7,36 +7,42 @@ import axios from "axios";
 import { useAuth } from "../hooks/authHooks";
 import { FixedLoader } from "../GlobalComponents/Loader";
 import { DataNotPosted } from "../GlobalComponents/Message";
+import { dispatchEnterpriseListApi } from "../RawData/links";
 
 const Offres_Emplois = () => {
-    const { apiInfos } = useAuth();
+    const { apiInfos, authedInfo } = useAuth();
     const { baseApi, headerApi } = apiInfos;
     const { type, page } = useParams();
     const [jobOffers, setJobOffers] = useState()
     const [pageInfos, setPageInfos] = useState({})
+    const [load, setLoad] = useState('')
+    const [apiLink, setApiLink] = useState(type != 'suggestion' ? dispatchEnterpriseListApi(type, 'get')
+        : dispatchEnterpriseListApi(type, 'get', authedInfo.general.id))
+    const dispatchAxiosQuery = (method, data) => {
+        if (method == 'post') {
+            return axios.post(baseApi + apiLink.link + '' + page, data, { headers: headerApi })
+        } else {
+            return axios.get(baseApi + apiLink.link + '' + page, { headers: headerApi })
+        }
+    }
 
     useEffect(() => {
-        let apiComplete = "";
-        if (type === 'latest') {
-            apiComplete = "/api/offres/dernier-offres"
-        } else if (type === 'mostViewed') {
-            apiComplete = "/api/offres/offres-populaire"
-        }
-        else if (type === 'suggestion') {
-            apiComplete = "/api/offres/offres-recommander"
-        } else {
-            apiComplete = '/api/offres/list-offres?page=' + page
-        }
-        axios.get(baseApi + '/api/offres/list-offres?page=' + page,
-            { headers: headerApi })
+        setLoad(<FixedLoader />)
+        dispatchAxiosQuery(apiLink.method, apiLink.data)
             .then(res => {
-                setJobOffers(res.data.data)
-                setPageInfos({
-                    ...pageInfos,
-                    totalPage: res.data.last_page,
-                    currentPage: parseInt(page),
-                    link: '/Offres-Emplois/'
-                })
+                if (res.data !== undefined && res.data.data) {
+                    setJobOffers(res.data.data)
+                    setPageInfos({
+                        ...pageInfos,
+                        totalPage: res.data.last_page,
+                        currentPage: parseInt(page),
+                        link: '/Offres-Emplois/'
+                    })
+                } else {
+                    setJobOffers([])
+                }
+
+                setLoad('')
             })
             .catch(err => console.log(err))
     },
@@ -44,14 +50,14 @@ const Offres_Emplois = () => {
     return <div className="dashboardPart">
         {
             jobOffers ?
-                <CandidateOrEmployerFilter props={{ userType: 'Candidat' }} />
+                <CandidateOrEmployerFilter props={{ userType: 'CANDIDAT', setApiLink }} />
                 : ''
         }
         {
             jobOffers ?
                 jobOffers.length > 0 ?
                     <JobsOfferList props={{ jobOffers }} />
-                    : <DataNotPosted props={{ dataType: " offres d'emplois " }} />
+                    : <DataNotPosted props={{ dataType: "aucune  offres d'emplois ne correspond a votre recherche " }} />
                 :
                 <FixedLoader />
         }
