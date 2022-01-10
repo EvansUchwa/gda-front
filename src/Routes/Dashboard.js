@@ -1,37 +1,30 @@
 import { Navigate } from 'react-router-dom';
 import '../Assets/styles/dashboard.css'
 
-import { DashWelcomeBanner, DashboardFastLinks, DashboardStats, AccountNotActivated } from "../RoutesSubComponents/dashboardComponents";
+import { DashWelcomeBanner, DashboardFastLinks, DashboardStats, AccountNotActivated, EnterpriseList } from "../RoutesSubComponents/dashboardComponents";
 import { useAuth } from '../hooks/authHooks';
 
 const Dashboard = () => {
     const { authedInfo, userType } = useAuth();
-
+    const { name } = authedInfo.general;
     // const { contact, tel } = authedInfo.other;
+    const userDashboardComponents = {
+        ENTREPRISE: <>
+            <DashboardFastLinks props={{ userType: userType.toLowerCase() }} />
+        </>,
+        CANDIDAT: <>
+            <DashboardFastLinks props={{ userType: userType.toLowerCase() }} />
+            <EnterpriseList />
+        </>
+    }
 
     return <>
-        {
-            (() => {
-                if (authedInfo !== null && (authedInfo.other !== null)) {
-                    const { name } = authedInfo.general;
-                    return <div className="dashboardPart">
-                        <DashWelcomeBanner props={{ userType: userType.toLowerCase(), name }} />
-                        <DashboardStats props={{ userType: userType.toLowerCase() }} />
-                        {
-                            (() => {
-                                if (userType != 'Admin') {
-                                    return <DashboardFastLinks props={{ userType: userType.toLowerCase() }} />
-                                } else {
-                                    return <p>Nothing</p>
-                                }
-                            })()
-                        }
-                    </div>
-                } else {
-                    return <Navigate to='/Finaliser-Inscription' replace />
-                }
-            })()
-        }
+        <div className="dashboardPart">
+            <DashWelcomeBanner props={{ userType: userType.toLowerCase(), name }} />
+            <DashboardStats props={{ userType: userType }} />
+            {userDashboardComponents[userType]}
+        </div>
+
         <AccountNotActivated />
     </>
 

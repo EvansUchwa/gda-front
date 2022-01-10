@@ -6,17 +6,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/authHooks";
 import { FixedLoader } from "../GlobalComponents/Loader";
+import { DataNotPosted } from "../GlobalComponents/Message";
 
 const Offres_Emplois = () => {
     const { apiInfos } = useAuth();
     const { baseApi, headerApi } = apiInfos;
     const { type, page } = useParams();
-    const [jobOffers, setJobOffers] = useState([])
-    const [pageInfos, setPageInfos] = useState({
-        totalPage: 12,
-        currentPage: parseInt(page),
-        link: '/Offres-Emplois/' + type
-    })
+    const [jobOffers, setJobOffers] = useState()
+    const [pageInfos, setPageInfos] = useState({})
 
     useEffect(() => {
         let apiComplete = "";
@@ -33,24 +30,36 @@ const Offres_Emplois = () => {
         axios.get(baseApi + '/api/offres/list-offres?page=' + page,
             { headers: headerApi })
             .then(res => {
-                // if (['latest', 'mostViewed', 'suggestion'].includes(type)) {
-                //     console.log(res.data.data)
-                // } else {
-                //     setJobOffers(res.data.data)
-                // }
                 setJobOffers(res.data.data)
+                setPageInfos({
+                    ...pageInfos,
+                    totalPage: res.data.last_page,
+                    currentPage: parseInt(page),
+                    link: '/Offres-Emplois/'
+                })
             })
             .catch(err => console.log(err))
     },
         []);
     return <div className="dashboardPart">
-        <CandidateOrEmployerFilter props={{ userType: 'Candidat' }} />
         {
-            jobOffers.length ?
-                <JobsOfferList props={{ jobOffers }} />
-                : <FixedLoader />
+            jobOffers ?
+                <CandidateOrEmployerFilter props={{ userType: 'Candidat' }} />
+                : ''
         }
-        <Pagination props={{ pageInfos }} />
+        {
+            jobOffers ?
+                jobOffers.length > 0 ?
+                    <JobsOfferList props={{ jobOffers }} />
+                    : <DataNotPosted props={{ dataType: " offres d'emplois " }} />
+                :
+                <FixedLoader />
+        }
+        {
+            jobOffers && pageInfos.totalPage > 1 ?
+                <Pagination props={{ pageInfos }} />
+                : ''
+        }
     </div>
 }
 

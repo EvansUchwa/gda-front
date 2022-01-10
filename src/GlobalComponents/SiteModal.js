@@ -5,11 +5,13 @@ import axios from 'axios';
 import { useAuth } from '../hooks/authHooks'
 import { handleUserFieldInfoChange } from "../Tools/formFunction";
 import { getError } from "../Tools/formValidator";
+import { userDetailModalKey } from "../RawData/key";
 export const ProfilDetailModal = ({ props }) => {
-    const { apiInfos } = useAuth();
+    const { apiInfos, dispatchProfilPic } = useAuth();
     const { modalId, userType } = props
     const [modalData, setModalData] = useState({});
-    const [entreprise, setEntreprise] = useState({});
+    const [etp, setEtp] = useState();
+
     const detailProfilLink = (userType === 'candidat') ?
         ('entreprise/' + modalData.entreprise_id) : ('candidat/' + modalData.id);
     useEffect(() => {
@@ -23,90 +25,17 @@ export const ProfilDetailModal = ({ props }) => {
         axios.get(baseApi + apiComplete + modalId,
             { headers: headerApi })
             .then(res => {
-                console.log(res.data)
                 setModalData(res.data)
-                if (userType == 'candidat') {
-                    setEntreprise(res.data.entreprises)
-                }
             })
             .catch(err => console.log(err))
     }, [])
-    const { code_cvtheque,
-        nom, prenom, sexe, lieu, adresse, pays,
-        situation_matrimonial, moyens_de_deplacement,
-        niveau, filiere,
-        photo1_url, nationality,
-        autre_competence, competences,
-        poste_envisager, pretention_salarials,
 
-        date_cloture, domaine_competence,
-        id, moyen_deplacement,
-        niveau_etude, post, salaire, type_contrat,
-        mission, profil, poste_apouvoir
-    } = modalData;
-
-
-    const infosTabObj = {
-        entreprise: {
-            tab1: [
-                { key: 'Nom', value: nom },
-                { key: 'Prenom', value: prenom },
-                { key: 'Sexe', value: sexe },
-                { key: 'Age', value: 'Nom' },
-                { key: 'Pays', value: pays },
-                { key: 'Lieu de Naissance', value: lieu },
-                { key: 'Ville de Residence', value: adresse },
-                { key: 'Nationalité', value: nationality },
-                { key: 'Situation Matrimonial', value: situation_matrimonial },
-                { key: 'Moyen de deplacement', value: moyens_de_deplacement },
-            ],
-            tab2: [
-                { key: 'Niveau', value: niveau },
-                { key: 'Ecole', value: 'Nom' },
-                { key: 'Filiere de formatin', value: filiere },
-                { key: 'Autre', value: 'Nom' },
-            ],
-            tab3: [
-                { key: 'Competence general', value: competences },
-                { key: 'Experience', value: 'Nom' },
-                { key: 'Autre Competence', value: autre_competence },
-            ],
-
-            tab4: [
-                { key: 'Poste envisagé', value: poste_envisager },
-                { key: 'Salaire envisagé', value: pretention_salarials },
-            ]
-        },
-
-        candidat: {
-            tab1: [
-                { key: 'Cloture', value: date_cloture },
-                { key: 'Poste', value: post },
-                { key: 'Nombre de Poste', value: poste_apouvoir },
-                { key: 'Salaire', value: salaire },
-                { key: 'Type de contrat', value: type_contrat },
-                { key: 'Lieu', value: adresse },
-                { key: 'Moyen de deplacement', value: moyen_deplacement },
-            ],
-            tab2: [
-                { key: 'Niveau', value: niveau_etude },
-                { key: 'Domaine', value: domaine_competence },
-                { key: 'Mission', value: mission },
-                { key: 'Profil', value: profil },
-            ],
-            tab3: [
-                { key: 'Nom de l\'entreprise', value: entreprise.nom_entreprise },
-                { key: 'Ify de l\'entreprise', value: entreprise.ifu },
-                { key: 'Description', value: entreprise.description },
-            ],
-        }
-    }
 
     const detailSwitcherTabs = {
         candidat: [
             { label: 'General', value: 1 },
             { label: 'Exigeance', value: 2 },
-            { label: 'Entreprise', value: 3 }],
+        ],
         entreprise: [
             { label: 'General', value: 1 },
             { label: 'Scolarité', value: 2 },
@@ -119,13 +48,26 @@ export const ProfilDetailModal = ({ props }) => {
         const value = event.target.value;
         setCurrentTab(value)
     }
+    const dispatchModalPic = (userType) => {
+        if (userType == 'entreprise') {
+            return modalData.photo1_url
+        } else {
+            const { entreprises } = modalData;
+            return entreprises ? entreprises.logo_url : '';
+        }
+    }
 
     return <div className='mdpBody'>
         <section className='mdpb-imageAndContact'>
-            <UrlImage props={{
-                src: photo1_url ? photo1_url : entreprise.logo_url,
-                alt: 'User detail modal'
-            }} />
+            {
+                modalData ?
+                    <UrlImage props={{
+                        src: dispatchModalPic(userType),
+                        alt: 'User detail modal',
+                        className: 'rounded'
+                    }} />
+                    : ''
+            }
             <div>
                 <Link to={"/Profil/" + detailProfilLink}>Voir le profil</Link>
                 <h5>OU</h5>
@@ -161,11 +103,12 @@ export const ProfilDetailModal = ({ props }) => {
 
                 <section className='mdpb-infosTextList'>
                     {
-                        infosTabObj[userType]['tab' + currentTab].map((info, index) => <div
+                        userDetailModalKey[userType]['tab' + currentTab].map((info, index) => <div
                             key={'mdpb-iTl' + index}>
-                            <span>{info.key}</span>
+                            <b>{info.title}</b>
                             <i className="mdi mdi-arrow-right"></i>
-                            <b>{info.value}</b>
+
+                            <span>{modalData[info.key]}</span>
                         </div>)
                     }
 
@@ -179,8 +122,8 @@ export const ProfilDetailModal = ({ props }) => {
 
 
 export const UpdateInfoModal = ({ props }) => {
-    const { userType, apiInfos, authedInfo } = useAuth()
-    const { upField, initialData } = props;
+    const { userType, apiInfos, authedInfo, updateUserInfo } = useAuth()
+    const { upField, initialData, setToggleModal } = props;
     const [userNewInfo, setUserNewInfo] = useState({
         nom: initialData.nom, prenom: initialData.prenom,
         sexe: initialData.sexe, date: initialData.date_naissance, lieu_de_naissance: initialData.lieu,
@@ -249,7 +192,14 @@ export const UpdateInfoModal = ({ props }) => {
             formData.append("photo2", userNewInfo.photo_2)
         }
         axios.post(baseApi + "/api/auth/update/profil/user", formData, { headers: headerApi })
-            .then(res => console.log(res))
+            .then(res => {
+                if (res.data) {
+                    // updateOtherUserInfo(res.data.dataOrder)
+                    // updateGeneralUserInfo(res.data.data)
+                    updateUserInfo(res.data)
+                    setToggleModal(false)
+                }
+            })
             .catch(err => console.log(err))
 
     }

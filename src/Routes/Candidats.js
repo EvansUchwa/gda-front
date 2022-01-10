@@ -59,7 +59,11 @@ const Candidats = () => {
             // : <FixedLoader />
             loader
         }
-        <Pagination props={{ pageInfos }} />
+        {
+            pageInfos.totalPage > 1 ?
+                <Pagination props={{ pageInfos }} />
+                : '...'
+        }
     </div>
 }
 

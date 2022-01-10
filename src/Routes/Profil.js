@@ -38,19 +38,23 @@ const Profil = () => {
 
     }, [])
 
+    function getProfilId() {
+        return (profilId && profilId > 0 ? profilId : authedInfo.other.id)
+    }
+
     return <>
         {
             (() => {
-                if (userType === 'CANDIDAT' && profilType == 'candidat') {
+                if (userType === 'CANDIDAT' && params.profilId && profilT == 'CANDIDAT') {
                     return <RequireToBeEnterprise>
-                        <ProfilLayout props={{ profilT, profilInfo }} />
+                        <ProfilLayout props={{ profilT, profilInfo, profilId: getProfilId() }} />
                     </RequireToBeEnterprise>
-                } else if (userType === 'ENTREPRISE' && profilType == 'entreprise') {
+                } else if (userType === 'ENTREPRISE' && params.profilId && profilT == 'ENTREPRISE') {
                     return <RequireToBeCandidate>
-                        <ProfilLayout props={{ profilT, profilInfo }} />
+                        <ProfilLayout props={{ profilT, profilInfo, profilId: getProfilId() }} />
                     </RequireToBeCandidate>
                 } else {
-                    return <ProfilLayout props={{ profilT, profilInfo }} />
+                    return <ProfilLayout props={{ profilT, profilInfo, profilId: getProfilId() }} />
                 }
             })()
         }

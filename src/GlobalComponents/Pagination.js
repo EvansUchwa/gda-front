@@ -1,32 +1,53 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 export const Pagination = ({ props }) => {
-    const { pageInfos } = props
-    const { totalPage, currentPage, link } = pageInfos;
-    const limit = 5;
-    const [pageVisible, setPageVisible] = useState([])
+    const { totalPage, currentPage, link } = props.pageInfos;
+
+    const [plk, setPlk] = useState([
+        { lk: 1, state: '' },
+        { lk: null, state: '' },
+        { lk: null, state: '' },
+        { lk: totalPage === 1 ? null : 12, state: '' }
+    ])
+
+    const [pageVisible, setPageVisible] = useState()
+
 
     useEffect(() => {
-        const copy = [];
-        let cf = currentPage < totalPage ? currentPage + 1 : currentPage;
+        const plkCopy = plk;
+        if (currentPage <= totalPage) {
 
-        for (let index = 1; index <= cf; index++) {
-            copy.push(<Link to={link + '/' + (index)}
-                className={currentPage === (index) || index == totalPage ? 'pageActive' : ''}
-                key={'pageItem' + index}>
-                {index} </Link>)
+            if (currentPage < totalPage && currentPage > 1) {
+                plkCopy[1] = { lk: currentPage, state: '' }
+                plkCopy[2] = { lk: currentPage + 1 < totalPage ? currentPage + 1 : null, state: '' }
+            } else if (currentPage == totalPage || currentPage + 1 == totalPage) {
+                plkCopy[1] = { lk: currentPage - 2 < totalPage && currentPage > 1 ? currentPage - 2 : null, state: '' }
+                plkCopy[2] = { lk: currentPage - 1 < totalPage && currentPage > 1 ? currentPage - 1 : null, state: '' }
+            }
+            else {
+                plkCopy[1] = { lk: null, state: '' }
+                plkCopy[2] = { lk: currentPage + 1 < totalPage ? currentPage + 1 : null, state: '' }
+            }
+
+            setPageVisible(plkCopy)
         }
-        setPageVisible([copy[currentPage - 2], copy[currentPage - 1], copy[currentPage]])
-    }, [totalPage, currentPage])
-    const n = [0, 0, 0, 0];
+
+    }, [props.pageInfos.currentPage])
+
     return <div className="itemsPagination">
         {
             totalPage ?
                 <><Link to={link + '/' + (currentPage > 1 ? currentPage - 1 : 1)}>
-                    Prev </Link>
+                    Prev</Link>
                     <section>
                         {
-                            pageVisible.map((index, item) => index)
+                            pageVisible ?
+                                pageVisible.filter(pg => pg.lk != null).map((pge, index) => <Link
+                                    to={link + '/' + (pge.lk)}
+                                    className={pge.lk === currentPage ? 'pageActive' : ""}
+                                    key={'pageItem' + index}>
+                                    {pge.lk} </Link>)
+                                : ''
                         }
                     </section>
                     <Link to={link + '/' + (currentPage < totalPage ? currentPage + 1 : totalPage)}>

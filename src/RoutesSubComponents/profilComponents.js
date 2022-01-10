@@ -3,10 +3,12 @@ import { useAuth } from "../hooks/authHooks";
 import { UrlImage } from "../GlobalComponents/Img"
 import { SimpleIconLoader } from "../GlobalComponents/Loader";
 import { JobCard } from "../GlobalComponents/Card";
+import axios from 'axios'
+import { userDataKey } from "../RawData/key";
 
 export const ProfilLayout = ({ props }) => {
     const { dispatchUserPic, dispatchLocation } = useAuth();
-    const { profilT, profilInfo } = props
+    const { profilT, profilInfo, profilId } = props
     return <div className="dashboardPart">
         <div className="dp-profil">
             <div className="profilInfos"
@@ -27,7 +29,7 @@ export const ProfilLayout = ({ props }) => {
             </div>
             <div className="profilPost">
                 {
-                    profilT === 'ENTREPRISE' ? <ProfilPosts props={{ profilId: 10 }} /> : ''
+                    profilT === 'ENTREPRISE' ? <ProfilPosts props={{ profilId }} /> : ''
                 }
             </div>
         </div>
@@ -40,14 +42,12 @@ const ProfilHead = ({ props }) => {
     const { dispatchProfilPic, dispatchLocation } = useAuth();
     const { userType, infos } = props
     const profilPic = infos[dispatchProfilPic(userType)];
-    // const profilPicCond = profilPic.includes('.jpg') || profilPic.includes('.png')
     return <>
         {
             <UrlImage props={{
                 src: profilPic,
                 alt: 'Image entreprise'
             }} />
-
         }
         {
             (() => {
@@ -77,7 +77,7 @@ const ProfilHead = ({ props }) => {
             </p>
             <p>
                 <i className="mdi mdi-eye"></i>
-                {/* <span>{profilInfo.nbre_view}</span> */}
+                <span>{infos.nbre_view} personne(s) ont visité ce profil </span>
             </p>
         </div>
     </>
@@ -85,69 +85,57 @@ const ProfilHead = ({ props }) => {
 
 const ProfilOtherInfo = ({ props }) => {
     const { userType, data } = props
-
-    const otherInfosDispatcher = (type, data) => {
-        const obj = {
-            entreprise: [
-                { title: 'Ifu', data: data.ifu },
-                { title: 'Telephone 1', data: data.contact },
-                { title: 'Telephone 2', data: data.contact2 },
-                { title: 'Domaine', data: data.type },
-                { title: 'Description', data: data.description },
-            ],
-            candidat: [
-                { title: 'Sexe', data: data.sexe },
-                { title: 'Pays', data: data.pays },
-                { title: 'Nationalité', data: data.nationality },
-                { title: 'Date de naissance', data: data.date_naissance },
-                { title: 'Telephone 1', data: data.tel },
-                { title: 'Telephone 2', data: data.tel2 },
-                { title: 'Niveau', data: data.niveau },
-                { title: 'Competence', data: data.competences },
-                { title: 'Filiere etudié', data: data.filiere },
-                { title: 'Ecole', data: data.ecole },
-                { title: 'Moyen de deplacement', data: data.moyens_de_deplacement },
-                { title: 'Experience', data: data.experience },
-                { title: 'Autre competence', data: data.autre_competence },
-            ]
-        }
-
-        return obj[type]
-    }
+    const [profilOInfo, setProfilOInfo] = useState();
+    useEffect(() => {
+        setProfilOInfo(userDataKey[userType])
+    }, [userType, data])
 
     return <ul>
         {
-            otherInfosDispatcher(userType, data) ? otherInfosDispatcher(userType, data).map((info, index) => <li key={"profil other info" + index}>
+            profilOInfo ? profilOInfo.map((info, index) => <li key={"profil other info" + index}>
                 <b><i className="mdi mdi-heart"></i>  {info.title}</b>
-                <p> {[0, '0', null, 'null'].includes(info.data) ? 'Non definis' : info.data}</p>
-            </li>)
-                : <SimpleIconLoader />
-
+                <p> {data[info.key]}</p>
+            </li>) : <SimpleIconLoader />
         }
     </ul>
 }
 
 export const ProfilPosts = ({ props }) => {
+    const { apiInfos } = useAuth()
     const { profilId } = props
+    const [profilPosts, setProfilPosts] = useState();
     const setToggleModal = () => { };
     const setModalInfoId = () => { };
 
     const obj = {
         adresse: 'kdksdjkd', date_cloture: '09/12/2000',
         description: 'dhhdhd', domaine_competence: 'Domaine de ',
-        id: 12, nbre_view: '12', niveau_etude: 'Ok boomer', post: 'Deve Java',
+        id: 12, nbre_view: '12', niveau_etude: 'Ok boomer', post: 'Dev Java',
         type_contrat: 'djdjd', mission: 'Votre mission'
     };
+
+    useEffect(() => {
+        const { baseApi, headerApi } = apiInfos;
+        axios.get(baseApi + '/api/offres/list-offre-entreprise/' + profilId, { headers: headerApi })
+            .then(res => {
+                setProfilPosts(res.data)
+            })
+            .catch(err => console.log(err))
+    }, [])
 
     return <>
         <h3>On retrouve ici les offres posté par l'entreprise</h3>
         <div>
             {
-                [0, 0, 0, 0].map((post, index) => <JobCard props={{
-                    job: obj,
-                    setToggleModal,
-                    setModalInfoId
-                }} />)
+                profilPosts ?
+                    profilPosts.length > 0 ?
+                        profilPosts.map((post, index) => <JobCard props={{
+                            job: post,
+                            setToggleModal,
+                            setModalInfoId
+                        }} key={'ok bommers' + index} />)
+                        : 'Aucune offre posté par cette entreprise'
+                    : <SimpleIconLoader />
             }
         </div>
     </>

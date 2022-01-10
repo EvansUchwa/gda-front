@@ -240,6 +240,10 @@ div {
 
 /* Element not found */
 .notFound {
+  position: sticky;
+  height: 80vh;
+  width: 250px;
+  margin: auto;
   display: flex;
   justify-content: center;
   text-align: center;

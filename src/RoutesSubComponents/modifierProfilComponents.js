@@ -30,7 +30,7 @@ export const UpdateProfilForm = () => {
         {
             toggleModal ?
                 <Modal props={{
-                    content: <UpdateInfoModal props={{ upField, initialData: authedInfo.other }} />,
+                    content: <UpdateInfoModal props={{ upField, initialData: authedInfo.other, setToggleModal }} />,
                     setToggleModal,
                     className: 'updateModal'
                 }} />

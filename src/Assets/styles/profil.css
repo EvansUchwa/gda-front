@@ -26,6 +26,7 @@
   width: 200px;
   height: 200px;
   border-radius: 100%;
+  object-fit: contain;
 }
 .pi-general p {
   margin-bottom: 5px;
@@ -43,6 +44,7 @@
 
 .pi-other {
   padding: 20px 0;
+  text-align: center;
 }
 .pi-other b {
   color: var(--colorPrincipal);
@@ -56,4 +58,71 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+}
+
+/* Update Form  */
+.updateInfoPart {
+  width: 90%;
+  margin: auto;
+  background-color: white;
+  padding: 40px 0;
+}
+.updateInfoPart H1 {
+  text-align: center;
+}
+.updateInfoPart > div {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.formUpdateSection {
+  width: 45%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cpd1);
+  padding: 10px 0;
+  position: relative;
+}
+.formUpdateSection label {
+  width: 90%;
+  margin: 10px auto;
+}
+.formUpdateSection section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: auto;
+}
+.formUpdateSection button {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  background-color: var(--colorPrincipal);
+  color: white;
+  padding: 10px 25px;
+}
+.updateModal button {
+  background-color: var(--colorPrincipal);
+  color: white;
+}
+/*  */
+
+@media screen and (max-width: 512px) {
+  .profilInfos {
+    width: 90% !important;
+    margin: 10px auto;
+  }
+  .profilPost {
+    width: 90%;
+    margin: 10px auto;
+  }
+  .formUpdateSection {
+    width: 95%;
+  }
+  .formUpdateSection button {
+    padding: 4px 8px;
+  }
 }

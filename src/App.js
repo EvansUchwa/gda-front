@@ -29,6 +29,7 @@ import Global_Offer from './Routes/Global-Offers';
 import Admin from './Routes/Admin';
 import { AuthProvider, useAuth } from './hooks/authHooks';
 import Modifier from './Routes/Modifier';
+import { RequireFinishStep } from './middleware';
 
 const RequireAuth = ({ children }) => {
   const location = useLocation();
@@ -108,7 +109,9 @@ function App() {
     window.scrollTo(0, 0)
     if (document.querySelector('.dashbordNav-visible')) {
       document.querySelector('.dashbordNav').classList.toggle('dashbordNav-visible')
-      // document.querySelector('.dashboardPart').classList.toggle('dashboardPartAlign')
+    }
+    if (document.querySelector('.dashboardPartAlign')) {
+      document.querySelector('.dashboardPart').classList.toggle('dashboardPartAlign')
     }
     handleMobileMenu()
   }, [pathName])
@@ -156,7 +159,9 @@ function App() {
               (() => {
                 if (route.requireAuth == true) {
                   return <RequireAuth>
-                    {route.components}
+                    <RequireFinishStep>
+                      {route.components}
+                    </RequireFinishStep>
                   </RequireAuth>
 
                 } else if (route.requireAuth == false) {

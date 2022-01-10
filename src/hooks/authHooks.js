@@ -35,6 +35,16 @@ export const useAuthProvider = () => {
                 JSON.stringify({ ...authedInfo, other: newData }))
             setAuthedInfo({ ...authedInfo, other: newData })
         },
+        updateGeneralUserInfo(newData) {
+            window.localStorage.setItem('gda-authInfos',
+                JSON.stringify({ ...authedInfo, general: newData }))
+            setAuthedInfo({ ...authedInfo, general: newData })
+        },
+        updateUserInfo(newData) {
+            window.localStorage.setItem('gda-authInfos',
+                JSON.stringify({ general: newData.data, other: newData.dataOrder }))
+            setAuthedInfo({ general: newData.data, other: newData.dataOrder })
+        },
         authed,
         login() {
             window.localStorage.setItem('gda-auth', true)

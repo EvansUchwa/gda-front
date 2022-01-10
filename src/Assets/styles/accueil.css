@@ -86,7 +86,7 @@
 /*  */
 .accueilTypeServices {
   width: 100%;
-  margin: 20px auto;
+  margin: 10px auto;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -141,17 +141,19 @@
   .accueilBanner {
     align-items: flex-start;
     justify-content: center;
+    height: 70vh;
+    /* background-color: green; */
   }
   .accueilBanner-img {
     order: 1;
     width: 90%;
-    height: 40%;
+    height: 60%;
     background-size: contain;
   }
   .accueilBanner-text {
     order: 2;
     width: 80%;
-    margin-top: -35% !important;
+    /* margin-top: -45% !important; */
     margin-bottom: auto !important;
   }
   .accueilBanner-text h1 {
