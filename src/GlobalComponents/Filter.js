@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useAuth } from "../hooks/authHooks";
 import { candidatsFields, enterpriseFields, jobFields } from "../RawData/fields";
-import { dispatchCandidatListApi } from "../RawData/links";
+import { dispatchCandidatListApi, dispatchEnterpriseListApi } from "../RawData/links";
 import { Modal } from "./Modal";
 import { dispatchInputOrSelect } from "../Tools/formValidator";
 
@@ -83,9 +83,12 @@ export const CandidateOrEmployerFilter = ({ props }) => {
 
     const handleSortChange = (event) => {
         let value = event.target.value;
-        // low_high
         if (value != '') {
-            setApiLink(dispatchCandidatListApi(value, 'post', value))
+            if (userType == 'ENTREPRISE') {
+                setApiLink(dispatchCandidatListApi(value, 'post', value))
+            } else {
+                setApiLink(dispatchEnterpriseListApi(value, 'post', value))
+            }
         }
     }
 
@@ -94,8 +97,8 @@ export const CandidateOrEmployerFilter = ({ props }) => {
             <select className="semiRounded" onChange={(event) => handleSortChange(event)} defaultValue={""}>
                 <option value=''>Trier ...</option>
                 <option value='az'>De A a Z</option>
-                <option value='za'>De Z a Z</option>
-                <option value="">De Moins recent a Plus recent</option>
+                <option value='za'>De Z a A</option>
+                <option value="low_high">De Moins recent a Plus recent</option>
                 <option value="latest">De Plus recent a Moins recent</option>
             </select>
         </section>

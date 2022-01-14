@@ -1,37 +1,46 @@
-import { Link } from 'react-router-dom';
 import { Modal } from '../GlobalComponents/Modal';
 import '../Assets/styles/services_formations.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../hooks/authHooks'
+import axios from 'axios'
 const Formations = () => {
-    const formationTabs = [0, 0, 0, 0];
-    const formationInfosTabs = [0, 0, 0, 0, 0, 0];
+    const { apiInfos } = useAuth();
+    const { baseApi, headerApi } = apiInfos;
+    const [formations, setFormations] = useState([]);
     const [toggleModal, setToggleModal] = useState(false)
+
+    useEffect(() => {
+        axios.get(baseApi + '/api/form/formation', { headers: headerApi })
+            .then(res => {
+                console.log(res)
+                setFormations(res.data)
+            })
+            .catch(err => console.log(err))
+
+    }, [])
     return <div className='formationOrServicePart'>
         <h1>Nos formations</h1>
 
         <div className='formationList'>
             {
-                formationTabs.map((ft, index) => <section key={'formation' + index}
+                formations.map((ft, index) => <section key={'formation' + index}
                     className='formation-card'>
-                    <h3>FORMATION EN SECRÉTARIAT BUREAUTIQUE</h3>
+                    <h3>{ft.titre}</h3>
                     <p>Ideal pour les jeune bachelier</p>
                     <div className='fc-price'>
-                        <span>Inscription: 12000 Fcfa</span>
+                        <span>Inscription: {ft.frais_inscription} Fcfa</span>
                         <p>
-                            <b>1400000 </b>
+                            <b>{ft.prix} </b>
                             <span>cfa/6 mois</span>
                         </p>
                     </div>
                     <button className='semiRounded' onClick={(event) => setToggleModal(true)}
                     >Reservez votre Place</button>
                     <ul>
-                        {
-                            formationInfosTabs.map((fi, index) => <li key={index + '-formation-info'}>
-                                <i className='mdi mdi-check'></i>
-                                <p>Lorem ipsum dolor caracteristique</p>
-                                <span>Lorem ipsum dolor</span>
-                            </li>)
-                        }
+                        <li >
+                            {/* <i className='mdi mdi-check'></i> */}
+                            <p>{ft.description}</p>
+                        </li>
                     </ul>
                 </section>)
             }

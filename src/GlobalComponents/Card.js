@@ -1,17 +1,21 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ProfilImage, SimpleImage, UrlImage } from './Img';
+import { Modal } from './Modal';
+
+
+
 export const JobCard = ({ props }) => {
-    const { job, setToggleModal, setModalInfoId } = props
+
     const { adresse, date_cloture, description, domaine_competence,
         id, nbre_view,
-        niveau_etude, post, type_contrat, mission } = job;
+        niveau_etude, post, type_contrat, mission } = props.job;
+    const { setToggleModal, setModalInfoId } = props
 
     return <div className="card1" >
         <div className="card1-head">
             <b>{type_contrat + ' ' + post}</b>
             <span><i className='mdi mdi-map-marker-circle'></i> {adresse}</span>
-            {/* <img className='rounded' alt={'Image of mostViewed Job N 2'}
-                src={require('../Assets/images/illustrations/contact.svg').default} /> */}
         </div>
 
         <div className="card1-body">
@@ -39,7 +43,14 @@ export const CandidateCard = ({ props }) => {
         poste_envisager, photo1_url,
         competences } = props.candidatInfo;
     const { setToggleModal, setModalId } = props
+    const [toggleModal2, setToggleModal2] = useState(false);
 
+    const modal2Content = <div className='contactBtnList'>
+        <h2>Contacter par :</h2>
+        <a href="mailto:contact@gda-services.com" target='_blank' className='googleColor'>Gmail</a>
+        <a href="#" target='_blank' className='telColor'>Appel</a>
+        <a href="https://wa.me/22994326044" target='_blank' className=' whatsappColor'>Whatsapp</a>
+    </div>
     return <div className="card2" >
         <div className="card2-head">
             {
@@ -73,14 +84,18 @@ export const CandidateCard = ({ props }) => {
                 event.preventDefault()
                 setModalId(id)
                 setToggleModal(true)
-            }}>Profil  </Link>
+            }}>Aperçu  </Link>
             <Link to='#' onClick={(event) => {
                 event.preventDefault()
-                setModalId(id)
-                setToggleModal(true)
+                setToggleModal2(true)
             }}>Contacter </Link>
         </div>
 
+        {
+            toggleModal2 ?
+                <Modal props={{ content: modal2Content, setToggleModal: setToggleModal2 }} />
+                : ''
+        }
     </div>
 }
 

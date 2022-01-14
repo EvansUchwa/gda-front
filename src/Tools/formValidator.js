@@ -9,6 +9,11 @@ export const toggleFormBtnClickable = (formFieldsIsValid, btnAnimation = null) =
 }
 
 export const dispatchInputOrSelect = (formValueObj, setFormValueObj, field, handleChange, errors, setErrors) => {
+    const removeImg = (name) => {
+        setFormValueObj({ ...formValueObj, [name]: '' })
+    }
+
+
     return <>
         {
             (() => {
@@ -33,10 +38,44 @@ export const dispatchInputOrSelect = (formValueObj, setFormValueObj, field, hand
                         {
                             field.options.map((sop, index) => <option
                                 key={'option' + index + field.name}>
-                                {sop.ph}
+                                {sop.ph ? sop.ph : sop}
                             </option>)
                         }
                     </select>
+                } else if (field.comp === 'textarea') {
+                    return <textarea placeholder='Message'
+                        name={field.name} errmsgname={field.errmsgname}
+                        onChange={(event) => handleChange(event,
+                            formValueObj, setFormValueObj,
+                            errors, setErrors)}
+                    >{formValueObj[field.name]}</textarea>
+                }
+                else if (field.comp === 'input' && field.htmlType == 'file') {
+                    return <>
+                        <label htmlFor={field.id} className='iconUploader'>
+                            <i className='mdi mdi-file-upload-outline'></i>
+                            <span>Cliquez ici pour uploader l'image</span>
+                            <input placeholder='Hey' type='file'
+                                name={field.name}
+                                onChange={(event) => handleChange(event,
+                                    formValueObj, setFormValueObj,
+                                    errors, setErrors)}
+                                errmsgname={field.errmsgname}
+                                id={field.id}
+                            />
+                        </label>
+                        <div className='previewImg'>
+                            {
+                                formValueObj[field.name] != ''
+                                    ? <>
+                                        <i className='mdi mdi-close'
+                                            onClick={() => removeImg(field.name)}></i>
+                                        <img id={field.name + '-preview'} alt="Image uploaded preview" />
+                                    </>
+                                    : ''
+                            }
+                        </div>
+                    </>
                 }
             })()
         }
@@ -134,11 +173,11 @@ export const isValidChar = (validationType, errors, setErrors, charName, char, c
         errorMsg = 'Erreur: ' + charMsgTitle + ' doit etre au format alphabetique';
     }
     else if (validationType == 'isAlphaWithSpace') {
-        regex = /^[a-zA-Z- ]+$/.test(char);
+        regex = /^[a-zA-Z-À-ÖØ-öø-ÿ ]+$/.test(char);
         errorMsg = 'Erreur: ' + charMsgTitle + ' doit etre au format alphabetique';
     }
     else if (validationType == 'isAlphaNumeric') {
-        regex = /^[a-zA-Z-0-9]+$/.test(char);
+        regex = /^[a-zA-Z-0-9À-ÖØ-öø-ÿ]+$/.test(char);
         errorMsg = 'Erreur: ' + charMsgTitle + ' doit etre au format alpha-numerique';
     }
     else if (validationType == 'isMail') {

@@ -6,13 +6,25 @@ import { ProfilDetailModal } from '../GlobalComponents/SiteModal';
 
 
 export const CandidatesList = ({ props }) => {
+    const { jobOffers, type } = props
     const [toggleModal, setToggleModal] = useState(false);
     const { candidats } = props
     const [modalId, setModalId] = useState()
 
     return <div className="ppc-published-items">
         <div className='ppc-title'>
-            <h3>Les candidat(e)s les mieux noté(e) </h3>
+            {
+                (() => {
+                    if (type === 'latest') {
+                        return <h3>Les derniers candidats inscrits</h3>
+                    } else if (type === 'mostViewed') {
+                        return <h3>Les candidats les plus populaires</h3>
+                    }
+                    else if (type === 'suggestion') {
+                        return <h3>Les candidats recommandés pour vous</h3>
+                    }
+                })()
+            }
         </div>
         <div className='ppc-itemsSlide'>
             {

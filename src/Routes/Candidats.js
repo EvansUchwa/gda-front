@@ -1,5 +1,5 @@
 import { Pagination } from "../GlobalComponents/Pagination";
-import { CandidatesList } from "../RoutesSubComponents/CandidatsComponents";
+import { CandidatesList } from "../RoutesSubComponents/candidats";
 import { CandidateOrEmployerFilter } from "../GlobalComponents/Filter";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -45,15 +45,15 @@ const Candidats = () => {
 
             })
             .catch(err => console.log(err))
-    }, [page, apiLink])
+    }, [page, type, apiLink])
 
-    return <div className="dashboardPart">
+    return <>
         <CandidateOrEmployerFilter props={{ userType: 'ENTREPRISE', setApiLink }} />
         {load}
         {
             candidats ?
                 candidats.length ?
-                    <CandidatesList props={{ candidats }} />
+                    <CandidatesList props={{ candidats, type }} />
                     : <DataNotFound props={{ dataType: 'aucun profil ne correspond a votre recherche' }} />
                 : <FixedLoader />
         }
@@ -62,7 +62,7 @@ const Candidats = () => {
                 <Pagination props={{ pageInfos }} />
                 : '...'
         }
-    </div>
+    </>
 }
 
 export default Candidats;

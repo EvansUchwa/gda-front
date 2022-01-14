@@ -2,8 +2,7 @@ import '../Assets/styles/finalisation.css'
 import {
     WaitForDashboardRedirect
 } from '../GlobalComponents/Steps.js'
-import { Stepper } from '../RoutesSubComponents/FinaliserInscriptionComponents';
-import { StepForm } from '../RoutesSubComponents/FinaliserInscriptionComponents';
+import { Stepper, StepForm } from '../RoutesSubComponents/finaliser-Inscription';
 import { useState } from 'react';
 import { IllustrationImage } from '../GlobalComponents/Img';
 import { useAuth } from '../hooks/authHooks';

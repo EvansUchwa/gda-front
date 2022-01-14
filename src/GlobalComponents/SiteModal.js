@@ -4,7 +4,7 @@ import { UrlImage } from "./Img";
 import axios from 'axios';
 import { useAuth } from '../hooks/authHooks'
 import { handleUserFieldInfoChange } from "../Tools/formFunction";
-import { dispatchBtn, getError } from "../Tools/formValidator";
+import { dispatchBtn, dispatchInputOrSelect, getError } from "../Tools/formValidator";
 import { userDetailModalKey } from "../RawData/key";
 export const ProfilDetailModal = ({ props }) => {
     const { apiInfos } = useAuth();
@@ -37,9 +37,9 @@ export const ProfilDetailModal = ({ props }) => {
         ],
         entreprise: [
             { label: 'General', value: 1 },
-            { label: 'Scolarité', value: 2 },
-            { label: 'Competence', value: 3 },
-            { label: 'Pretention', value: 4 },]
+            { label: 'Formations', value: 2 },
+            { label: 'Compétences', value: 3 },
+            { label: 'Prétentions', value: 4 },]
     }
     const [currentTab, setCurrentTab] = useState(1);
 
@@ -152,9 +152,6 @@ export const UpdateInfoModal = ({ props }) => {
 
     });
     const [errors, setErrors] = useState([]);
-    const removeImg = (name) => {
-        setUserNewInfo({ ...userNewInfo, [name]: '' })
-    }
 
     function handleSubmit(event) {
         setFormBtn(dispatchBtn('disable', 'Sauvegarder'))
@@ -219,68 +216,7 @@ export const UpdateInfoModal = ({ props }) => {
         <div className="formSegment">
             <label><b>Modifier votre {upField.label}</b> </label>
             {
-                (() => {
-                    if (upField.comp === 'input' && upField.htmlType != 'file') {
-                        return <input placeholder='Hey' type={upField.htmlType}
-                            name={upField.name} value={userNewInfo[upField.name]}
-                            onChange={(event) => handleUserFieldInfoChange(event,
-                                userNewInfo, setUserNewInfo,
-                                errors, setErrors)}
-                            errmsgname={upField.errmsgname}
-                            placeholder={"Ex: " + upField.ph}
-                            autoComplete="off"
-                        />
-                    } else if (upField.comp === 'select') {
-                        return <select defaultValue={userNewInfo[upField.name]}
-                            name={upField.name}
-                            onChange={(event) => handleUserFieldInfoChange(event,
-                                userNewInfo, setUserNewInfo,
-                                errors, setErrors)}
-                            errmsgname={upField.errmsgname}>
-                            <option value="">Choisir...</option>
-                            {
-                                upField.options.map((sop, index) => <option
-                                    key={'option' + index + upField.name}>
-                                    {sop.ph}
-                                </option>)
-                            }
-                        </select>
-                    } else if (upField.comp === 'textarea') {
-                        return <textarea placeholder='Message'
-                            name={upField.name} errmsgname={upField.errmsgname}
-                            onChange={(event) => handleUserFieldInfoChange(event,
-                                userNewInfo, setUserNewInfo,
-                                errors, setErrors)}
-                        >{userNewInfo[upField.name]}</textarea>
-                    }
-                    else if (upField.comp === 'input' && upField.htmlType == 'file') {
-                        return <>
-                            <label htmlFor={upField.id} className='iconUploader'>
-                                <i className='mdi mdi-file-upload-outline'></i>
-                                <span>Cliquez ici pour uploader l'image</span>
-                                <input placeholder='Hey' type='file'
-                                    name={upField.name}
-                                    onChange={(event) => handleUserFieldInfoChange(event,
-                                        userNewInfo, setUserNewInfo,
-                                        errors, setErrors)}
-                                    errmsgname={upField.errmsgname}
-                                    id={upField.id}
-                                />
-                            </label>
-                            <div className='previewImg'>
-                                {
-                                    userNewInfo[upField.name] != ''
-                                        ? <>
-                                            <i className='mdi mdi-close'
-                                                onClick={() => removeImg(upField.name)}></i>
-                                            <img id={upField.name + '-preview'} alt="Image uploaded preview" />
-                                        </>
-                                        : ''
-                                }
-                            </div>
-                        </>
-                    }
-                })()
+                dispatchInputOrSelect(userNewInfo, setUserNewInfo, upField, handleUserFieldInfoChange, errors, setErrors)
             }
         </div>
         {getError(upField.name, errors)}

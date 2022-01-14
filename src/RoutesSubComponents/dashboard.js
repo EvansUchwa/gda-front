@@ -9,9 +9,9 @@ export const DashWelcomeBanner = ({ props }) => {
     const { userType, name } = props
     const dispatchDashHelloAction = () => {
         if (userType == 'candidat') {
-            return <Link to="/Modifier/Profil">Mettre a jour mon profil</Link>
+            return <Link to="/Modifier/Profil">Mettre à jour mon profil</Link>
         } else if (userType == 'entreprise') {
-            return <Link to="/Ajouter-offre">Postez une nouvelle offre</Link>
+            return <Link to="/Ajouter-offre">Poster une nouvelle offre</Link>
         } else {
             return <Link to="">Affaires</Link>
         }
@@ -31,7 +31,7 @@ export const DashboardFastLinks = ({ props }) => {
         {(() => {
             if (['entreprise', 'candidat', 'admin'].includes(userType)) {
                 return <>
-                    <h2>{userType == 'entreprise' ? 'Les profiles de candidats' : 'Les offres'} </h2>
+                    <h2>{userType == 'entreprise' ? 'Les profils de candidats' : 'Les offres'} </h2>
                     <OfferAndCandidatePreviewSection props={{ offerType: 'latest', userType }} />
                     <OfferAndCandidatePreviewSection props={{ offerType: 'mostViewed', userType }} />
                     {
@@ -46,12 +46,12 @@ export const DashboardFastLinks = ({ props }) => {
 }
 
 export const DashboardStats = ({ props }) => {
-    const { authedInfo } = useAuth();
+    const { authedInfo, dispatchUserRoleOpponents } = useAuth();
     const { userType } = props
 
     const statsObj = {
         ENTREPRISE: [
-            { number: 3, title: 'Offres postés', icon: "mdi-book" },
+            { number: 3, title: 'Offres postées', icon: "mdi-book" },
         ],
         CANDIDAT: [
             // { number: 'Non definis', title: 'Autres Statistique', icon: "mdi-book" }
@@ -67,7 +67,7 @@ export const DashboardStats = ({ props }) => {
     return <div className="dash-stats">
         <h2>Statistiques</h2>
         <section className="ds-section">
-            <b>{authedInfo.other.nbre_view} personnes <br /> ont visité votre profil </b>
+            <b>{authedInfo.other.nbre_view} {dispatchUserRoleOpponents()} <br /> ont visité votre profil </b>
             <i className="mdi mdi-eye"></i>
         </section>
         {
@@ -85,13 +85,13 @@ const OfferAndCandidatePreviewSection = ({ props }) => {
     const { offerType, userType } = props
     const dispatchOfferTitle = () => {
         if (offerType === 'latest') {
-            return userType == 'entreprise' ? 'Derniers candidats inscrits' : 'Dernières offres publiés'
+            return userType == 'entreprise' ? 'Derniers candidats inscrits' : 'Dernières offres publiées'
         }
         else if (offerType === 'mostViewed') {
-            return userType == 'entreprise' ? 'Profil(candidats) les plus visité(s)' : 'Offres les plus populaire'
+            return userType == 'entreprise' ? 'Profil(candidats) les plus visités' : 'Offres les plus populaires'
         }
         else {
-            return userType == 'entreprise' ? 'Candidats pour vous(recommandés)' : 'Offres pour vous(recommandés)'
+            return userType == 'entreprise' ? 'Candidats recommandés pour vous' : 'Offres recommandées pour vous'
         }
     }
     return <section className="df-section">
@@ -127,7 +127,7 @@ export const EnterpriseList = () => {
     }, [])
     return <div className="dash-enterpriseList">
         <h2>Liste de nos partenaires</h2>
-        <h5>Au moins 10 nouvelles entreprise nous rejoignent chaque mois</h5>
+        <h5>Au moins 10 nouvelles entreprises nous rejoignent chaque mois</h5>
         <ul>
             <li>
                 <b>Logo</b>
@@ -163,7 +163,7 @@ export const AccountNotActivated = () => {
 
     return <Pulse forever duration={3000}>
         <div className="accountNotActivated">
-            <b>Votre compte n'est pas activer</b>
+            <b>Votre compte n'est pas activé</b>
             <Link to="/Candidats/latest">Detail</Link>
         </div>
     </Pulse>

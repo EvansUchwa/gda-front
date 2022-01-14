@@ -50,5 +50,13 @@ export const handleUserFieldInfoChange = (event, userInfo, setUserInfo, errors, 
         }
 
     }
+
+    if (name === 'password') {
+        isValidChar('isPassword', errors, setErrors, name, value, 'Votre mot de passe ')
+    }
+    if (name === 'password_confirmation') {
+        isValidChar('isPasswordConfirm', errors, setErrors, name, value,
+            'Les mots de passe ', userInfo.password)
+    }
     setUserInfo({ ...userInfo, [name]: value })
 }

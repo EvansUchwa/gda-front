@@ -4,7 +4,7 @@ import { Modal } from '../GlobalComponents/Modal';
 import { ProfilDetailModal } from '../GlobalComponents/SiteModal';
 
 export const JobsOfferList = ({ props }) => {
-    const { jobOffers } = props
+    const { jobOffers, type } = props
     const [modalInfoId, setModalInfoId] = useState();
     const [toggleModal, setToggleModal] = useState(false);
     const offerModal = <ProfilDetailModal props={{
@@ -13,7 +13,18 @@ export const JobsOfferList = ({ props }) => {
     }} />;
     return <div className="ppc-published-items">
         <div className='ppc-title'>
-            <h3>Les offres les plus vues</h3>
+            {
+                (() => {
+                    if (type === 'latest') {
+                        return <h3>Les dernières offres publiées</h3>
+                    } else if (type === 'mostViewed') {
+                        return <h3>Les offres les plus populaires</h3>
+                    }
+                    else if (type === 'suggestion') {
+                        return <h3>Les offres recommandées pour vous</h3>
+                    }
+                })()
+            }
         </div>
         <div className='ppc-itemsSlide'>
             {

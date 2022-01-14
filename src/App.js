@@ -5,7 +5,6 @@ import './Assets/styles/modal.css';
 import "./Assets/styles/slick/slick.css";
 import "./Assets/styles/slick/slick-theme.css";
 import './Assets/styles/materialdesignicons.min.css'
-import Choice from './Routes/Choice';
 import Accueil from './Routes/Accueil.js'
 import Auth from './Routes/Auth.js'
 import MailAction from './Routes/Mail';
@@ -23,28 +22,31 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { Footer } from './GlobalComponents/Footer';
 import { useState } from 'react';
 import FinaliserInscription from './Routes/FinaliserInscription';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Global_Offer from './Routes/Global-Offers';
 import Admin from './Routes/Admin';
 import { AuthProvider, useAuth } from './hooks/authHooks';
 import Modifier from './Routes/Modifier';
-import { RequireFinishStep } from './middleware';
+import Logiciel from './Routes/Logiciel';
 
 const RequireAuth = ({ children }) => {
-  const location = useLocation();
+  const navigate = useNavigate();
   const { authed, userType, authedInfo } = useAuth();
 
   return authed === true ? <>
     {
-      authedInfo != null && authedInfo.other != null ?
-        <><AsideDashNav />
+      authedInfo.other != null ?
+        <>
+          <AsideDashNav />
           <TopDashNav />
-        </> :
-        ''
+          <div className='dashboardPart'>
+            {children}
+          </div>
+        </> : <FinaliserInscription />
     }
-    {children}</>
-    : <Navigate to="/Authentification/Connexion" />
+  </>
+    : <Navigate to="/Authentification/Connexion" replace />
 }
 
 const NotRequiredAuth = ({ children }) => {
@@ -126,27 +128,30 @@ function App() {
     { path: '/Authentification/:typeAuth/:typeAccount', components: <Auth />, requireAuth: false },
 
     { path: '/Profil/:profilType/:profilId', components: <Profil />, requireAuth: true },
-    { path: '/Mail/:mailAction', components: <MailAction />, requireAuth: false },
     { path: '/Modifier/:cible', components: <Modifier />, requireAuth: true },
 
-    // { path: '/Choice', components: <Choice />, requireAuth: true },
+    { path: '/Mail/:mailAction', components: <MailAction />, requireAuth: false },
+    { path: '/Modifier/Mot-de-passe/:hash', components: <Modifier />, requireAuth: false },
 
+
+
+    // { path: '/Choice', components: <Choice />, requireAuth: true },
     { path: '/Dashboard', components: <Dashboard />, requireAuth: true },
     { path: '/Profil', components: <Profil />, requireAuth: true },
-
-    { path: '/Finaliser-Inscription', components: <FinaliserInscription />, requireAuth: true },
-
     {
       path: '/Candidats/:type/:page', components: <RequireActivation>
-        {<Candidats />}
+        {<Candidats key={new Date()} />}
       </RequireActivation>, requireAuth: true
     },
     {
       path: '/Offres-Emplois/:type/:page', components: <RequireActivation>
-        <Offres_Emplois />
+        <Offres_Emplois key={new Date()} />
       </RequireActivation>, requireAuth: true
     },
     { path: '/Ajouter-offre', components: <Add_offer />, requireAuth: true },
+
+    // { path: '/Logiciel/:type/:action', components: <Logiciel />, requireAuth: true },
+
 
   ]
   return (<>
@@ -159,9 +164,7 @@ function App() {
               (() => {
                 if (route.requireAuth == true) {
                   return <RequireAuth>
-                    <RequireFinishStep>
-                      {route.components}
-                    </RequireFinishStep>
+                    {route.components}
                   </RequireAuth>
 
                 } else if (route.requireAuth == false) {

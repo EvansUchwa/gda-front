@@ -11,10 +11,13 @@ const toggleSideBar = () => {
 }
 
 const toggleOptionsNav = (event) => {
-    event.target.nextElementSibling.classList.toggle('native-options-visible')
-    if (event.target.attributes['class'].value == 'dashMenuDropdown') {
-        event.target.children[0].classList.toggle('mdi-rotate-90')
+    if (event.target !== event.currentTarget) {
+        return;
     }
+    // event.target.nextElementSibling.
+    event.target.children[1].classList.toggle('mdi-rotate-90')
+    event.target.children[2].classList.toggle('native-options-visible')
+    // console.log(event.target.childNodes)
 }
 
 function dispatchUserPic(userType) {
@@ -98,23 +101,14 @@ export const AsideDashNav = () => {
         </section>
 
         <section className="dashbordNav-links">
-            <Link to={"/Dashboard"}><i className="mdi mdi-view-dashboard"></i> Dashboard</Link>
+            <Link to={"/Dashboard"}><i className="mdi mdi-view-dashboard"></i> Accueil</Link>
             {
-                (() => {
-                    if (['admin'].includes(userType)) {
-                        return <IsDropableSidebarLink props={{ userType, toggleOptionsNav }} />;
-                    } else {
-                        return <NotDropableSidebarLink props={{ userType }} />
-                    }
-                })()
+                <IsDropableSidebarLink props={{ userType, toggleOptionsNav }} />
             }
-            <Link to="/Profil"><i className="mdi mdi-account"></i>Mon Profil</Link>
-            <Link to="/Modifier/Profil"><i className="mdi mdi-account"></i>Modifier Profil</Link>
-
             <Link onClick={(event) => {
                 event.preventDefault();
                 logout()
-            }} to="#"><i className="mdi mdi-logout"></i>Se deconnectez</Link>
+            }} to="#"><i className="mdi mdi-logout"></i>Se deconnecter</Link>
         </section>
 
     </aside>
@@ -172,8 +166,8 @@ const OfferLinks = ({ props }) => {
     const { className, id } = props
     return <div className={className} id={id}>
         <Link to="/GDA-Offre/Emplois">Emplois</Link>
-        <Link to="/GDA-Offre/Immobilier/Location">Immobilier(Location) </Link>
-        <Link to="/GDA-Offre/Immobilier/Achat">Immobilier(Achat)</Link>
+        <Link to="/GDA-Offre/Immobilier/Location">Immobilier (Location) </Link>
+        <Link to="/GDA-Offre/Immobilier/Achat">Immobilier (Achat)</Link>
         <Link to="/GDA-Offre/Boutique">Boutique</Link>
     </div>
 }

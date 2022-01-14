@@ -287,4 +287,13 @@
     line-height: 40px;
   }
   /*  */
+
+  /* modal */
+  .mdpb-switcher span {
+    font-size: 12px;
+  }
+  .mdpb-infosTextList b {
+    font-size: 13px;
+  }
+  /*  */
 }

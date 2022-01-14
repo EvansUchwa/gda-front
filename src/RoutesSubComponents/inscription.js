@@ -4,7 +4,7 @@ import { Input } from '../GlobalComponents/form';
 import { isValidChar, isValidLenght, getError } from '../Tools/formValidator';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { simpleInscriptionFields } from '../RawData/form';
+import { generalUserFields } from '../RawData/fields';
 import { useAuth } from '../hooks/authHooks';
 import { dispatchBtn } from '../Tools/formValidator';
 
@@ -62,7 +62,7 @@ export const AuthInscription = ({ props }) => {
         const value = event.target.value.trim();
 
         if (name === 'pseudo') {
-            isValidLenght(errors, setErrors, name, value, 5, 25, 'Votre pseudo role ')
+            isValidLenght(errors, setErrors, name, value, 5, 25, 'Votre pseudo ')
         }
         else if (['nom', 'prenom'].includes(name)) {
             isValidLenght(errors, setErrors, name, value, 2, 35, 'Votre Nom ou votre Prenom  ')
@@ -90,16 +90,14 @@ export const AuthInscription = ({ props }) => {
                 <option value=''>Choisir....</option>
                 <option value="candidat">Un(e) candidat(e)</option>
                 <option value="entreprise">Une entreprise</option>
-                <option value="apporteur">Un(e) apporteur(se) d'affaire(Parrain) </option>
-                <option value="boutiquier">Un commercant(e)(ayant une boutique) </option>
             </select>
         </section>
         {inscriptionFields.role != '' ?
-            simpleInscriptionFields.map((field, index) => <div
+            generalUserFields.map((field, index) => <div
                 className='formSegment' key={'first step inscription field' + index}>
                 <label>{field.label}</label>
                 <Input props={{
-                    type: field.type,
+                    type: field.htmlType,
                     placeholder: field.ph,
                     name: field.name,
                     handleChange: handleFieldChange,
@@ -110,18 +108,23 @@ export const AuthInscription = ({ props }) => {
             : ''
         }
 
-        <div className='formViewPassword'>
-            <label htmlFor='viewPassword'>
-                <input type="checkbox" id='viewPassword' onChange={() => setIPF(!isPasswordField)} />
-                Voir mot de passe
-            </label>
-        </div>
+        {
+            inscriptionFields.role != '' ?
+                <div className='formViewPassword'>
+                    <label htmlFor='viewPassword'>
+                        <input type="checkbox" id='viewPassword' onChange={() => setIPF(!isPasswordField)} />
+                        Voir mot de passe
+                    </label>
+                </div>
+                : ''
+        }
+
         <span className='errorField'>{error}</span>
         <div className="formBtn">
             {checkFormValidity(inscriptionFields) ? formBtn : dispatchBtn('disable', btnContent)}
         </div>
         <div className='formOtherAuth'>
-            <p>Vous avez deja un compte ? <Link to='/Authentification/Connexion'>Connexion</Link> </p>
+            <p>Vous avez dejà un compte ? <Link to='/Authentification/Connexion'>Connexion</Link> </p>
         </div>
     </form>
 }

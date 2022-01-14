@@ -68,9 +68,9 @@ export const useAuthProvider = () => {
             }
         },
         dispatchProfilPic(profilType) {
-            if (profilType == 'entreprise') {
+            if (profilType == 'ENTREPRISE') {
                 return 'logo_url'
-            } else if (profilType == 'candidat') {
+            } else if (profilType == 'CANDIDAT') {
                 return 'photo1_url'
             }
         },
@@ -80,6 +80,28 @@ export const useAuthProvider = () => {
             } else if (userType == 'candidat') {
                 return 'adresse'
             }
+        },
+        dispatchUserRoleOpponents(type = null) {
+            let role = '';
+            if (type == null) {
+                const userType = authedInfo !== null ? authedInfo.general.role : '';
+                role = userType;
+                if (role == 'ENTREPRISE') {
+                    return 'candidats'
+                } else if (role == 'CANDIDAT') {
+                    return 'entreprise'
+                }
+            } else {
+                role = type;
+                if (role == 'ENTREPRISE') {
+                    return 'entreprise'
+                } else if (role == 'CANDIDAT') {
+                    return 'candidat'
+                }
+            }
+
+
+
         }
     }
 }

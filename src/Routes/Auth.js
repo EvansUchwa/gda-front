@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../Assets/styles/auth.css';
-import { AuthConnexion } from '../RoutesSubComponents/ConnexionComponents';
-import { AuthInscription } from '../RoutesSubComponents/InscriptionComponents';
+import { AuthConnexion } from '../RoutesSubComponents/connexion';
+import { AuthInscription } from '../RoutesSubComponents/inscription';
 import { useParams } from 'react-router-dom';
 import Pulse from 'react-reveal/Pulse';
 
@@ -12,14 +12,14 @@ const Auth = () => {
     const { typeAuth } = urlParams
     const getAuthView = () => {
         if (typeAuth === 'Connexion') {
-            setAuthView({ title: 'Connectez vous', component: <AuthConnexion /> })
+            setAuthView({ title: 'Connectez-vous', component: <AuthConnexion /> })
         } else if (['Inscription', 'Inscription/candidat', 'Inscription/entreprise'].includes(typeAuth)) {
             let role = ''
             if (urlParams.typeAccount) {
                 role = urlParams.typeAccount
             }
             setAuthView({
-                title: "Inscrivez vous",
+                title: "Inscrivez-vous",
                 component: <AuthInscription props={{ role }} />
             })
         }

@@ -23,14 +23,6 @@ export const RequireToBeCandidate = ({ children }) => {
     </>
 }
 
-export const RequireFinishStep = ({ children }) => {
-    const { authedInfo } = useAuth();
 
-    return <>
-        {
-            authedInfo.other != null && authedInfo
-                ? children
-                : <Navigate to="/Finaliser-Inscription" />
-        }
-    </>
-}
+
+

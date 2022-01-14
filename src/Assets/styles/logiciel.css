@@ -1,0 +1,49 @@
+.logicielPart {
+  width: 100%;
+  margin: auto;
+}
+
+.logicielHeader {
+  width: 90%;
+  margin: auto;
+}
+.logicielTable {
+  background-color: white;
+  width: 90%;
+  margin: auto;
+}
+
+.logicielTable tr:first-child {
+  background-color: var(--cwd2);
+  padding: 10px 0;
+}
+.logicielTable tr:first-child th {
+  padding: 10px 0;
+}
+
+.logicielTable tr {
+  text-align: center;
+}
+.logicielTable tr td {
+  padding: 5px 0;
+}
+
+.logicielTable tr td:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 10%; */
+}
+.logicielTable tr td button {
+  padding: 5px 15px;
+  color: white;
+  margin: auto;
+}
+
+@media screen and (max-width: 512px) {
+  .logicielTable {
+    width: 100%;
+  }
+  .logicielTable tr:first-child th {
+    font-size: 12px;
+  }
+}

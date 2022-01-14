@@ -1,44 +1,36 @@
 import { useState } from "react";
 import { Modal } from "../GlobalComponents/Modal";
-import { IllustrationImage } from "../GlobalComponents/Img";
-const Services = () => {
-    const [toggleModal, setToggleModal] = useState(false)
-    const servicesTab = [
-        {
-            img: '1.svg', title: 'Recrutement et placement de personnel'
-        },
-        {
-            img: '2.svg', title: 'La Création et la Refonte de Site Vitrine et E-Commerce'
-        },
-        {
-            img: '3.svg', title: 'Des Prestations de Référencement Naturel (SEO) '
-        },
-        {
-            img: '4.svg', title: 'La Rédaction de Contenus Optimisés SEO (Content Marketing, Inbound Marketing)'
-        },
-        {
-            img: '5.svg', title: 'La Création de Webdesign (UX & UI Design) et' +
-                'La Creation de Logo et Identité Visuelle.'
-        },
-        {
-            img: '6.svg', title: 'Du Référencement Payant avec la Création et la Gestion de . Campagne Google AdWords'
-        },
-        {
-            img: '7.svg', title: 'La Création de Page Facebook, Chaînes YouTube, Google+ et ' +
-                'l\'Animation des Réseaux Sociaux (Gestion de la Campagne Publicitaire)'
-        },
+import { IllustrationImage, UrlImage } from "../GlobalComponents/Img";
+import { useAuth } from '../hooks/authHooks'
+import axios from 'axios'
+import { useEffect } from "react";
 
-    ]
+
+const Services = () => {
+    const { apiInfos } = useAuth();
+    const { baseApi, headerApi } = apiInfos;
+    const [toggleModal, setToggleModal] = useState(false)
+    const [services, setServices] = useState([])
+
+    useEffect(() => {
+        axios.get(baseApi + "/api/serv/service", { headers: headerApi })
+            .then(res => {
+                console.log(res)
+                setServices(res.data)
+            })
+            .catch(err => console.log(err))
+
+    }, [])
     return <div className="formationOrServicePart">
         <h1>Nos Services</h1>
         <div className="serviceList">
             {
-                servicesTab.map((sv, index) => <section key={"service-" + index}
+                services.map((sv, index) => <section key={"service-" + index}
                     className="service-card">
                     <div>
-                        <IllustrationImage props={{ src: 'services/service' + sv.img, alt: 'Img Service ' + index }} />
+                        <UrlImage props={{ src: sv.image_url, alt: 'Image de service' + index }} />
                     </div>
-                    <b>{sv.title}</b>
+                    <b>{sv.libelle}</b>
                     <button className="semiRounded" onClick={() => setToggleModal(true)}>Demandez un Devis</button>
                 </section>)
             }

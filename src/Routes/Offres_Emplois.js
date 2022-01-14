@@ -1,5 +1,5 @@
 import { CandidateOrEmployerFilter } from "../GlobalComponents/Filter";
-import { JobsOfferList } from "../RoutesSubComponents/OffresEmploisComponents";
+import { JobsOfferList } from "../RoutesSubComponents/offres-Emplois";
 import { Pagination } from '../GlobalComponents/Pagination.js'
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -13,22 +13,23 @@ const Offres_Emplois = () => {
     const { apiInfos, authedInfo } = useAuth();
     const { baseApi, headerApi } = apiInfos;
     const { type, page } = useParams();
+    const [apiLink, setApiLink] = useState(type !== 'suggestion' ? dispatchEnterpriseListApi(type, 'get')
+        : dispatchEnterpriseListApi(type, 'get', authedInfo.general.id))
+
     const [jobOffers, setJobOffers] = useState()
     const [pageInfos, setPageInfos] = useState({})
     const [load, setLoad] = useState('')
-    const [apiLink, setApiLink] = useState(type != 'suggestion' ? dispatchEnterpriseListApi(type, 'get')
-        : dispatchEnterpriseListApi(type, 'get', authedInfo.general.id))
-    const dispatchAxiosQuery = (method, data) => {
+    const dispatchAxiosQuery = (method, data, link) => {
         if (method == 'post') {
-            return axios.post(baseApi + apiLink.link + '' + page, data, { headers: headerApi })
+            return axios.post(baseApi + link + '' + page, data, { headers: headerApi })
         } else {
-            return axios.get(baseApi + apiLink.link + '' + page, { headers: headerApi })
+            return axios.get(baseApi + link + '' + page, { headers: headerApi })
         }
     }
 
     useEffect(() => {
         setLoad(<FixedLoader />)
-        dispatchAxiosQuery(apiLink.method, apiLink.data)
+        dispatchAxiosQuery(apiLink.method, apiLink.data, apiLink.link)
             .then(res => {
                 if (res.data !== undefined && res.data.data) {
                     setJobOffers(res.data.data)
@@ -46,27 +47,24 @@ const Offres_Emplois = () => {
             })
             .catch(err => console.log(err))
     },
-        []);
-    return <div className="dashboardPart">
+        [page, type, apiLink]);
+    return <>
+
+        <CandidateOrEmployerFilter props={{ userType: 'CANDIDAT', setApiLink }} />
         {
             jobOffers ?
-                <CandidateOrEmployerFilter props={{ userType: 'CANDIDAT', setApiLink }} />
-                : ''
-        }
-        {
-            jobOffers ?
-                jobOffers.length > 0 ?
-                    <JobsOfferList props={{ jobOffers }} />
+                jobOffers.length ?
+                    <JobsOfferList props={{ jobOffers, type }} />
                     : <DataNotPosted props={{ dataType: "aucune  offres d'emplois ne correspond a votre recherche " }} />
                 :
                 <FixedLoader />
         }
         {
-            jobOffers && pageInfos.totalPage > 1 ?
+            pageInfos.totalPage > 1 ?
                 <Pagination props={{ pageInfos }} />
                 : ''
         }
-    </div>
+    </>
 }
 
 export default Offres_Emplois;

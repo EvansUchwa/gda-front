@@ -1,0 +1,48 @@
+.mailContainer {
+  width: 40%;
+  margin: 10px auto;
+  padding: 100px 0;
+  background-color: var(--cpd1);
+}
+.mailContainer h1 {
+  color: var(--cpd4);
+  text-align: center;
+}
+
+.mc-validateMailForm {
+  text-align: center;
+}
+
+.search-mail,
+.mc-validateMailForm form {
+  width: 90%;
+  margin: auto;
+  color: var(--cpd4);
+}
+.mc-validateMailForm form button {
+  background-color: var(--colorSecond);
+  color: white;
+}
+.mc-validateMailForm form a {
+  background-color: var(--colorSecond);
+  padding: 5px 15px;
+  color: white;
+}
+.hasSigned {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.hasSigned img {
+  max-width: 80%;
+  max-height: 200px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 512px) {
+  .mailContainer {
+    width: 90%;
+  }
+}

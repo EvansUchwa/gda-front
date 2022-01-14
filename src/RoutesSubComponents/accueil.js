@@ -2,6 +2,11 @@ import { Reveal } from 'react-reveal'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import { Typewriter } from 'react-simple-typewriter'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useAuth } from '../hooks/authHooks'
+import { UrlImage } from '../GlobalComponents/Img'
+import { SimpleIconLoader } from '../GlobalComponents/Loader'
 
 export const AccueilBanner = () => {
 
@@ -17,12 +22,12 @@ export const AccueilBanner = () => {
 
     return <div className="accueilBanner" id="kdkdj">
         <section className="accueilBanner-text">
-            <h1>En quelque clic seulement trouvez: {' '}<br />
+            <h1>En quelques clics seulement trouvez: {' '}<br />
                 <span>
                     <Typewriter
-                        words={['le travail ou le job de vos rêve',
-                            'le personnel qu\'il vous faut',
-                            'une oppotunité d\'affaire']}
+                        words={['Le Travail ou le Job de vos rêves',
+                            'Le Personnel qu\'il vous faut',
+                            'Une Oppotunité d\'affaire']}
                         loop={false}
                         cursor
                         cursorStyle='|'
@@ -55,8 +60,8 @@ export const TypeServices = () => {
             <Reveal left duration="5000">
                 <div>
                     <h2>Vous êtes un employeur ?</h2>
-                    <p>Publiez une offre et trouvez le profil dont vous avez besoin</p>
-                    <Link to="/Authentification/Inscription&role=recruteur">S'inscrire</Link>
+                    <p>Publiez une offre et trouvez le profil dont vous avez besoin .</p>
+                    <Link to="/Authentification/Inscription/entreprise">S'inscrire</Link>
                 </div>
             </Reveal>
         </section>
@@ -70,9 +75,9 @@ export const TypeServices = () => {
             </Reveal>
             <Reveal right duration="5000">
                 <div>
-                    <h2>Vous êtes a la recherche d'emplois ?</h2>
-                    <p>Déposez votre CV et décrochez votre prochain emploi</p>
-                    <Link to='/Authentification/Inscription&role=candidat'>S'inscrire</Link>
+                    <h2>Vous êtes à la recherche d'emploi ?</h2>
+                    <p>Déposez votre CV et décrochez votre prochain emploi .</p>
+                    <Link to='/Authentification/Inscription/candidat'>S'inscrire</Link>
                 </div>
             </Reveal>
         </section>
@@ -101,26 +106,36 @@ export const Partenaires = () => {
             }
         ]
     };
-    const partenaires = [{ id: 1, logo: 'partenaires/', nom: 'Partenaire ' },
-    { id: 2, logo: 'partenaires/', nom: 'Partenaire ' },
-    { id: 3, logo: 'partenaires/', nom: 'Partenaire ' },
-    { id: 4, logo: 'partenaires/', nom: 'Partenaire ' },
-    { id: 5, logo: 'partenaires/', nom: 'Partenaire ' },
-    { id: 2, logo: 'partenaires/', nom: 'Partenaire ' },
-    { id: 3, logo: 'partenaires/', nom: 'Partenaire ' },
-    { id: 4, logo: 'partenaires/', nom: 'Partenaire ' },]
+    const { apiInfos } = useAuth();
+    const { baseApi, headerApi } = apiInfos;
+    const [partenaires, setPartenaires] = useState([])
+
+
+    useEffect(() => {
+        axios.get(baseApi + "/api/entreprise/list-entreprise", { headers: headerApi })
+            .then(res => {
+                console.log(res.data)
+                setPartenaires(res.data.data)
+            })
+            .catch(err => console.log(err))
+
+    }, [])
     return <div className='nosPartenaires'>
-        <hr className='section-divider' />
-        {/* <h2> Nos partenaires </h2> */}
+
+        <h2> Nos partenaires </h2>
         <section className='nosPartenaires-liste'>
             <Slider {...settings}>
-                {partenaires.map(ptn => <div key={ptn.id} className='npl-item'>
-                    <img alt='All Partenaire'
-                        src={require('../Assets/images/' + ptn.logo + '5.png').default} />
-                    {/* <p>{ptn.nom + ptn.id} </p> */}
-                    {/* <Link to="">Consulter</Link> */}
-                </div>
-                )}
+                {
+                    partenaires.length ?
+                        partenaires.map((ptn, index) => <div key={'partenaire pic' + index} className='npl-item'>
+                            <UrlImage props={{ src: ptn.logo_url, alt: 'Partenaire img' + index }} />
+                            {/* <p>{ptn.nom + ptn.id} </p> */}
+                            {/* <Link to="">Consulter</Link> */}
+                        </div>)
+                        : <div>
+                            <SimpleIconLoader />
+                        </div>
+                }
             </Slider>
         </section>
     </div>

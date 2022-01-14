@@ -7,6 +7,7 @@ import axios from 'axios'
 import { userDataKey } from "../RawData/key";
 import { Modal } from "../GlobalComponents/Modal";
 import { ProfilDetailModal } from "../GlobalComponents/SiteModal";
+import { returnImg } from '../Tools/imgs'
 
 export const ProfilLayout = ({ props }) => {
     const { dispatchUserPic, dispatchLocation } = useAuth();
@@ -18,7 +19,7 @@ export const ProfilLayout = ({ props }) => {
                 <div className="pi-general">
                     {
                         profilInfo && profilT ?
-                            <ProfilHead props={{ userType: profilT.toLowerCase(), infos: profilInfo }} />
+                            <ProfilHead props={{ userType: profilT, infos: profilInfo }} />
                             : <SimpleIconLoader />
                     }
                 </div>
@@ -41,9 +42,9 @@ export const ProfilLayout = ({ props }) => {
 
 
 const ProfilHead = ({ props }) => {
-    const { dispatchProfilPic, dispatchLocation } = useAuth();
+    const { dispatchProfilPic, dispatchLocation, dispatchUserRoleOpponents } = useAuth();
     const { userType, infos } = props
-    const profilPic = infos[dispatchProfilPic(userType)];
+    const profilPic = returnImg(infos[dispatchProfilPic(userType)]);
     return <>
         {
             <UrlImage props={{
@@ -64,10 +65,6 @@ const ProfilHead = ({ props }) => {
                 } else {
                     return <>
                         <h2>{infos.nom + ' ' + infos.prenom}</h2>
-                        <p>
-                            <span>Reprensentant de :</span>
-                            <b>Nom entreprise</b>
-                        </p>
                     </>
                 }
             })()
@@ -79,7 +76,7 @@ const ProfilHead = ({ props }) => {
             </p>
             <p>
                 <i className="mdi mdi-eye"></i>
-                <span>{infos.nbre_view} personne(s) ont visité ce profil </span>
+                <span>{infos.nbre_view} {dispatchUserRoleOpponents(userType)}(s) ont visité ce profil </span>
             </p>
         </div>
     </>

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import '../Assets/styles/admin.css'
 import {
     ListeComptes, ActivationComptes
-} from '../RoutesSubComponents/AdminComponents';
+} from '../RoutesSubComponents/admin';
 
 const Admin = () => {
     const params = useParams();

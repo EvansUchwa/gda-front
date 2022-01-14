@@ -1,6 +1,6 @@
 
 import '../Assets/styles/profil.css'
-import { ProfilLayout } from "../RoutesSubComponents/profilComponents"
+import { ProfilLayout } from "../RoutesSubComponents/profil"
 import { useAuth } from '../hooks/authHooks'
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"

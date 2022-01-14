@@ -1,14 +1,29 @@
 import { useParams } from "react-router-dom";
-import { UpdateProfilForm } from "../RoutesSubComponents/modifierProfilComponents";
+import { UpdateProfilForm } from "../RoutesSubComponents/modifier-Profil";
+import { UpdatePasswordForm } from "../RoutesSubComponents/modifier-Motdepasse";
 const Modifier = () => {
     const params = useParams();
-    const { cible } = params;
-    return <div className="dashboardPart">
+    const { cible, hash } = params;
+    return <>
         <div className="updateInfoPart">
-            <h1>Modifier votre {cible} </h1>
-            <UpdateProfilForm />
+
+            {
+                (() => {
+                    if (cible) {
+                        return <>
+                            <h1>Modifier votre {cible} </h1>
+                            <UpdateProfilForm />
+                        </>
+                    } else if (hash) {
+                        return <>
+                            <h1>Veuillez entrez votre nouveau mot de passe</h1>
+                            <UpdatePasswordForm props={{ hash }} />
+                        </>
+                    }
+                })()
+            }
         </div>
-    </div>
+    </>
 }
 
 export default Modifier;

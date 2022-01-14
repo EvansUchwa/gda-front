@@ -1,5 +1,5 @@
 import '../Assets/styles/offer.css';
-import { AddOfferForm } from "../RoutesSubComponents/AddOfferComponents";
+import { AddOfferForm } from "../RoutesSubComponents/add-Offer";
 const Add_offer = () => {
     return <div className="dashboardPart">
         <AddOfferForm />

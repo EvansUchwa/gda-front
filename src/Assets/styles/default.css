@@ -99,6 +99,10 @@ h6 {
 .btnDisabled {
   background-color: var(--cwd4) !important;
 }
+.deleteBtn {
+  background-color: var(--errorColor) !important;
+}
+
 button {
   padding: 15px;
   border: 0;

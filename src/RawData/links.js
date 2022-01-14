@@ -1,9 +1,64 @@
 export const sidebarLinks = {
     CANDIDAT: [
-
+        {
+            menuName: 'Offre', menuIcon: 'mdi-bag-checked',
+            menuOptions: [
+                { ph: 'Offres recentes', link: '/Offres-emplois/latest/1' },
+                { ph: 'Offres populaire', link: '/Offres-emplois/mostViewed/1' },
+                { ph: 'Offres pour vous', link: '/Offres-emplois/suggestion/1' },
+                { ph: 'Candidature', link: '#' }]
+        },
+        {
+            menuName: 'Profil', menuIcon: 'mdi-account',
+            menuOptions: [
+                { ph: 'Mon profil', link: '/Profil' },
+                { ph: 'Modifier Profil', link: '/Modifier/Profil' }
+            ]
+        },
     ],
     ENTREPRISE: [
-        // { ph: 'Offre posté', link: '#', icons: 'mdi-heart' },
+        {
+            menuName: "Candidat", menuIcon: 'mdi-clipboard-account',
+            menuOptions: [
+                { ph: 'Candidat recent', link: '/Candidats/latest/1' },
+                { ph: 'Candidats populaire', link: '/Candidats/mostViewed/1' },
+                { ph: 'Candidats pour vous', link: '/Candidats/suggestion/1' },
+                { ph: 'Candidature', link: '#' }]
+        },
+        // {
+        //     menuName: 'Ventes', menuIcon: 'mdi-basket',
+        //     menuOptions: [
+        //         { ph: 'Liste des ventes', link: '/Logiciel/vente/liste' },
+        //         { ph: 'Ajouter une vente', link: '/Logiciel/vente/ajout' }
+        //     ]
+        // },
+        // {
+        //     menuName: 'Depense', menuIcon: 'mdi-basket',
+        //     menuOptions: [
+        //         { ph: 'Liste des depense', link: '/Logiciel/depense/liste' },
+        //         { ph: 'Ajouter une depense', link: '/Logiciel/depense/ajout' }
+        //     ]
+        // },
+        // {
+        //     menuName: 'Produits', menuIcon: 'mdi-basket',
+        //     menuOptions: [
+        //         { ph: 'Liste de produit', link: '/Logiciel/produit/liste' },
+        //         { ph: 'Ajouter un produit', link: '/Logiciel/produit/ajout' }
+        //     ]
+        // },
+        // {
+        //     menuName: 'Client', menuIcon: 'mdi-basket',
+        //     menuOptions: [
+        //         { ph: 'Liste des clients', link: '/Logiciel/client/liste' },
+        //     ]
+        // },
+        {
+            menuName: 'Profil', menuIcon: 'mdi-account',
+            menuOptions: [
+                { ph: 'Mon profil', link: '/Profil' },
+                { ph: 'Modifier Profil', link: '/Modifier/Profil' }
+            ]
+        },
     ],
     ADMIN: [
         {
@@ -70,6 +125,7 @@ export const dispatchEnterpriseListApi = (type, method, data = null) => {
         suggestion: "/api/offres/offres-recommander/" + data + "?page=",
         az: "/api/offres/search-filtre-sortingBy?page=",
         za: '/api/offres/search-filtre-sortingBy?page=',
+        low_high: '/api/offres/search-filtre-sortingBy?page=',
         filter: "/api/offres/search-filtre-options?page="
     }
 

@@ -12,7 +12,25 @@
   width: 65%;
   background-color: white;
 }
+/*  */
+.updatePassword {
+  width: 50%;
+  margin: auto;
+}
+/*  */
 
+/*  */
+.contactBtnList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
+}
+.contactBtnList a {
+  margin: 10px 0;
+  padding: 8px 25px;
+}
+/*  */
 .pi-general,
 .pi-other {
   width: 90%;
@@ -117,6 +135,11 @@
 /*  */
 
 @media screen and (max-width: 512px) {
+  /*  */
+  .updatePassword {
+    width: 95%;
+  }
+  /*  */
   .profilInfos {
     width: 90% !important;
     margin: 10px auto;

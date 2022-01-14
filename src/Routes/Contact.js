@@ -3,8 +3,8 @@ const Contact = () => {
     return <div className="contact">
         <div className="contactForm">
             <h1>Contactez nous</h1>
-            <p>Pour toutes vos questions,precoccupation ou suggestions nous
-                mettons a votre disposition ce formulaire de contact</p>
+            <p>Pour toutes vos questions , precoccupations ou suggestions nous
+                mettons à votre disposition ce formulaire de contact</p>
             <form>
                 <input placeholder="Mail..." />
                 <textarea placeholder="Votre Message..."></textarea>

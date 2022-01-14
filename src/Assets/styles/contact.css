@@ -1,6 +1,6 @@
 .contact {
   width: 90%;
-  margin: 50px auto;
+  margin: 0 auto;
   padding: 20px 10px;
   display: flex;
   justify-content: space-between;
@@ -52,7 +52,6 @@
     width: 100%;
   }
   .contactImg {
-    margin-top: 50px;
     width: 100%;
   }
 }

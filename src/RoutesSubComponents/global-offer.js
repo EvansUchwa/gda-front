@@ -59,7 +59,7 @@ export const GlobalOfferLayout = ({ props }) => {
                     </>
                 } else {
                     return <section className='notAccessible'>
-                        <p>Pour acceder au offres d'emplois veuillez vous inscrire et vous connectez </p>
+                        <p>Pour acceder aux offres d'emploi veuillez vous inscrire ou vous connecter </p>
                         <div>
                             <Link to='/Authentification/Connexion'>Connexion</Link>
                             <Link to='/Authentification/Inscription'>Inscription</Link>
@@ -108,9 +108,20 @@ const GDAOfferBanner = ({ props }) => {
     return <div className="offerBanner">
         <section>
             <h1>Global-{typeOfferCut[0]}</h1>
-            <p>Both rules have the same content.
-                The difference is just the second tag.
-                Is there a way to do something like this?</p>
+            <p>
+                {(() => {
+                    if (typeOffer == 'Emplois') {
+                        return <>
+                            Retrouver ici la liste des offres d'emploi posté sur notre plateforme.
+                        </>
+                    } else if (typeOffer == 'Immobilier') {
+                        return <>
+                            Retrouver ici quelques annonces immobilières aussi bien des parcelles en vente
+                            que des appartements ou chambres a louer.
+                        </>
+                    }
+                })()}
+            </p>
         </section>
         <IllustrationImage props={{ src: banner, alt: 'Hus e vs' }} />
     </div>

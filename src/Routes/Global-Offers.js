@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useParams } from "react-router-dom"
-import { GlobalOfferLayout } from "../RoutesSubComponents/Global-offerComponents.js"
+import { GlobalOfferLayout } from "../RoutesSubComponents/global-offer.js"
 
 const toggleFilterSidebar = (event) => {
     event.preventDefault();

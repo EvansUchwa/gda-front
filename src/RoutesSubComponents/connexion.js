@@ -103,6 +103,7 @@ export const AuthConnexion = () => {
 
         <div className='formOtherAuth'>
             <p>Vous n'avez pas de compte ? <Link to='/Authentification/Inscription'>Inscription</Link> </p>
+            <p> <Link to='/Mail/rechercher-mail'>Mot de passe oublié ?</Link> </p>
         </div>
     </form>
 }

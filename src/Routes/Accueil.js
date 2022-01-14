@@ -1,5 +1,5 @@
 import '../Assets/styles/accueil.css'
-import { AccueilBanner, Partenaires, TypeServices } from '../RoutesSubComponents/AccueilComponents';
+import { AccueilBanner, Partenaires, TypeServices } from '../RoutesSubComponents/accueil';
 
 const Accueil = () => {
     return <>

@@ -15,21 +15,21 @@ export const NotDropableSidebarLink = ({ props }) => {
     </>
 }
 export const IsDropableSidebarLink = ({ props }) => {
-    const { toggleOptionsNav } = props
+    const { toggleOptionsNav, userType } = props
     return <>
         {
-            sidebarLinks['admin'].map((am, index) => <div key={"adminMenu" + index}>
-                <i className={"mdi " + am.menuIcon}></i>
-                <span className="dashMenuDropdown"
-                    onClick={(event) => toggleOptionsNav(event)}>
+            sidebarLinks[userType].map((am, index) => <div key={"adminMenu" + index}
+                onClick={(event) => toggleOptionsNav(event)}>
+                <span className="dashMenuDropdown">
+                    <i className={"mdi " + am.menuIcon}></i>
                     {am.menuName}
-                    <i className="mdi mdi-chevron-right"></i>
                 </span>
-                <section>
+                <i className="mdi mdi-chevron-right"></i>
+                <section className="">
                     {
                         am.menuOptions.map((amM0, index) => <Link
                             key={am.menuName + 'subLink' + index}
-                            to={"/Admin/" + am.menuName + amM0.link}>{amM0.ph}
+                            to={amM0.link}>{amM0.ph}
                         </Link>)
                     }
                 </section>
